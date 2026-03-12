@@ -44,7 +44,12 @@ export default function StravaCallbackPage() {
 
     if (error) {
       setStatus('error');
-      setErrorMsg('Вы отклонили доступ к Strava');
+      const desc = (searchParams.get('error_description') ?? '').toLowerCase();
+      if (error === 'too_many_athletes' || desc.includes('quota') || desc.includes('athlete')) {
+        setErrorMsg('Приложение временно не принимает новых пользователей Strava — превышен лимит квоты API. Попробуйте позже или добавьте тренировки вручную.');
+      } else {
+        setErrorMsg('Вы отклонили доступ к Strava');
+      }
       return;
     }
     if (!code) {
@@ -65,7 +70,13 @@ export default function StravaCallbackPage() {
         });
 
         if (fnError) throw fnError;
-        if (data?.error) throw new Error(data.error);
+        if (data?.error) {
+          const msg: string = data.error ?? '';
+          if (msg.toLowerCase().includes('too many') || msg.toLowerCase().includes('athlete')) {
+            throw new Error('__quota__');
+          }
+          throw new Error(msg);
+        }
 
         // Step 2 — initial sync immediately after connecting
         setStatus('syncing');
@@ -92,9 +103,13 @@ export default function StravaCallbackPage() {
         setStatus('success');
         setTimeout(() => navigate('/dashboard'), 2000);
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Неизвестная ошибка';
+        const raw = err instanceof Error ? err.message : 'Неизвестная ошибка';
         setStatus('error');
-        setErrorMsg(`Ошибка подключения Strava: ${message}`);
+        if (raw === '__quota__' || raw.toLowerCase().includes('too many') || raw.toLowerCase().includes('athlete')) {
+          setErrorMsg('Приложение временно не принимает новых пользователей Strava — превышен лимит квоты API. Попробуйте позже или добавьте тренировки вручную.');
+        } else {
+          setErrorMsg(`Ошибка подключения Strava: ${raw}`);
+        }
         toast.error('Не удалось подключить Strava');
       }
     };
