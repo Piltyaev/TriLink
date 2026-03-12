@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Activity, Calendar, BarChart3,
-  Waves, Bike, PersonStanding, Zap, Users, Map,
+  Waves, Bike, PersonStanding, Zap, Map,
   CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ const features = [
   { icon: Calendar, title: "Умный календарь",       accent: "text-swim bg-swim/10 border-swim/20" },
   { icon: BarChart3, title: "Аналитика формы",      accent: "text-run bg-run/10 border-run/20" },
   { icon: Zap,      title: "Синхронизация Strava",  accent: "text-bike bg-bike/10 border-bike/20" },
-  { icon: Users,    title: "Группы и тренеры",      accent: "text-strength bg-strength/10 border-strength/20" },
   { icon: Map,      title: "Карта активности",      accent: "text-primary bg-primary/10 border-primary/20" },
 ];
 

@@ -19,7 +19,7 @@ export function MobileHeader() {
 
       <button
         onClick={() => navigate('/settings')}
-        className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold transition-colors hover:bg-primary/25"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold transition-colors active:bg-primary/30"
       >
         {initials}
       </button>
