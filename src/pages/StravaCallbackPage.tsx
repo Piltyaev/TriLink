@@ -3,11 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Loader2, CheckCircle2, XCircle, Zap } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, Zap, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Status = 'loading' | 'syncing' | 'success' | 'error';
+type Status = 'loading' | 'syncing' | 'success' | 'error' | 'quota';
 
 const STATUS_LABELS: Record<Status, { title: string; sub: string }> = {
   loading: {
@@ -26,6 +26,10 @@ const STATUS_LABELS: Record<Status, { title: string; sub: string }> = {
     title: 'Ошибка подключения',
     sub:   '',
   },
+  quota: {
+    title: 'Превышен лимит Strava API',
+    sub:   'Приложение временно не принимает новых подключений Strava. Добавляйте тренировки вручную, пока мы решаем эту проблему.',
+  },
 };
 
 export default function StravaCallbackPage() {
@@ -43,11 +47,10 @@ export default function StravaCallbackPage() {
     const error = searchParams.get('error');
 
     if (error) {
-      setStatus('error');
-      const desc = (searchParams.get('error_description') ?? '').toLowerCase();
-      if (error === 'too_many_athletes' || desc.includes('quota') || desc.includes('athlete')) {
-        setErrorMsg('Приложение временно не принимает новых пользователей Strava — превышен лимит квоты API. Попробуйте позже или добавьте тренировки вручную.');
+      if (error === 'too_many_athletes') {
+        setStatus('quota');
       } else {
+        setStatus('error');
         setErrorMsg('Вы отклонили доступ к Strava');
       }
       return;
@@ -70,13 +73,11 @@ export default function StravaCallbackPage() {
         });
 
         if (fnError) throw fnError;
-        if (data?.error) {
-          const msg: string = data.error ?? '';
-          if (msg.toLowerCase().includes('too many') || msg.toLowerCase().includes('athlete')) {
-            throw new Error('__quota__');
-          }
-          throw new Error(msg);
+        if (data?.error === 'too_many_athletes') {
+          setStatus('quota');
+          return;
         }
+        if (data?.error) throw new Error(data.error);
 
         // Step 2 — initial sync immediately after connecting
         setStatus('syncing');
@@ -89,7 +90,6 @@ export default function StravaCallbackPage() {
         setImported(count);
 
         if (syncError) {
-          // Sync failed but OAuth succeeded — still show success
           toast.warning('Strava подключена, но синхронизация не удалась. Попробуйте вручную в Настройках.');
         } else {
           toast.success(
@@ -103,13 +103,9 @@ export default function StravaCallbackPage() {
         setStatus('success');
         setTimeout(() => navigate('/dashboard'), 2000);
       } catch (err: unknown) {
-        const raw = err instanceof Error ? err.message : 'Неизвестная ошибка';
+        const message = err instanceof Error ? err.message : 'Неизвестная ошибка';
         setStatus('error');
-        if (raw === '__quota__' || raw.toLowerCase().includes('too many') || raw.toLowerCase().includes('athlete')) {
-          setErrorMsg('Приложение временно не принимает новых пользователей Strava — превышен лимит квоты API. Попробуйте позже или добавьте тренировки вручную.');
-        } else {
-          setErrorMsg(`Ошибка подключения Strava: ${raw}`);
-        }
+        setErrorMsg(`Ошибка подключения Strava: ${message}`);
         toast.error('Не удалось подключить Strava');
       }
     };
@@ -168,6 +164,19 @@ export default function StravaCallbackPage() {
               </div>
             </motion.div>
           )}
+          {status === 'quota' && (
+            <motion.div
+              key="quota"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="flex justify-center"
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10">
+                <Users className="h-9 w-9 text-amber-400" />
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Title + subtitle */}
@@ -175,7 +184,7 @@ export default function StravaCallbackPage() {
           <h2 className="font-display text-xl font-bold text-foreground">
             {labels.title}
           </h2>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
             {status === 'error' ? errorMsg : labels.sub}
           </p>
         </div>
@@ -205,6 +214,18 @@ export default function StravaCallbackPage() {
             <Zap className="h-4 w-4" />
             {imported} активностей импортировано
           </motion.div>
+        )}
+
+        {/* Quota: two actions */}
+        {status === 'quota' && (
+          <div className="flex flex-col gap-2">
+            <Button onClick={() => navigate('/workouts')} className="w-full">
+              Добавить тренировку вручную
+            </Button>
+            <Button variant="outline" onClick={() => navigate('/dashboard')} className="w-full">
+              На главную
+            </Button>
+          </div>
         )}
 
         {/* Error: back button */}
