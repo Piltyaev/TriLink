@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Backgrounds ────────────────── */
+    --background:   220 18%  8%;   /* чуть светлее для меньшей нагрузки на глаза */
+    --foreground:   214 30% 94%;   /* почти белый, максимальная читаемость */
+
+    --card:         220 20% 12%;   /* контраст с фоном виден чётко */
+    --card-foreground: 214 30% 94%;
+
+    --popover:      220 22% 14%;
+    --popover-foreground: 214 30% 94%;
+
+    /* ── Accent ─────────────────────── */
+    --primary:      217 91% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    /* ── Surfaces ───────────────────── */
+    --secondary:    220 20% 17%;
+    --secondary-foreground: 214 22% 80%;
+
+    --muted:        220 18% 15%;
+    --muted-foreground: 214 18% 65%;   /* было 50% — поднял до 65% для читаемости */
+
+    --accent:       220 20% 19%;
+    --accent-foreground: 214 30% 94%;
+
+    /* ── States ─────────────────────── */
+    --destructive:  0 62% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* ── Structure ──────────────────── */
+    --border:       220 22% 22%;   /* было 17% — границы теперь заметнее */
+    --input:        220 22% 15%;
+    --ring:         217 91% 62%;
+    --radius:       0.875rem;
+
+    /* ── Sport colours ──────────────── */
+    --swim:         200 55% 38%;
+    --swim-foreground: 200 70% 90%;
+
+    --bike:         155 48% 36%;
+    --bike-foreground: 155 60% 88%;
+
+    --run:           32 65% 44%;
+    --run-foreground:  32 80% 90%;
+
+    --strength:     262 48% 50%;
+    --strength-foreground: 262 70% 90%;
+
+    --rest:         220 14% 38%;
+    --rest-foreground: 220 22% 78%;
+
+    /* ── Charts ─────────────────────── */
+    --chart-1: 217 91% 62%;
+    --chart-2: 200 55% 52%;
+    --chart-3: 155 48% 48%;
+    --chart-4:  32 65% 54%;
+    --chart-5: 262 48% 60%;
+
+    /* ── Sidebar ────────────────────── */
+    --sidebar-background:         220 24%  7%;
+    --sidebar-foreground:         214 18% 68%;   /* было 56% — навигация стала читаемее */
+    --sidebar-primary:            217 91% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent:             220 22% 14%;
+    --sidebar-accent-foreground:  214 30% 92%;
+    --sidebar-border:             220 22% 13%;
+    --sidebar-ring:               217 91% 62%;
+  }
+
+  /* dark alias for Tailwind dark: utilities */
+  .dark {
+    --background:   220 18%  8%;
+    --foreground:   214 30% 94%;
+    --card:         220 20% 12%;
+    --card-foreground: 214 30% 94%;
+    --popover:      220 22% 14%;
+    --popover-foreground: 214 30% 94%;
+    --primary:      217 91% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:    220 20% 17%;
+    --secondary-foreground: 214 22% 80%;
+    --muted:        220 18% 15%;
+    --muted-foreground: 214 18% 65%;
+    --accent:       220 20% 19%;
+    --accent-foreground: 214 30% 94%;
+    --destructive:  0 62% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border:       220 22% 22%;
+    --input:        220 22% 15%;
+    --ring:         217 91% 62%;
+    --swim:         200 55% 38%;
+    --swim-foreground: 200 70% 90%;
+    --bike:         155 48% 36%;
+    --bike-foreground: 155 60% 88%;
+    --run:           32 65% 44%;
+    --run-foreground:  32 80% 90%;
+    --strength:     262 48% 50%;
+    --strength-foreground: 262 70% 90%;
+    --rest:         220 14% 38%;
+    --rest-foreground: 220 22% 78%;
+    --chart-1: 217 91% 62%;
+    --chart-2: 200 55% 52%;
+    --chart-3: 155 48% 48%;
+    --chart-4:  32 65% 54%;
+    --chart-5: 262 48% 60%;
+    --sidebar-background:         220 24%  7%;
+    --sidebar-foreground:         214 18% 68%;
+    --sidebar-primary:            217 91% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent:             220 22% 14%;
+    --sidebar-accent-foreground:  214 30% 92%;
+    --sidebar-border:             220 22% 13%;
+    --sidebar-ring:               217 91% 62%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  p, span, li {
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2, h3, h4 {
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring) / 0.7);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar        { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { background: hsl(var(--border)); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  }
+
+  .gradient-sport {
+    background: linear-gradient(135deg, hsl(217 91% 55%) 0%, hsl(210 80% 50%) 100%);
+  }
+
+  .glass {
+    backdrop-filter: blur(12px) saturate(160%);
+    background: hsl(var(--card) / 0.88);
+    border: 1px solid hsl(var(--border));
+  }
+}
