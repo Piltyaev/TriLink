@@ -33,12 +33,27 @@ serve(async (req) => {
       }),
     });
 
+    const tokenData = await tokenRes.json();
+
     if (!tokenRes.ok) {
-      const err = await tokenRes.text();
-      throw new Error(`Strava token exchange failed: ${err}`);
+      // Parse Strava error response and return a clean error code
+      const stravaErrors: { code?: string }[] = tokenData?.errors ?? [];
+      const hasQuotaError = stravaErrors.some(
+        (e) => (e.code ?? "").toLowerCase().includes("too many") || (e.code ?? "").toLowerCase().includes("athlete")
+      ) || (tokenData?.message ?? "").toLowerCase().includes("too many");
+
+      if (hasQuotaError) {
+        return new Response(
+          JSON.stringify({ error: "too_many_athletes" }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      throw new Error(tokenData?.message ?? `Strava token exchange failed (${tokenRes.status})`);
     }
 
-    const tokenData = await tokenRes.json();
+    if (!tokenData.access_token) {
+      throw new Error("No access token returned by Strava");
+    }
 
     // Save tokens to Supabase
     const supabase = createClient(
@@ -51,8 +66,8 @@ serve(async (req) => {
       access_token: tokenData.access_token,
       refresh_token: tokenData.refresh_token,
       expires_at: tokenData.expires_at,
-      athlete_id: tokenData.athlete?.id,
-      athlete_name: `${tokenData.athlete?.firstname || ""} ${tokenData.athlete?.lastname || ""}`.trim(),
+      athlete_id: tokenData.athlete?.id ?? null,
+      athlete_name: `${tokenData.athlete?.firstname ?? ""} ${tokenData.athlete?.lastname ?? ""}`.trim() || null,
       updated_at: new Date().toISOString(),
     }, { onConflict: "user_id" });
 
@@ -62,7 +77,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
+    return new Response(JSON.stringify({ error: (err as Error).message }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
