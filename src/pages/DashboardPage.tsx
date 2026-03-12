@@ -92,7 +92,8 @@ export default function DashboardPage() {
     const newBadges = earned.filter(b => !storedSet.has(b.id));
     if (newBadges.length > 0) {
       setBadgeQueue(newBadges);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(earned.map(b => b.id)));
+      // Store the UNION of previously seen + new — never remove old ones
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...stored, ...newBadges.map(b => b.id)]));
     }
   }, [loading, workouts]);
 
