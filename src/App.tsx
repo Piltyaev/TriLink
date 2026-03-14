@@ -8,6 +8,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
+const PersonalRecordsPage = lazy(() => import("./pages/PersonalRecordsPage"));
 const LandingPage         = lazy(() => import("./pages/LandingPage"));
 const LoginPage           = lazy(() => import("./pages/LoginPage"));
 const RegisterPage        = lazy(() => import("./pages/RegisterPage"));
@@ -32,7 +33,11 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Suspense fallback={<div className="flex items-center justify-center h-screen bg-background" />}>
+          <Suspense fallback={
+            <div className="flex items-center justify-center h-screen bg-background">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+            </div>
+          }>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/auth/login" element={<LoginPage />} />
@@ -47,6 +52,7 @@ const App = () => (
                   <Route path="/workouts/:id" element={<WorkoutDetailPage />} />
                   <Route path="/analytics" element={<AnalyticsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/records" element={<PersonalRecordsPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
                   <Route path="/admin" element={<AdminPage />} />
                 </Route>

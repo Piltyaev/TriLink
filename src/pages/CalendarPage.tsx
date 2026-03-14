@@ -446,6 +446,19 @@ export default function CalendarPage() {
         )}
       </motion.div>
 
+      {/* ── Empty state hint ───────────────────────────────── */}
+      {!loading && events.length === 0 && workouts.length === 0 && (
+        <motion.div
+          className="flex flex-col items-center justify-center py-10 text-center rounded-2xl border border-dashed border-border/60 bg-card/40"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <p className="text-sm font-medium text-muted-foreground">Нажмите на любой день, чтобы запланировать тренировку</p>
+          <p className="text-xs text-muted-foreground/60 mt-1">Или используйте кнопку «Добавить» в верхнем углу</p>
+        </motion.div>
+      )}
+
       {/* ── Upcoming planned workouts ───────────────────────── */}
       <AnimatePresence>
         {upcoming.length > 0 && (

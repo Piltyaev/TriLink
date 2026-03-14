@@ -120,8 +120,7 @@ export default function WorkoutsPage() {
       if (error) { toast.error(`Ошибка: ${error.message}`); return; }
       toast.success('Тренировка добавлена');
     }
-    setShowModal(false);
-    setForm(emptyForm());
+    closeModal();
     load();
   };
 
@@ -131,9 +130,9 @@ export default function WorkoutsPage() {
     const { error } = await supabase
       .from('workouts').delete().eq('id', id).eq('user_id', user.id);
     if (error) { toast.error('Ошибка удаления'); return; }
-    setWorkouts(prev => prev.filter(w => w.id !== id));
     toast.success('Тренировка удалена');
-    if (showModal) setShowModal(false);
+    if (showModal) closeModal();
+    load();
   };
 
   const filtered = useMemo(() =>
@@ -159,6 +158,7 @@ export default function WorkoutsPage() {
   const totalDuration  = workouts.reduce((s, w) => s + w.duration, 0);
   const totalDistance  = workouts.reduce((s, w) => s + (w.distance || 0), 0);
 
+  const closeModal = () => { setShowModal(false); setEditingId(null); setForm(emptyForm()); setFormError(''); };
   const openModal = () => { setEditingId(null); setForm(emptyForm()); setFormError(''); setShowModal(true); };
   const openEdit = (w: Workout, e: React.MouseEvent) => {
     e.preventDefault();
@@ -406,7 +406,7 @@ export default function WorkoutsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)}
+            onClick={closeModal}
           >
             <motion.div
               className="w-full max-w-md rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-[0_8px_40px_hsl(0_0%_0%/0.6)] max-h-[92vh] overflow-y-auto"
@@ -437,7 +437,7 @@ export default function WorkoutsPage() {
                     </button>
                   )}
                   <button
-                    onClick={() => setShowModal(false)}
+                    onClick={closeModal}
                     className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                   >
                     <X className="h-4 w-4" />
@@ -552,7 +552,7 @@ export default function WorkoutsPage() {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-1">
-                  <Button variant="outline" className="flex-1" onClick={() => setShowModal(false)}>
+                  <Button variant="outline" className="flex-1" onClick={closeModal}>
                     Отмена
                   </Button>
                   <Button className="flex-1 gap-2" onClick={handleSave} disabled={saving}>

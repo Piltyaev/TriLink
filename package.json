@@ -1,17 +1,17 @@
 {
-  "name": "stamina-sculptor",
+  "name": "trilink",
   "private": true,
   "version": "0.1.0",
   "description": "TriLink — веб-платформа для планирования и аналитики тренировок по триатлону.",
   "author": "Piltyayev Vladimir <bobpltm@gmail.com> (https://github.com/Piltyaev)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Piltyaev/stamina-sculptor.git"
+    "url": "git+https://github.com/Piltyaev/TriLink.git"
   },
   "bugs": {
-    "url": "https://github.com/Piltyaev/stamina-sculptor/issues"
+    "url": "https://github.com/Piltyaev/TriLink/issues"
   },
-  "homepage": "https://github.com/Piltyaev/stamina-sculptor#readme",
+  "homepage": "https://github.com/Piltyaev/TriLink#readme",
   "type": "module",
   "scripts": {
     "dev": "vite",

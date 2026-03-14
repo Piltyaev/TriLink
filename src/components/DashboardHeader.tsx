@@ -37,6 +37,15 @@ const QUOTES = [
   "Сделай сегодня то, о чём завтра будешь гордиться.",
 ];
 
+function pluralDays(n: number): string {
+  const abs = Math.abs(n) % 100;
+  const last = abs % 10;
+  if (abs >= 11 && abs <= 19) return 'дней';
+  if (last === 1) return 'день';
+  if (last >= 2 && last <= 4) return 'дня';
+  return 'дней';
+}
+
 function getGreeting(): string {
   const h = new Date().getHours();
   if (h < 6)  return "Поздняя ночь";
@@ -67,7 +76,7 @@ export function DashboardHeader({ userName, streak, weeklyMinutes, weeklyGoal = 
         {streak > 0 && (
           <span className="inline-flex items-center gap-1 rounded-full bg-run/20 text-run-foreground px-2.5 py-0.5 text-sm font-semibold border border-run/20">
             <Flame className="h-3.5 w-3.5" />
-            {streak} {streak === 1 ? 'день' : streak < 5 ? 'дня' : 'дней'}
+            {streak} {pluralDays(streak)}
           </span>
         )}
       </div>
