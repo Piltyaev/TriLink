@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { Shield, Users, Activity, Database } from "lucide-react";
+import { Shield, Users, Activity, Database, Lock } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'bobpltm@gmail.com';
 
 interface Profile {
   id: string;
@@ -18,6 +22,21 @@ interface Profile {
 export default function AdminPage() {
   usePageTitle('Админ');
   const { user } = useAuth();
+
+  if (!user || user.email !== ADMIN_EMAIL) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 p-8 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10">
+          <Lock className="h-8 w-8 text-destructive" />
+        </div>
+        <h2 className="font-display text-xl font-bold">Доступ запрещён</h2>
+        <p className="text-sm text-muted-foreground max-w-xs">У вас нет прав для просмотра этой страницы.</p>
+        <Button asChild variant="outline">
+          <Link to="/dashboard">На главную</Link>
+        </Button>
+      </div>
+    );
+  }
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [totalWorkouts, setTotalWorkouts] = useState(0);
   const [loading, setLoading] = useState(true);

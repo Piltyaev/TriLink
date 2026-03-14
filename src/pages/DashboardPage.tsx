@@ -8,13 +8,14 @@ import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import { type Workout, mapWorkout } from "@/data/mockData";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { Timer, MapPin, Zap, Plus, ArrowRight } from "lucide-react";
+import { Timer, MapPin, Zap, Plus, ArrowRight, Flame } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
 import { cn, formatDuration, toLocalISO, dateISO } from "@/lib/utils";
 import { getRankProgress, getTotalMinutes } from "@/lib/ranks";
 import { calcBadges, type Badge } from "@/lib/badges";
 import { BadgeCelebrationQueue } from "@/components/BadgeCelebration";
+import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 function calcStreak(workouts: Workout[]): number {
   const days = new Set(workouts.map(w => w.date));
@@ -33,6 +34,37 @@ function calcStreak(workouts: Workout[]): number {
   return streak;
 }
 
+
+function calcBestDayStreak(workouts: Workout[]): number {
+  if (workouts.length === 0) return 0;
+  const days = [...new Set(workouts.map(w => w.date))].sort();
+  let best = 1, cur = 1;
+  for (let i = 1; i < days.length; i++) {
+    const prev = new Date(days[i - 1]);
+    const curr = new Date(days[i]);
+    const diff = Math.round((curr.getTime() - prev.getTime()) / 86400000);
+    if (diff === 1) { cur++; best = Math.max(best, cur); } else cur = 1;
+  }
+  return best;
+}
+
+function calcBestWeekStreak(workouts: Workout[]): number {
+  if (workouts.length === 0) return 0;
+  const weekSet = new Set(workouts.map(w => {
+    const d = new Date(w.date);
+    const startOfYear = new Date(d.getFullYear(), 0, 1);
+    return `${d.getFullYear()}-${Math.ceil(((d.getTime() - startOfYear.getTime()) / 86400000 + startOfYear.getDay() + 1) / 7)}`;
+  }));
+  const weeks = [...weekSet].sort();
+  let best = 1, cur = 1;
+  for (let i = 1; i < weeks.length; i++) {
+    const [y1, w1] = weeks[i - 1].split('-').map(Number);
+    const [y2, w2] = weeks[i].split('-').map(Number);
+    const diff = (y2 - y1) * 52 + (w2 - w1);
+    if (diff === 1) { cur++; best = Math.max(best, cur); } else cur = 1;
+  }
+  return best;
+}
 
 const STORAGE_KEY = 'trilink_badges';
 
@@ -102,7 +134,22 @@ export default function DashboardPage() {
   const totalDuration = weekWorkouts.reduce((s, w) => s + w.duration, 0);
   const totalDistance = weekWorkouts.reduce((s, w) => s + (w.distance || 0), 0);
   if (loading) {
-    return <div className="flex items-center justify-center h-full p-8 text-muted-foreground">Загрузка...</div>;
+    return (
+      <div className="p-4 lg:p-8 space-y-6">
+        <div className="space-y-2">
+          <div className="h-8 w-56 rounded-xl bg-card animate-pulse" />
+          <div className="h-4 w-80 rounded-lg bg-card animate-pulse" />
+          <div className="mt-3 h-12 w-full rounded-xl bg-card animate-pulse" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+          {[...Array(2)].map((_, i) => <div key={i} className="h-20 rounded-xl bg-card animate-pulse" />)}
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          {[...Array(2)].map((_, i) => <div key={i} className="h-72 rounded-xl bg-card animate-pulse" />)}
+        </div>
+        <div className="h-40 rounded-xl bg-card animate-pulse" />
+      </div>
+    );
   }
 
   const isNewUser = !loading && workouts.length === 0;
@@ -242,6 +289,32 @@ export default function DashboardPage() {
         <ActivityHeatmap workouts={workouts} />
       </motion.div>
 
+      {/* ── Стрики ────────────────────────────────────────── */}
+      <motion.div
+        className="rounded-xl border border-border bg-card p-5 shadow-[0_1px_4px_hsl(0_0%_0%/0.35)]"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.27 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Flame className="h-4 w-4 text-run" />
+          <h3 className="font-display text-base font-semibold">Стрики</h3>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { label: 'Текущий', value: streak, unit: streak === 1 ? 'день' : streak < 5 ? 'дня' : 'дней', color: 'text-run' },
+            { label: 'Лучший дневной', value: calcBestDayStreak(workouts), unit: 'дн.', color: 'text-primary' },
+            { label: 'Лучший недельный', value: calcBestWeekStreak(workouts), unit: 'нед.', color: 'text-bike' },
+          ].map(s => (
+            <div key={s.label} className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-background/30 p-3 text-center">
+              <span className={cn("font-display text-2xl font-bold", s.color)}>{s.value}</span>
+              <span className="text-[10px] text-muted-foreground mt-0.5">{s.unit}</span>
+              <span className="text-[10px] text-muted-foreground/70 mt-0.5">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
       {/* ── Recent Workouts + Badges ──────────────────────── */}
       <div className="grid gap-6 lg:grid-cols-2">
 
@@ -296,22 +369,22 @@ export default function DashboardPage() {
           ) : (
             <div className="flex flex-wrap gap-2">
               {badges.map(badge => (
-                <div
-                  key={badge.id}
-                  className={cn(
-                    "group relative inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold cursor-default transition-transform hover:scale-105",
-                    badge.color
-                  )}
-                  title={badge.desc}
-                >
-                  <span className="text-base leading-none">{badge.emoji}</span>
-                  <span>{badge.label}</span>
-                  <div className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-10">
-                    <div className="rounded-lg border border-border bg-popover px-3 py-1.5 text-xs text-popover-foreground shadow-lg whitespace-nowrap">
-                      {badge.desc}
+                <UITooltip key={badge.id}>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold cursor-default transition-transform hover:scale-105",
+                        badge.color
+                      )}
+                    >
+                      <span className="text-base leading-none">{badge.emoji}</span>
+                      <span>{badge.label}</span>
                     </div>
-                  </div>
-                </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">
+                    {badge.desc}
+                  </TooltipContent>
+                </UITooltip>
               ))}
             </div>
           )}

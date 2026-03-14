@@ -273,7 +273,7 @@ export default function LandingPage() {
       {/* ── Footer ─────────────────────────────────────── */}
       <footer className="border-t border-border/20 py-8">
         <div className="mx-auto max-w-6xl px-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-xs text-muted-foreground">© 2026 TriLink. Created by Piltyayev Vladimir.</p>
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} TriLink. Created by Piltyayev Vladimir.</p>
           <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <Link to="/auth/login" className="hover:text-foreground transition-colors">Войти</Link>
             <Link to="/auth/register" className="hover:text-foreground transition-colors">Регистрация</Link>

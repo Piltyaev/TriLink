@@ -14,12 +14,15 @@ serve(async (req) => {
   }
 
   try {
+    console.log("[strava-oauth] invoked");
     const { code, userId } = await req.json();
     if (!code || !userId) throw new Error("Missing code or userId");
+    console.log("[strava-oauth] code received for userId:", userId);
 
     const clientId = Deno.env.get("STRAVA_CLIENT_ID");
     const clientSecret = Deno.env.get("STRAVA_CLIENT_SECRET");
     if (!clientId || !clientSecret) throw new Error("STRAVA_CLIENT_ID or STRAVA_CLIENT_SECRET not set");
+    console.log("[strava-oauth] secrets OK, clientId:", clientId);
 
     // Exchange code for tokens with Strava
     const tokenRes = await fetch("https://www.strava.com/oauth/token", {
@@ -34,6 +37,7 @@ serve(async (req) => {
     });
 
     const tokenData = await tokenRes.json();
+    console.log("[strava-oauth] Strava token response status:", tokenRes.status, "body:", JSON.stringify(tokenData));
 
     if (!tokenRes.ok) {
       // Parse Strava error response and return a clean error code

@@ -8,6 +8,7 @@ import {
   LineChart, Line, Legend,
   RadarChart, PolarGrid, PolarAngleAxis, Radar,
   CartesianGrid,
+  PieChart, Pie, Cell,
 } from "recharts";
 import { motion } from "framer-motion";
 import {
@@ -174,6 +175,24 @@ export default function AnalyticsPage() {
     { label: 'Бег',       min: runMin,      pct: Math.round((runMin      / sportTotal) * 100), color: 'bg-run',      icon: <PersonStanding  className="h-4 w-4" />, accent: 'text-run'      },
     { label: 'Сила',      min: strengthMin, pct: Math.round((strengthMin / sportTotal) * 100), color: 'bg-strength', icon: <Dumbbell        className="h-4 w-4" />, accent: 'text-strength' },
   ].filter(s => s.min > 0).sort((a, b) => b.min - a.min);
+
+  // Day of week distribution
+  const DOW_LABELS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  const dowCounts = Array(7).fill(0);
+  workouts.forEach(w => {
+    const day = new Date(w.date).getDay(); // 0=Sun
+    const idx = day === 0 ? 6 : day - 1;  // Mon=0
+    dowCounts[idx]++;
+  });
+  const dowData = DOW_LABELS.map((d, i) => ({ day: d, count: dowCounts[i] }));
+
+  // Active vs rest days (last 6 weeks = 42 days)
+  const activeDays = new Set(workouts.map(w => w.date)).size;
+  const restDays   = Math.max(0, 42 - activeDays);
+  const pieData = [
+    { name: 'Активные', value: activeDays,  color: 'hsl(var(--primary))' },
+    { name: 'Отдых',    value: restDays,     color: 'hsl(var(--muted))' },
+  ];
 
   // Radar
   const maxSport  = Math.max(swimMin, bikeMin, runMin, strengthMin, 1);
@@ -368,6 +387,65 @@ export default function AnalyticsPage() {
               />
             </RadarChart>
           </ResponsiveContainer>
+        </ChartCard>
+
+        {/* Day of week */}
+        <ChartCard
+          title="Время тренировок"
+          subtitle="распределение по дням недели"
+          delay={0.35}
+        >
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={dowData} barSize={24}>
+              <CartesianGrid vertical={false} stroke="hsl(var(--border)/0.4)" />
+              <XAxis dataKey="day" {...axisProps} />
+              <YAxis {...axisProps} width={28} allowDecimals={false} />
+              <Tooltip {...tooltipStyle} formatter={(v: number) => [v, 'тренировок']} />
+              <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Тренировок" />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        {/* Active vs rest pie */}
+        <ChartCard
+          title="Активность / Отдых"
+          subtitle="дней за последние 6 недель"
+          delay={0.37}
+        >
+          <div className="flex items-center justify-center gap-8">
+            <PieChart width={160} height={160}>
+              <Pie
+                data={pieData}
+                cx={75}
+                cy={75}
+                innerRadius={45}
+                outerRadius={70}
+                paddingAngle={3}
+                dataKey="value"
+                startAngle={90}
+                endAngle={-270}
+              >
+                {pieData.map((entry, i) => (
+                  <Cell key={i} fill={entry.color} strokeWidth={0} />
+                ))}
+              </Pie>
+              <Tooltip {...tooltipStyle} formatter={(v: number) => [v, 'дней']} />
+            </PieChart>
+            <div className="space-y-2.5">
+              {pieData.map(e => (
+                <div key={e.name} className="flex items-center gap-2">
+                  <div className="h-2.5 w-2.5 rounded-full shrink-0" style={{ background: e.color }} />
+                  <div>
+                    <p className="text-sm font-semibold">{e.value} <span className="text-xs text-muted-foreground font-normal">дн.</span></p>
+                    <p className="text-[11px] text-muted-foreground">{e.name}</p>
+                  </div>
+                </div>
+              ))}
+              <p className="text-[11px] text-muted-foreground pt-1">
+                {activeDays > 0 ? Math.round((activeDays / 42) * 100) : 0}% активность
+              </p>
+            </div>
+          </div>
         </ChartCard>
 
         {/* Line — weekly trend */}

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Calendar, Dumbbell, BarChart3,
-  Settings, Shield, ChevronLeft, ChevronRight, LogOut, Medal,
+  Settings, Shield, ChevronLeft, ChevronRight, LogOut, Medal, Award,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -14,6 +14,7 @@ const navItems = [
   { title: "Тренировки", url: "/workouts",  icon: Dumbbell },
   { title: "Аналитика",  url: "/analytics", icon: BarChart3 },
   { title: "Рейтинг",    url: "/ranking",   icon: Medal },
+  { title: "Рекорды",    url: "/records",   icon: Award },
   { title: "Настройки",  url: "/settings",  icon: Settings },
 ];
 
