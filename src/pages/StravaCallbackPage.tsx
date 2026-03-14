@@ -72,7 +72,17 @@ export default function StravaCallbackPage() {
           body: { code, userId: user.id },
         });
 
-        if (fnError) throw fnError;
+        // Extract real error from edge function response body
+        if (fnError) {
+          let realMessage = fnError.message;
+          try {
+            // FunctionsHttpError has a context property (the Response object)
+            const body = await (fnError as { context?: Response }).context?.json();
+            if (body?.error) realMessage = body.error;
+          } catch { /* ignore parse error */ }
+          if (realMessage === 'too_many_athletes') { setStatus('quota'); return; }
+          throw new Error(realMessage);
+        }
         if (data?.error === 'too_many_athletes') {
           setStatus('quota');
           return;
