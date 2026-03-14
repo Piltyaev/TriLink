@@ -143,6 +143,18 @@ export default function WorkoutsPage() {
     [workouts, filter, search]
   );
 
+  // Grouped by sport for "all" view (only sports that have at least 1 workout)
+  const GROUP_ORDER: SportType[] = ['swim', 'bike', 'run', 'strength', 'rest'];
+  const grouped = useMemo(() => {
+    if (filter !== 'all') return null;
+    return GROUP_ORDER
+      .map(sport => ({
+        sport,
+        items: filtered.filter(w => w.sport === sport),
+      }))
+      .filter(g => g.items.length > 0);
+  }, [filtered, filter]);
+
   // Summary stats
   const totalDuration  = workouts.reduce((s, w) => s + w.duration, 0);
   const totalDistance  = workouts.reduce((s, w) => s + (w.distance || 0), 0);
@@ -258,82 +270,106 @@ export default function WorkoutsPage() {
           ))}
         </div>
       ) : filtered.length > 0 ? (
-        <div className="space-y-2">
-          {filtered.map((w, i) => (
-            <motion.div
-              key={w.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.035, duration: 0.3 }}
-            >
-              <Link to={`/workouts/${w.id}`} className="group block">
-                <div className={cn(
-                  "flex items-center gap-4 rounded-xl border border-l-[3px] bg-card px-4 py-3.5",
-                  "shadow-[0_1px_3px_hsl(0_0%_0%/0.25)] hover:shadow-[0_2px_8px_hsl(0_0%_0%/0.4)]",
-                  "transition-all duration-150 hover:-translate-y-px",
-                  sportAccent[w.sport]
-                )}>
-
-                  {/* Sport icon */}
+        <div className="space-y-6">
+          {(grouped ?? [{ sport: filter as SportType, items: filtered }]).map((group) => (
+            <div key={group.sport}>
+              {/* Section header — only in grouped mode */}
+              {grouped && (
+                <div className="flex items-center gap-2.5 mb-3">
                   <div className={cn(
-                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg",
-                    sportIconBg[w.sport]
+                    "flex h-8 w-8 items-center justify-center rounded-lg text-base",
+                    sportIconBg[group.sport]
                   )}>
-                    {sportEmoji[w.sport]}
+                    {sportEmoji[group.sport]}
                   </div>
-
-                  {/* Title + meta */}
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm truncate">{w.title}</p>
-                    <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                      <span className="text-xs text-muted-foreground">{formatDate(w.date)}</span>
-                      <span className="text-muted-foreground/40 text-xs">·</span>
-                      <span className={cn(
-                        "inline-flex items-center gap-1 text-[10px] font-medium rounded-full px-2 py-0.5",
-                        w.source === 'strava'
-                          ? "bg-[#FC4C02]/10 text-[#FC4C02]"
-                          : "bg-muted text-muted-foreground"
-                      )}>
-                        {w.source === 'strava' ? <><Zap className="h-2.5 w-2.5" /> Strava</> : <><PenLine className="h-2.5 w-2.5" /> Вручную</>}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Metrics */}
-                  <div className="hidden sm:flex items-center gap-3 text-xs text-muted-foreground shrink-0">
-                    <span className="flex items-center gap-1 font-medium text-foreground">
-                      <Timer className="h-3.5 w-3.5 text-muted-foreground" />
-                      {formatDuration(w.duration)}
-                    </span>
-                    {w.distance && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {w.distance} км
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button
-                      onClick={e => openEdit(w, e)}
-                      className="opacity-0 group-hover:opacity-100 flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-150"
-                      title="Редактировать"
-                    >
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button
-                      onClick={e => handleDelete(w.id, e)}
-                      className="opacity-0 group-hover:opacity-100 flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-150"
-                      title="Удалить"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-muted-foreground transition-colors" />
-                  </div>
+                  <h2 className="font-display text-sm font-semibold text-foreground">
+                    {sportLabels[group.sport]}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">
+                    {group.items.length} {group.items.length === 1 ? 'тренировка' : group.items.length < 5 ? 'тренировки' : 'тренировок'}
+                  </span>
+                  <div className="flex-1 h-px bg-border/50" />
                 </div>
-              </Link>
-            </motion.div>
+              )}
+
+              <div className="space-y-2">
+                {group.items.map((w, i) => (
+                  <motion.div
+                    key={w.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.03, duration: 0.3 }}
+                  >
+                    <Link to={`/workouts/${w.id}`} className="group block">
+                      <div className={cn(
+                        "flex items-center gap-4 rounded-xl border border-l-[3px] bg-card px-4 py-3.5",
+                        "shadow-[0_1px_3px_hsl(0_0%_0%/0.25)] hover:shadow-[0_2px_8px_hsl(0_0%_0%/0.4)]",
+                        "transition-all duration-150 hover:-translate-y-px",
+                        sportAccent[w.sport]
+                      )}>
+                        {/* Sport icon */}
+                        <div className={cn(
+                          "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg",
+                          sportIconBg[w.sport]
+                        )}>
+                          {sportEmoji[w.sport]}
+                        </div>
+
+                        {/* Title + meta */}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-sm truncate">{w.title}</p>
+                          <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                            <span className="text-xs text-muted-foreground">{formatDate(w.date)}</span>
+                            <span className="text-muted-foreground/40 text-xs">·</span>
+                            <span className={cn(
+                              "inline-flex items-center gap-1 text-[10px] font-medium rounded-full px-2 py-0.5",
+                              w.source === 'strava'
+                                ? "bg-[#FC4C02]/10 text-[#FC4C02]"
+                                : "bg-muted text-muted-foreground"
+                            )}>
+                              {w.source === 'strava' ? <><Zap className="h-2.5 w-2.5" /> Strava</> : <><PenLine className="h-2.5 w-2.5" /> Вручную</>}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Metrics */}
+                        <div className="hidden sm:flex items-center gap-3 text-xs text-muted-foreground shrink-0">
+                          <span className="flex items-center gap-1 font-medium text-foreground">
+                            <Timer className="h-3.5 w-3.5 text-muted-foreground" />
+                            {formatDuration(w.duration)}
+                          </span>
+                          {w.distance && (
+                            <span className="flex items-center gap-1">
+                              <MapPin className="h-3.5 w-3.5" />
+                              {w.distance} км
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={e => openEdit(w, e)}
+                            className="opacity-0 group-hover:opacity-100 flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-150"
+                            title="Редактировать"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={e => handleDelete(w.id, e)}
+                            className="opacity-0 group-hover:opacity-100 flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-150"
+                            title="Удалить"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-muted-foreground transition-colors" />
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : (
