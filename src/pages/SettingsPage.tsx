@@ -179,8 +179,8 @@ export default function SettingsPage() {
   const handleSync = async () => {
     setSyncing(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const { data: { session }, error: refreshError } = await supabase.auth.refreshSession();
+      if (refreshError || !session) {
         toast.error('Сессия истекла — войдите снова');
         navigate('/auth/login');
         return;
