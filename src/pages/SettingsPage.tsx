@@ -182,7 +182,14 @@ export default function SettingsPage() {
       const { data, error } = await supabase.functions.invoke('strava-sync', {
         body: { userId: user?.id },
       });
-      if (error) throw error;
+      if (error) {
+        let msg = 'Ошибка синхронизации';
+        try {
+          const body = await (error as { context?: { json?: () => Promise<{ error?: string }> } }).context?.json?.();
+          if (body?.error) msg = body.error;
+        } catch { /* ignore */ }
+        throw new Error(msg);
+      }
       toast.success(`Синхронизировано: ${data?.imported || 0} активностей`);
       loadStravaStatus();
     } catch (err: unknown) {
