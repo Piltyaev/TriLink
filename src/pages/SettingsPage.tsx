@@ -183,10 +183,19 @@ export default function SettingsPage() {
         body: { userId: user?.id },
       });
       if (error) {
-        let msg = 'Ошибка синхронизации';
+        let msg = error.message || 'Ошибка синхронизации';
         try {
-          const body = await (error as { context?: { json?: () => Promise<{ error?: string }> } }).context?.json?.();
-          if (body?.error) msg = body.error;
+          const ctx = (error as { context?: Response }).context;
+          if (ctx) {
+            const text = await ctx.clone().text();
+            try {
+              const body = JSON.parse(text);
+              if (body?.error) msg = body.error;
+              else if (body?.message) msg = body.message;
+            } catch {
+              if (text) msg = text.slice(0, 300);
+            }
+          }
         } catch { /* ignore */ }
         throw new Error(msg);
       }
