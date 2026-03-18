@@ -179,6 +179,13 @@ export default function SettingsPage() {
   const handleSync = async () => {
     setSyncing(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Сессия истекла — войдите снова');
+        navigate('/auth/login');
+        return;
+      }
+
       const { data, error } = await supabase.functions.invoke('strava-sync', {
         body: { userId: user?.id },
       });
