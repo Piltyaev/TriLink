@@ -19,7 +19,6 @@ const WorkoutDetailPage   = lazy(() => import("./pages/WorkoutDetailPage"));
 const AnalyticsPage       = lazy(() => import("./pages/AnalyticsPage"));
 const SettingsPage        = lazy(() => import("./pages/SettingsPage"));
 const AdminPage           = lazy(() => import("./pages/AdminPage"));
-const RankingPage         = lazy(() => import("./pages/RankingPage"));
 const StravaCallbackPage  = lazy(() => import("./pages/StravaCallbackPage"));
 const GarminCallbackPage  = lazy(() => import("./pages/GarminCallbackPage"));
 const NotFound            = lazy(() => import("./pages/NotFound"));
@@ -53,7 +52,6 @@ const App = () => (
                   <Route path="/analytics" element={<AnalyticsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/records" element={<PersonalRecordsPage />} />
-                  <Route path="/ranking" element={<RankingPage />} />
                   <Route path="/admin" element={<AdminPage />} />
                 </Route>
               </Route>
