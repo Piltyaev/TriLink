@@ -92,8 +92,9 @@ export default function StravaCallbackPage() {
         // Step 2 — initial sync immediately after connecting
         setStatus('syncing');
 
+        const { data: { session: syncSession } } = await supabase.auth.refreshSession();
         const { data: syncData, error: syncError } = await supabase.functions.invoke('strava-sync', {
-          body: { userId: user.id },
+          body: { userId: syncSession?.user.id ?? user.id },
         });
 
         const count = syncData?.imported ?? 0;
