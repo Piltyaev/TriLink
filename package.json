@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "TriLink — веб-платформа для планирования и аналитики тренировок по триатлону.",
-  "author": "Piltyayev Vladimir <bobpltm@gmail.com> (https://github.com/Piltyaev)",
+  "author": "Vladimir Piltyaev <bobpltm@gmail.com> (https://github.com/Piltyaev)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Piltyaev/TriLink.git"
