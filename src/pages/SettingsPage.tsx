@@ -187,7 +187,7 @@ export default function SettingsPage() {
       }
 
       const { data, error } = await supabase.functions.invoke('strava-sync', {
-        body: { userId: user?.id },
+        body: { userId: session.user.id },
       });
       if (error) {
         let msg = error.message || 'Ошибка синхронизации';
