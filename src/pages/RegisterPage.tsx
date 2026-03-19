@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, MailCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const AGE_CATEGORIES = [
@@ -25,8 +25,8 @@ export default function RegisterPage() {
   const [ageCategory, setAgeCategory] = useState('');
   const [weight,      setWeight]      = useState('');
   const [loading,     setLoading]     = useState(false);
+  const [confirmed,   setConfirmed]   = useState(false);
   const { signUp } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,9 +45,34 @@ export default function RegisterPage() {
       }
       return;
     }
-    toast.success('Аккаунт создан! Проверьте почту для подтверждения.');
-    navigate('/auth/login');
+    setConfirmed(true);
   };
+
+  if (confirmed) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <motion.div
+          className="w-full max-w-sm text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+            <MailCheck className="h-8 w-8 text-primary" />
+          </div>
+          <h1 className="font-display text-2xl font-bold text-foreground mb-2">
+            Проверьте почту
+          </h1>
+          <p className="text-sm text-muted-foreground mb-8">
+            Мы отправили письмо на <span className="text-foreground font-medium">{email}</span>.<br />
+            Подтвердите email, чтобы войти в аккаунт.
+          </p>
+          <Button asChild variant="outline" className="w-full">
+            <Link to="/auth/login">Вернуться к входу</Link>
+          </Button>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
