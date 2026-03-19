@@ -5,11 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-  html, body {
-    overflow-x: hidden;
-    max-width: 100%;
-  }
-
   :root {
     /* ── Backgrounds ────────────────── */
     --background:   220 18%  8%;   /* чуть светлее для меньшей нагрузки на глаза */
