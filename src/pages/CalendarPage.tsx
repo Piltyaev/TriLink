@@ -129,10 +129,6 @@ export default function CalendarPage() {
     .sort((a, b) => a.date.localeCompare(b.date))
     .slice(0, 6);
 
-  const recentWorkouts = workouts
-    .filter(w => w.date <= today)
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 4);
 
   // ── Navigation ──────────────────────────────────────────────────────────────
 
@@ -524,62 +520,6 @@ export default function CalendarPage() {
         )}
       </AnimatePresence>
 
-      {/* ── Synced workouts ──────────────────────────────────── */}
-      <AnimatePresence>
-        {recentWorkouts.length > 0 && (
-          <motion.div
-            className="rounded-2xl border border-border bg-card p-5 shadow-[0_2px_8px_hsl(0_0%_0%/0.3)]"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-          >
-            <h3 className="font-display text-sm font-semibold mb-4 flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/10 text-primary">
-                <Zap className="h-3.5 w-3.5" />
-              </span>
-              Синхронизированные тренировки
-            </h3>
-            <div className="space-y-2">
-              {recentWorkouts.map((wo, i) => (
-                <motion.div
-                  key={wo.id}
-                  className={cn(
-                    "flex items-center justify-between rounded-xl border border-border/50 border-l-[3px] bg-card px-4 py-3 transition-colors hover:bg-accent/30 cursor-pointer",
-                    sportBorderLeft[wo.sport]
-                  )}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.27 + i * 0.05 }}
-                  onClick={() => setViewWorkout(wo)}
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={cn(
-                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm",
-                      sportIconBg[wo.sport]
-                    )}>
-                      {sportEmoji[wo.sport]}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">{wo.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {wo.date} · {wo.duration} мин{wo.distance ? ` · ${wo.distance} км` : ''}
-                      </p>
-                    </div>
-                  </div>
-                  <span className={cn(
-                    "shrink-0 ml-2 inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
-                    wo.source === 'strava'
-                      ? "bg-[#FC4C02]/10 text-[#FC4C02]"
-                      : "bg-muted text-muted-foreground"
-                  )}>
-                    {wo.source === 'strava' ? 'Strava' : 'Вручную'}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ── Workout detail modal ────────────────────────────── */}
       <AnimatePresence>
