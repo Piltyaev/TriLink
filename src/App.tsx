@@ -20,7 +20,6 @@ const AnalyticsPage       = lazy(() => import("./pages/AnalyticsPage"));
 const SettingsPage        = lazy(() => import("./pages/SettingsPage"));
 const AdminPage           = lazy(() => import("./pages/AdminPage"));
 const StravaCallbackPage  = lazy(() => import("./pages/StravaCallbackPage"));
-const GarminCallbackPage  = lazy(() => import("./pages/GarminCallbackPage"));
 const NotFound            = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -50,7 +49,6 @@ const App = () => (
               <Route path="/auth/login" element={<LoginPage />} />
               <Route path="/auth/register" element={<RegisterPage />} />
               <Route path="/auth/strava/callback" element={<StravaCallbackPage />} />
-              <Route path="/auth/garmin/callback" element={<GarminCallbackPage />} />
               <Route element={<ProtectedRoute />}>
                 <Route element={<AppLayout />}>
                   <Route path="/dashboard" element={<DashboardPage />} />

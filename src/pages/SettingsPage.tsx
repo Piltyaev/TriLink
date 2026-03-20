@@ -507,15 +507,6 @@ export default function SettingsPage() {
           )}
         </div>
 
-        {/* Garmin tip */}
-        <div className="flex items-start gap-2.5 rounded-xl bg-muted/60 border border-border/40 p-3.5">
-          <AlertCircle className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            <span className="font-semibold text-foreground">Garmin Connect:</span> включи
-            автосинхронизацию со Strava — тренировки с часов будут автоматически попадать в TriLink.
-          </p>
-        </div>
-
         {/* Sync stats */}
         <div className="rounded-xl border border-border/50 bg-background/30 px-4 py-1 divide-y divide-border/30">
           <StatRow
