@@ -76,7 +76,7 @@ export default function LandingPage() {
           <motion.div variants={fadeUp} initial="hidden" animate="show">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-primary">
               <Activity className="h-3.5 w-3.5" />
-              Платформа для триатлетов
+              Будь лучшим
             </div>
           </motion.div>
 
@@ -148,8 +148,8 @@ export default function LandingPage() {
                 transition={{ delay: i * 0.08, duration: 0.45 }}
                 viewport={{ once: true }}
               >
-                <p className={cn("font-display text-4xl font-bold lg:text-5xl", s.color)}>{s.value}</p>
-                <p className="mt-2 text-sm text-muted-foreground font-medium">{s.label}</p>
+                <p className={cn("font-display text-5xl font-bold lg:text-6xl drop-shadow-lg", s.color)}>{s.value}</p>
+                <p className="mt-2 text-sm text-foreground/80 font-semibold uppercase tracking-widest">{s.label}</p>
               </motion.div>
             ))}
           </div>
@@ -258,7 +258,7 @@ export default function LandingPage() {
               Готов к старту?
             </h2>
             <p className="text-lg text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
-              Тысячи триатлетов уже тренируются умнее.<br className="hidden sm:block" />Начни прямо сейчас — это бесплатно.
+              Тысячи триатлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
             </p>
             <Link to="/auth/register">
               <Button size="lg" className="gap-2 px-10 h-12 text-base shadow-[0_0_40px_hsl(var(--primary)/0.4)]">
