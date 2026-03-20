@@ -266,9 +266,6 @@ export default function LandingPage() {
           transition={{ duration: 0.55 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl overflow-hidden mb-6 shadow-[0_0_40px_hsl(var(--primary)/0.25)]">
-            <img src="/logo.jpg" alt="TriLink" className="h-full w-full object-cover" />
-          </div>
           <h2 className="font-display text-4xl font-bold mb-4 lg:text-5xl">
             Готов к старту?
           </h2>
