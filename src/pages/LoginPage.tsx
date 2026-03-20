@@ -41,9 +41,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="relative flex min-h-screen items-center justify-center px-4">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/bg1.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-background/75 z-[1]" />
       <motion.div
-        className="w-full max-w-sm"
+        className="relative z-[2] w-full max-w-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
