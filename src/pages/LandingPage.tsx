@@ -278,13 +278,8 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        <div className="relative z-[2] mx-auto w-full max-w-6xl px-0 flex flex-col items-center justify-between gap-4 sm:flex-row border-t border-white/10 pt-6">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md overflow-hidden shrink-0">
-              <img src="/logo.jpg" alt="TriLink" className="h-full w-full object-cover" />
-            </div>
-            <p className="text-xs text-white/40">© {new Date().getFullYear()} TriLink. Created by Piltyayev Vladimir.</p>
-          </div>
+        <div className="relative z-[2] mx-auto w-full max-w-6xl px-0 flex flex-col items-center justify-between gap-4 sm:flex-row pt-6">
+          <p className="text-xs text-white/40">© {new Date().getFullYear()} TriLink. Created by Piltyayev Vladimir.</p>
           <div className="flex items-center gap-4 text-xs text-white/40">
             <Link to="/auth/login" className="hover:text-white transition-colors">Войти</Link>
             <Link to="/auth/register" className="hover:text-white transition-colors">Регистрация</Link>
