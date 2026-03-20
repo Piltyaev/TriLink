@@ -264,7 +264,7 @@ export default function LandingPage() {
               Готов к старту?
             </h2>
             <p className="text-lg text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
-              Тысячи триатлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
+              Тысячи атлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
             </p>
             <Link to="/auth/register">
               <Button size="lg" className="gap-2 px-10 h-12 text-base shadow-[0_0_40px_hsl(var(--primary)/0.4)]">
