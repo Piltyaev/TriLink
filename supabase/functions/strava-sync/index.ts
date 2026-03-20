@@ -78,10 +78,24 @@ serve(async (req) => {
 
     const accessToken = await refreshTokenIfNeeded(supabase, tokenRow);
 
-    // Fetch last 90 days of activities
-    const after = Math.floor((Date.now() - 90 * 24 * 60 * 60 * 1000) / 1000);
+    // Fetch last 365 days of activities
+    const after = Math.floor((Date.now() - 365 * 24 * 60 * 60 * 1000) / 1000);
     let page = 1;
     let imported = 0;
+
+    // Load existing strava_ids to avoid duplicates without needing a unique constraint
+    const { data: existing } = await supabase
+      .from("workouts")
+      .select("strava_id")
+      .eq("user_id", userId)
+      .not("strava_id", "is", null);
+
+    const existingIds = new Set((existing || []).map((r: { strava_id: number }) => String(r.strava_id)));
+
+    let stravaFetched = 0;
+    let skipped = 0;
+    let insertErrors: string[] = [];
+    let stravaApiError: string | null = null;
 
     while (true) {
       const res = await fetch(
@@ -89,11 +103,19 @@ serve(async (req) => {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
 
-      if (!res.ok) break;
+      if (!res.ok) {
+        stravaApiError = `Strava API error: ${res.status} ${await res.text()}`;
+        break;
+      }
       const activities = await res.json();
       if (!activities.length) break;
 
+      stravaFetched += activities.length;
+
       for (const act of activities) {
+        // Skip already imported activities (compare as string to avoid bigint mismatch)
+        if (existingIds.has(String(act.id))) { skipped++; continue; }
+
         const sport = sportMap[act.type] || "run";
         const durationMin = Math.round((act.moving_time || 0) / 60);
         const distanceKm = act.distance ? Math.round(act.distance / 10) / 100 : null;
@@ -102,7 +124,7 @@ serve(async (req) => {
           : null;
         const dateStr = (act.start_date_local || act.start_date || '').slice(0, 10);
 
-        const { error } = await supabase.from("workouts").upsert({
+        const { error } = await supabase.from("workouts").insert({
           user_id: userId,
           strava_id: act.id,
           title: act.name,
@@ -110,14 +132,19 @@ serve(async (req) => {
           date: dateStr,
           duration: durationMin,
           distance: distanceKm,
-          avg_hr: act.average_heartrate || null,
-          max_hr: act.max_heartrate || null,
+          avg_hr: act.average_heartrate ? Math.round(act.average_heartrate) : null,
+          max_hr: act.max_heartrate ? Math.round(act.max_heartrate) : null,
           avg_pace: formatPace(paceSeconds),
-          calories: act.calories || null,
+          calories: act.calories ? Math.round(act.calories) : null,
           source: "strava",
-        }, { onConflict: "strava_id" });
+        });
 
-        if (!error) imported++;
+        if (!error) {
+          imported++;
+          existingIds.add(String(act.id));
+        } else {
+          insertErrors.push(`${act.id}: ${error.message}`);
+        }
       }
 
       if (activities.length < 50) break;
@@ -130,7 +157,15 @@ serve(async (req) => {
       updated_at: new Date().toISOString(),
     }).eq("user_id", userId);
 
-    return new Response(JSON.stringify({ success: true, imported }), {
+    return new Response(JSON.stringify({
+      success: true,
+      imported,
+      stravaFetched,
+      skipped,
+      insertErrors,
+      stravaApiError,
+      existingCount: existingIds.size,
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
