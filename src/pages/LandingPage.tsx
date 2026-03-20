@@ -46,12 +46,7 @@ export default function LandingPage() {
       {/* ── Nav ────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg overflow-hidden shrink-0">
-              <img src="/logo.jpg" alt="TriLink" className="h-full w-full object-cover" />
-            </div>
-            <span className="font-display text-lg font-bold tracking-tight">TriLink</span>
-          </div>
+          <div />
           <div className="flex items-center gap-2">
             <Link to="/auth/login">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
