@@ -78,7 +78,7 @@ export default function LandingPage() {
       {/* ── Hero ───────────────────────────────────────── */}
       <section
         className="relative px-6 pt-24 pb-20 text-center lg:pt-36"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.75), hsl(220 18% 8% / 0.85)), url('/bg1.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.75), hsl(220 18% 8% / 0.85)), url('/bg4.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
       >
       <div className="mx-auto max-w-5xl">
         <motion.div variants={fadeUp} initial="hidden" animate="show">
@@ -169,7 +169,7 @@ export default function LandingPage() {
       {/* ── Features ───────────────────────────────────── */}
       <section
         className="relative px-6 py-24"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.82), hsl(220 18% 8% / 0.82)), url('/bg2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.82), hsl(220 18% 8% / 0.82)), url('/bg1.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
       >
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-14">
