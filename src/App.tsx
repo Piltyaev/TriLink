@@ -23,7 +23,15 @@ const StravaCallbackPage  = lazy(() => import("./pages/StravaCallbackPage"));
 const GarminCallbackPage  = lazy(() => import("./pages/GarminCallbackPage"));
 const NotFound            = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 2 * 60 * 1000,
+      gcTime:    5 * 60 * 1000,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
