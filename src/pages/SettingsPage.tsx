@@ -231,7 +231,13 @@ export default function SettingsPage() {
   });
 
   return (
-    <div className="p-4 lg:p-8 max-w-2xl space-y-5">
+    <div className="relative min-h-screen">
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center pointer-events-none"
+        style={{ backgroundImage: "url('/bg5.jpg')" }}
+      />
+      <div className="fixed inset-0 bg-background/80 z-[1] pointer-events-none" />
+    <div className="relative z-[2] p-4 lg:p-8 max-w-2xl space-y-5">
 
       {/* ── Page title ──────────────────────────────────────── */}
       <motion.div {...fadeUp(0)}>
@@ -539,6 +545,7 @@ export default function SettingsPage() {
         </Button>
       </motion.div>
 
+    </div>
     </div>
   );
 }
