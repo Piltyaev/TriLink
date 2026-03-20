@@ -50,9 +50,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8">
+      <video
+        className="absolute inset-0 h-full w-full object-cover z-0"
+        src="/bg3.MP4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-background/75 z-[1]" />
       <motion.div
-        className="w-full max-w-sm"
+        className="relative z-[2] w-full max-w-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
