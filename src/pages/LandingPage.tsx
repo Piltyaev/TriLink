@@ -99,14 +99,6 @@ export default function LandingPage() {
           быстрее
         </motion.h1>
 
-        <motion.p
-          className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground"
-          variants={fadeUp} custom={2} initial="hidden" animate="show"
-        >
-          TriLink объединяет плавание, велосипед и бег в одну платформу.
-          Синхронизируйте Strava, планируйте тренировки и отслеживайте форму — всё в одном месте.
-        </motion.p>
-
         <motion.div
           className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           variants={fadeUp} custom={3} initial="hidden" animate="show"
