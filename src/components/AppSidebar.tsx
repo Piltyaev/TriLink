@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   LayoutDashboard, Calendar, Dumbbell, BarChart3,
   Settings, Shield, ChevronLeft, ChevronRight, LogOut, Award,
@@ -36,8 +36,8 @@ export function AppSidebar() {
       collapsed ? "w-16" : "w-60"
     )}>
       {/* Logo */}
-      <div className={cn(
-        "flex h-16 items-center gap-3 border-b border-sidebar-border",
+      <Link to="/" className={cn(
+        "flex h-16 items-center gap-3 border-b border-sidebar-border hover:opacity-80 transition-opacity",
         collapsed ? "justify-center px-0" : "px-5"
       )}>
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg overflow-hidden">
@@ -48,7 +48,7 @@ export function AppSidebar() {
             TriLink
           </span>
         )}
-      </div>
+      </Link>
 
       {/* Nav */}
       <nav className="flex-1 space-y-0.5 p-2 overflow-hidden">
