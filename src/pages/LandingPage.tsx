@@ -76,7 +76,11 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────── */}
-      <section className="mx-auto max-w-5xl px-6 pt-24 pb-20 text-center lg:pt-36">
+      <section
+        className="relative px-6 pt-24 pb-20 text-center lg:pt-36"
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.75), hsl(220 18% 8% / 0.85)), url('/bg1.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
+      >
+      <div className="mx-auto max-w-5xl">
         <motion.div variants={fadeUp} initial="hidden" animate="show">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/8 px-4 py-1.5 text-sm font-medium text-primary">
             <Activity className="h-3.5 w-3.5" />
@@ -138,6 +142,7 @@ export default function LandingPage() {
             </div>
           ))}
         </motion.div>
+      </div>
       </section>
 
       {/* ── Stats ──────────────────────────────────────── */}
@@ -162,7 +167,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ───────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section
+        className="relative px-6 py-24"
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.82), hsl(220 18% 8% / 0.82)), url('/bg2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
+      >
+      <div className="mx-auto max-w-6xl">
         <div className="text-center mb-14">
           <motion.p
             className="text-sm font-medium text-primary uppercase tracking-widest mb-3"
@@ -195,10 +204,14 @@ export default function LandingPage() {
             </motion.div>
           ))}
         </div>
+      </div>
       </section>
 
       {/* ── How it works ───────────────────────────────── */}
-      <section className="border-y border-border/20 py-24">
+      <section
+        className="relative border-y border-border/20 py-24"
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.82), hsl(220 18% 8% / 0.82)), url('/bg3.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
+      >
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-14">
             <motion.p
@@ -238,7 +251,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────── */}
-      <section className="mx-auto max-w-3xl px-6 py-28 text-center">
+      <section
+        className="relative px-6 py-28 text-center"
+        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.80), hsl(220 18% 8% / 0.80)), url('/bg4.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
+      >
+      <div className="mx-auto max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -260,6 +277,7 @@ export default function LandingPage() {
             </Button>
           </Link>
         </motion.div>
+      </div>
       </section>
 
       {/* ── Footer ─────────────────────────────────────── */}
