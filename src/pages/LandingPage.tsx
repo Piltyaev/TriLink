@@ -68,11 +68,17 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────── */}
-      <section
-        className="relative px-6 pt-28 pb-24 text-center lg:pt-40 lg:pb-32"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.6), hsl(220 18% 8% / 0.88)), url('/bg1.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
-      >
-        <div className="mx-auto max-w-5xl">
+      <section className="relative px-6 pt-28 pb-24 text-center lg:pt-40 lg:pb-32">
+        <video
+          className="absolute inset-0 h-full w-full object-cover z-0"
+          src="/bg3.MP4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 bg-background/65 z-[1]" />
+        <div className="relative z-[2] mx-auto max-w-5xl">
           <motion.div variants={fadeUp} initial="hidden" animate="show">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-primary">
               <Activity className="h-3.5 w-3.5" />
