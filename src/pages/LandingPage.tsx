@@ -244,8 +244,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CTA ────────────────────────────────────────── */}
-      <section className="relative overflow-hidden px-6 py-28 text-center md:min-h-[600px] md:flex md:items-center md:justify-center">
+      {/* ── CTA + Footer ────────────────────────────────── */}
+      <section className="relative overflow-hidden px-6 pt-28 pb-8 text-center md:min-h-[600px] md:flex md:flex-col md:justify-between">
         <video
           className="absolute inset-0 h-full w-full object-cover object-center z-0"
           src="/bg4.MP4"
@@ -255,7 +255,8 @@ export default function LandingPage() {
           playsInline
         />
         <div className="absolute inset-0 bg-background/70 z-[1]" />
-        <div className="relative z-[2] mx-auto max-w-3xl">
+
+        <div className="relative z-[2] mx-auto max-w-3xl flex-1 flex flex-col items-center justify-center py-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -276,23 +277,20 @@ export default function LandingPage() {
             </Link>
           </motion.div>
         </div>
-      </section>
 
-      {/* ── Footer ─────────────────────────────────────── */}
-      <footer className="border-t border-border/20 bg-card/40 py-8">
-        <div className="mx-auto max-w-6xl px-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div className="relative z-[2] mx-auto w-full max-w-6xl px-0 flex flex-col items-center justify-between gap-4 sm:flex-row border-t border-white/10 pt-6">
           <div className="flex items-center gap-2.5">
             <div className="flex h-6 w-6 items-center justify-center rounded-md overflow-hidden shrink-0">
               <img src="/logo.jpg" alt="TriLink" className="h-full w-full object-cover" />
             </div>
-            <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} TriLink. Created by Piltyayev Vladimir.</p>
+            <p className="text-xs text-white/40">© {new Date().getFullYear()} TriLink. Created by Piltyayev Vladimir.</p>
           </div>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <Link to="/auth/login" className="hover:text-foreground transition-colors">Войти</Link>
-            <Link to="/auth/register" className="hover:text-foreground transition-colors">Регистрация</Link>
+          <div className="flex items-center gap-4 text-xs text-white/40">
+            <Link to="/auth/login" className="hover:text-white transition-colors">Войти</Link>
+            <Link to="/auth/register" className="hover:text-white transition-colors">Регистрация</Link>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }
