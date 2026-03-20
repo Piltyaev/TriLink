@@ -68,9 +68,9 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────── */}
-      <section className="relative px-6 pt-28 pb-24 text-center lg:pt-40 lg:pb-32">
+      <section className="relative px-6 pt-28 pb-24 text-center lg:pt-40 lg:pb-32 min-h-screen flex flex-col justify-center">
         <video
-          className="absolute inset-0 h-full w-full object-cover z-0"
+          className="absolute inset-0 h-full w-full object-cover object-center z-0"
           src="/bg3.MP4"
           autoPlay
           muted
