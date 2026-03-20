@@ -248,7 +248,18 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────── */}
-      <section className="mx-auto max-w-3xl px-6 py-28 text-center">
+      <section className="relative overflow-hidden px-6 py-28 text-center">
+        {/* Background video */}
+        <video
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+          src="/bg3.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 bg-background/75 -z-10" />
+        <div className="relative mx-auto max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -270,6 +281,7 @@ export default function LandingPage() {
             </Button>
           </Link>
         </motion.div>
+        </div>
       </section>
 
       {/* ── Footer ─────────────────────────────────────── */}
