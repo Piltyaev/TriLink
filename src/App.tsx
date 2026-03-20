@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/AppLayout";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ChunkErrorBoundary } from "@/components/ChunkErrorBoundary";
 
 const PersonalRecordsPage = lazy(() => import("./pages/PersonalRecordsPage"));
 const LandingPage         = lazy(() => import("./pages/LandingPage"));
@@ -39,6 +40,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <ChunkErrorBoundary>
           <Suspense fallback={
             <div className="flex items-center justify-center h-screen bg-background">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -64,6 +66,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          </ChunkErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
