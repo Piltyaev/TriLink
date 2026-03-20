@@ -148,8 +148,8 @@ export default function LandingPage() {
                 transition={{ delay: i * 0.08, duration: 0.45 }}
                 viewport={{ once: true }}
               >
-                <p className={cn("font-display text-5xl font-bold lg:text-6xl drop-shadow-lg", s.color)}>{s.value}</p>
-                <p className="mt-2 text-sm text-foreground/80 font-semibold uppercase tracking-widest">{s.label}</p>
+                <p className={cn("font-display text-4xl font-bold lg:text-5xl", s.color)}>{s.value}</p>
+                <p className="mt-2 text-sm text-muted-foreground font-medium">{s.label}</p>
               </motion.div>
             ))}
           </div>
@@ -226,8 +226,8 @@ export default function LandingPage() {
                 transition={{ delay: i * 0.12, duration: 0.45 }}
                 viewport={{ once: true }}
               >
-                <span className={cn("font-display text-5xl font-bold opacity-20 block mb-4", s.color)}>{s.num}</span>
-                <h3 className="font-display font-semibold text-lg mb-2">{s.title}</h3>
+                <span className={cn("font-display text-6xl font-bold block mb-3", s.color)}>{s.num}</span>
+                <h3 className="font-display font-semibold text-lg mb-2 uppercase tracking-wide">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
