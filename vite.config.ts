@@ -20,6 +20,7 @@ export default defineConfig({
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-charts':  ['recharts'],
           'vendor-motion':  ['framer-motion'],
+          'vendor-icons':   ['lucide-react'],
         },
       },
     },
