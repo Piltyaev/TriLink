@@ -206,33 +206,6 @@ export default function DashboardPage() {
       </motion.div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Weekly Volume Chart */}
-        <motion.div
-          className="rounded-xl border border-border bg-card p-5 shadow-[0_1px_4px_hsl(0_0%_0%/0.35)]"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <h3 className="font-display text-base font-semibold mb-4">Объём по неделям (мин)</h3>
-          {weeklyVolume.some(w => w.swim + w.bike + w.run + w.strength > 0) ? (
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={weeklyVolume}>
-                <XAxis dataKey="week" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
-                <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
-                <Tooltip contentStyle={{ background: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 10, fontSize: 12, boxShadow: '0 4px 16px hsl(0 0% 0% / 0.5)' }} labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: 600 }} itemStyle={{ color: 'hsl(var(--muted-foreground))' }} />
-                <Bar dataKey="swim" stackId="a" fill="hsl(var(--swim))" name="Плавание" />
-                <Bar dataKey="bike" stackId="a" fill="hsl(var(--bike))" name="Велосипед" />
-                <Bar dataKey="run" stackId="a" fill="hsl(var(--run))" name="Бег" />
-                <Bar dataKey="strength" stackId="a" fill="hsl(var(--strength))" radius={[4, 4, 0, 0]} name="Сила" />
-              </BarChart>
-            </ResponsiveContainer>
-          ) : (
-            <div className="flex items-center justify-center h-[250px] text-muted-foreground text-sm">
-              Нет данных. Добавьте тренировки!
-            </div>
-          )}
-        </motion.div>
-
         {/* Rank card */}
         <motion.div
           className="rounded-xl border bg-card p-5 shadow-[0_1px_4px_hsl(0_0%_0%/0.35)]"
@@ -313,6 +286,33 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
+      </motion.div>
+
+      {/* Weekly Volume Chart */}
+      <motion.div
+        className="rounded-xl border border-border bg-card p-5 shadow-[0_1px_4px_hsl(0_0%_0%/0.35)]"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <h3 className="font-display text-base font-semibold mb-4">Объём по неделям (мин)</h3>
+        {weeklyVolume.some(w => w.swim + w.bike + w.run + w.strength > 0) ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={weeklyVolume}>
+              <XAxis dataKey="week" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+              <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+              <Tooltip contentStyle={{ background: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 10, fontSize: 12, boxShadow: '0 4px 16px hsl(0 0% 0% / 0.5)' }} labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: 600 }} itemStyle={{ color: 'hsl(var(--muted-foreground))' }} />
+              <Bar dataKey="swim" stackId="a" fill="hsl(var(--swim))" name="Плавание" />
+              <Bar dataKey="bike" stackId="a" fill="hsl(var(--bike))" name="Велосипед" />
+              <Bar dataKey="run" stackId="a" fill="hsl(var(--run))" name="Бег" />
+              <Bar dataKey="strength" stackId="a" fill="hsl(var(--strength))" radius={[4, 4, 0, 0]} name="Сила" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex items-center justify-center h-[250px] text-muted-foreground text-sm">
+            Нет данных. Добавьте тренировки!
+          </div>
+        )}
       </motion.div>
 
       {/* ── Recent Workouts + Badges ──────────────────────── */}
