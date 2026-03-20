@@ -208,10 +208,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it works ───────────────────────────────── */}
-      <section
-        className="relative border-y border-border/20 py-24"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.82), hsl(220 18% 8% / 0.82)), url('/bg3.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
-      >
+      <section className="border-y border-border/20 py-24">
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-14">
             <motion.p
@@ -251,11 +248,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────── */}
-      <section
-        className="relative px-6 py-28 text-center"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.80), hsl(220 18% 8% / 0.80)), url('/bg4.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
-      >
-      <div className="mx-auto max-w-3xl">
+      <section className="mx-auto max-w-3xl px-6 py-28 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -277,7 +270,6 @@ export default function LandingPage() {
             </Button>
           </Link>
         </motion.div>
-      </div>
       </section>
 
       {/* ── Footer ─────────────────────────────────────── */}
