@@ -253,6 +253,7 @@ export default function LandingPage() {
           muted
           loop
           playsInline
+          preload="none"
         />
         <div className="absolute inset-0 bg-background/70 z-[1]" />
 
