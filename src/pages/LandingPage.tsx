@@ -44,7 +44,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* ── Nav ────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-background/70 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg overflow-hidden shrink-0">
@@ -68,7 +68,7 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────── */}
-      <section className="relative px-6 pt-28 pb-24 text-center lg:pt-40 lg:pb-32 min-h-screen flex flex-col justify-center">
+      <section className="relative px-6 pt-20 pb-24 text-center lg:pt-24 lg:pb-32 min-h-screen flex flex-col justify-center">
         <video
           className="absolute inset-0 h-full w-full object-cover object-center z-0"
           src="/bg3.MP4"
