@@ -16,7 +16,7 @@ const STATUS_LABELS: Record<Status, { title: string; sub: string }> = {
   },
   syncing: {
     title: 'Импорт тренировок...',
-    sub:   'Загружаем активности за последние 90 дней',
+    sub:   'Загружаем активности за последний год',
   },
   success: {
     title: 'Strava подключена!',
