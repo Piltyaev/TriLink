@@ -244,7 +244,7 @@ export default function LandingPage() {
       {/* ── CTA ────────────────────────────────────────── */}
       <section className="relative overflow-hidden px-6 py-28 text-center md:min-h-[600px] md:flex md:items-center md:justify-center">
         <video
-          className="absolute inset-0 h-full w-full object-cover md:object-contain z-0"
+          className="absolute inset-0 h-full w-full object-cover object-center z-0"
           src="/bg4.MP4"
           autoPlay
           muted
