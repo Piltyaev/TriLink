@@ -145,7 +145,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ──────────────────────────────────────── */}
-      <section className="bg-card/60 border-y border-border/30 backdrop-blur-sm">
+      <section className="bg-gradient-to-b from-background via-card/20 to-background">
         <div className="mx-auto max-w-4xl px-6 py-16">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {stats.map((s, i) => (
