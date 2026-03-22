@@ -251,7 +251,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden px-6 pt-28 pb-8 text-center md:min-h-[600px] md:flex md:flex-col md:justify-between">
         <video
           className="absolute inset-0 h-full w-full object-cover object-center z-0"
-          src="/bg4.MP4"
+          src="/bg8.MP4"
           autoPlay
           muted
           loop
