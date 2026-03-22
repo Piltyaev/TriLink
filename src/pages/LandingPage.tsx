@@ -121,29 +121,6 @@ export default function LandingPage() {
             </Link>
           </motion.div>
 
-          {/* Sport cards */}
-          <motion.div
-            className="mt-20 grid grid-cols-3 gap-4 max-w-md mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.6 }}
-          >
-            {sports.map((s) => (
-              <div
-                key={s.label}
-                className={cn(
-                  "flex flex-col items-center gap-3 rounded-2xl border p-5 backdrop-blur-md transition-all duration-200 cursor-default hover:-translate-y-0.5",
-                  s.bg
-                )}
-              >
-                <s.icon className={cn("h-7 w-7", s.color)} />
-                <div>
-                  <p className="text-sm font-semibold text-white">{s.label}</p>
-                  <p className="text-[10px] text-white/50 mt-0.5">{s.sub}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
