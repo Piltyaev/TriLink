@@ -44,7 +44,7 @@ export default function LoginPage() {
     <div className="relative flex min-h-screen items-center justify-center px-4">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg1.jpg')" }}
+        style={{ backgroundImage: "url('/bg1.jpg')" }} aria-hidden="true"
       />
       <div className="absolute inset-0 bg-background/75 z-[1]" />
       <motion.div

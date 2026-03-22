@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn, toLocalISO, formatDuration } from "@/lib/utils";
+import { cn, toLocalISO, formatDuration, dateISO } from "@/lib/utils";
 import { StatCard } from "@/components/StatCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -90,7 +90,7 @@ export default function CalendarPage() {
     if (!user) return;
     Promise.all([
       supabase.from('calendar_events').select('*').eq('user_id', user.id).order('date', { ascending: true }),
-      supabase.from('workouts').select('*').eq('user_id', user.id).order('date', { ascending: true }),
+      supabase.from('workouts').select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes').eq('user_id', user.id).gte('date', dateISO(365)).order('date', { ascending: true }),
     ]).then(([evRes, woRes]) => {
       setEvents((evRes.data || []).map(r => mapCalendarEvent(r as Record<string, unknown>)));
       setWorkouts((woRes.data || []).map(r => mapWorkout(r as Record<string, unknown>)));

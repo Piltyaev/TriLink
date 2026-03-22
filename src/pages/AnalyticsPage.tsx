@@ -128,7 +128,7 @@ export default function AnalyticsPage() {
     if (!user) return;
     supabase
       .from('workouts')
-      .select('*')
+      .select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes')
       .eq('user_id', user.id)
       .gte('date', dateISO(42))
       .order('date', { ascending: true })

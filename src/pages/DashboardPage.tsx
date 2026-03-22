@@ -81,7 +81,7 @@ export default function DashboardPage() {
     if (!user) return;
     const since = dateISO(105);
     supabase
-      .from('workouts').select('*').eq('user_id', user.id).gte('date', since).order('date', { ascending: false })
+      .from('workouts').select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes').eq('user_id', user.id).gte('date', since).order('date', { ascending: false })
       .then(({ data, error }) => {
         setLoading(false);
         if (error) return;

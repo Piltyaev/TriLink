@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { cn, formatDuration, toLocalISO } from "@/lib/utils";
+import { cn, formatDuration, toLocalISO, dateISO } from "@/lib/utils";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -73,8 +73,9 @@ export default function WorkoutsPage() {
     if (!user) return;
     supabase
       .from('workouts')
-      .select('*')
+      .select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes')
       .eq('user_id', user.id)
+      .gte('date', dateISO(365))
       .order('date', { ascending: false })
       .then(({ data }) => {
         setWorkouts((data || []).map(r => mapWorkout(r as Record<string, unknown>)));

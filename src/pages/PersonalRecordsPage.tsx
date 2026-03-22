@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn, dateISO } from "@/lib/utils";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -84,8 +84,9 @@ export default function PersonalRecordsPage() {
         .order('date', { ascending: false }),
       supabase
         .from('workouts')
-        .select('*')
-        .eq('user_id', user.id),
+        .select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes')
+        .eq('user_id', user.id)
+        .gte('date', dateISO(730)),
     ]).then(([recRes, woRes]) => {
       const r = recRes as { data: Record<string, unknown>[] | null };
       setRecords((r.data || []).map(mapRecord));
