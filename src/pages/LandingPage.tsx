@@ -168,6 +168,83 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Disciplines ─────────────────────────────────── */}
+      <section className="px-6 py-24 bg-background">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-14">
+            <motion.p
+              className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-3"
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            >
+              Дисциплины
+            </motion.p>
+            <motion.h2
+              className="font-display text-4xl font-bold lg:text-5xl"
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            >
+              Три дисциплины — одна платформа
+            </motion.h2>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              {
+                icon: Waves,
+                label: "Плавание",
+                sub: "Open water & бассейн",
+                desc: "Отслеживай метры и темп в бассейне или на открытой воде. Анализируй каждый заплыв.",
+                color: "text-swim",
+                border: "border-swim/30",
+                bg: "bg-swim/8",
+                glow: "hover:shadow-[0_0_32px_hsl(var(--swim)/0.2)]",
+                stat: "Плавание",
+              },
+              {
+                icon: Bike,
+                label: "Велосипед",
+                sub: "Шоссе & горные трассы",
+                desc: "Контролируй мощность, каденс и набор высоты. Планируй длинные шоссейные этапы.",
+                color: "text-bike",
+                border: "border-bike/30",
+                bg: "bg-bike/8",
+                glow: "hover:shadow-[0_0_32px_hsl(var(--bike)/0.2)]",
+                stat: "Велосипед",
+              },
+              {
+                icon: PersonStanding,
+                label: "Бег",
+                sub: "Трейл & асфальт",
+                desc: "Следи за темпом, пульсом и вертикальной нагрузкой. Готовься к финишному этапу.",
+                color: "text-run",
+                border: "border-run/30",
+                bg: "bg-run/8",
+                glow: "hover:shadow-[0_0_32px_hsl(var(--run)/0.2)]",
+                stat: "Бег",
+              },
+            ].map((d, i) => (
+              <motion.div
+                key={d.label}
+                className={cn(
+                  "group rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 cursor-default",
+                  d.border, d.bg, d.glow
+                )}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className={cn("inline-flex h-14 w-14 items-center justify-center rounded-2xl border mb-6", d.border, d.bg)}>
+                  <d.icon className={cn("h-7 w-7", d.color)} />
+                </div>
+                <h3 className={cn("font-display text-2xl font-bold mb-1", d.color)}>{d.label}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{d.sub}</p>
+                <p className="text-sm text-white/60 leading-relaxed">{d.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Features ───────────────────────────────────── */}
       <section
         className="relative px-6 py-28"
