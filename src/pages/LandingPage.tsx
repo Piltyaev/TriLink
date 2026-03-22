@@ -124,26 +124,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Stats ──────────────────────────────────────── */}
-      <section className="bg-gradient-to-b from-background via-card/20 to-background">
-        <div className="mx-auto max-w-4xl px-6 py-16">
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                className="text-center rounded-2xl border border-white/5 bg-white/3 px-4 py-6 backdrop-blur-sm"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08, duration: 0.45 }}
-                viewport={{ once: true }}
-              >
-                <p className={cn("font-display text-4xl font-bold lg:text-5xl", s.color)}>{s.value}</p>
-                <p className="mt-2 text-xs text-muted-foreground font-medium uppercase tracking-wide">{s.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── Disciplines ─────────────────────────────────── */}
       <section className="px-6 py-24 bg-background">
