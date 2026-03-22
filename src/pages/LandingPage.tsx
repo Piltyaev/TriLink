@@ -208,10 +208,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it works ───────────────────────────────── */}
-      <section
-        className="py-28"
-        style={{ backgroundImage: "linear-gradient(to bottom, hsl(220 18% 8% / 0.78), hsl(220 18% 8% / 0.78)), url('/bg9.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "scroll" }}
-      >
+      <section className="py-28 bg-card/40">
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <motion.p
