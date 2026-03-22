@@ -79,7 +79,7 @@ export default function LandingPage() {
       <section className="relative px-6 pt-20 pb-24 text-center lg:pt-24 lg:pb-32 min-h-screen flex flex-col justify-center">
         <video
           className="absolute inset-0 h-full w-full object-cover object-center z-0"
-          src="/bg10.MP4"
+          src="/bg10.mp4"
           autoPlay muted loop playsInline
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/55 to-background/80 z-[1]" />
