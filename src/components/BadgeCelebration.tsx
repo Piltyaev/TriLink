@@ -1,15 +1,7 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Badge } from "@/lib/badges";
 import { cn } from "@/lib/utils";
-
-const CONFETTI_COLORS = [
-  '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#10b981',
-  '#f97316', '#ec4899', '#3b82f6', '#84cc16', '#fbbf24',
-  '#a78bfa', '#fb923c', '#34d399', '#f472b6', '#60a5fa',
-];
-
-const SPARKS = ['🎉', '🎊', '✨', '⭐', '💫', '🌟', '🎯', '🔥'];
 
 interface Props {
   badge: Badge;
@@ -17,40 +9,10 @@ interface Props {
 }
 
 export function BadgeCelebration({ badge, onClose }: Props) {
-  // Автозакрытие через 5 секунд
   useEffect(() => {
     const t = setTimeout(onClose, 5000);
     return () => clearTimeout(t);
   }, [badge.id, onClose]);
-
-  // Конфетти: равномерно по кругу + случайный разброс
-  const particles = useMemo(() =>
-    Array.from({ length: 56 }, (_, i) => {
-      const angle = (i / 56) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-      const dist = 140 + Math.random() * 280;
-      return {
-        id: i,
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist - Math.random() * 120,
-        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-        rot: Math.random() * 720 - 360,
-        delay: Math.random() * 0.25,
-        w: Math.random() * 7 + 4,
-        h: Math.random() * 12 + 6,
-      };
-    }), [badge.id]);
-
-  // Эмодзи-искры по кругу
-  const sparks = useMemo(() =>
-    SPARKS.map((emoji, i) => {
-      const angle = (i / SPARKS.length) * Math.PI * 2 - Math.PI / 2;
-      const dist = 130 + Math.random() * 70;
-      return {
-        emoji,
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist,
-      };
-    }), [badge.id]);
 
   return (
     <motion.div
@@ -62,32 +24,6 @@ export function BadgeCelebration({ badge, onClose }: Props) {
     >
       {/* Затемнение фона */}
       <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" />
-
-      {/* Конфетти */}
-      {particles.map(p => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-[2px] pointer-events-none"
-          style={{ left: '50%', top: '50%', width: p.w, height: p.h, background: p.color, marginLeft: -p.w / 2, marginTop: -p.h / 2 }}
-          initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 1 }}
-          animate={{ x: p.x, y: p.y, opacity: 0, rotate: p.rot, scale: 0.6 }}
-          transition={{ duration: 1.6 + Math.random() * 0.6, ease: [0.2, 0.8, 0.4, 1], delay: p.delay }}
-        />
-      ))}
-
-      {/* Эмодзи-искры */}
-      {sparks.map((s, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-2xl pointer-events-none select-none"
-          style={{ left: '50%', top: '50%' }}
-          initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
-          animate={{ x: s.x, y: s.y, opacity: [0, 1, 1, 0], scale: [0, 1.3, 1.1, 0] }}
-          transition={{ duration: 1.3, ease: 'easeOut', delay: 0.1 + i * 0.05 }}
-        >
-          {s.emoji}
-        </motion.div>
-      ))}
 
       {/* Основная карточка */}
       <motion.div
