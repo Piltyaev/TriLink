@@ -185,14 +185,14 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
       >
         {[
-          { title: "Объём", value: formatDuration(totalDuration), sub: `${weekWorkouts.length} тренировок`, icon: <Timer className="h-5 w-5" />, iconBg: "bg-primary/10 text-primary" },
-          { title: "Дистанция", value: `${totalDistance.toFixed(1)}`, sub: "км за неделю", icon: <MapPin className="h-5 w-5" />, iconBg: "bg-swim/10 text-swim" },
-          { title: "Стрик", value: streak, sub: streak === 1 ? "день подряд" : streak < 5 ? "дня подряд" : "дней подряд", icon: <Flame className="h-5 w-5" />, iconBg: "bg-run/10 text-run" },
+          { title: "Объём", value: formatDuration(totalDuration), sub: `${weekWorkouts.length} тренировок`, icon: <Timer className="h-4 w-4" />, iconBg: "bg-primary/10 text-primary" },
+          { title: "Дистанция", value: `${totalDistance.toFixed(1)}`, sub: "км за неделю", icon: <MapPin className="h-4 w-4" />, iconBg: "bg-swim/10 text-swim" },
+          { title: "Стрик", value: streak, sub: streak === 1 ? "день подряд" : streak < 5 ? "дня подряд" : "дней подряд", icon: <Flame className="h-4 w-4" />, iconBg: "bg-run/10 text-run" },
         ].map((s, i) => (
           <div key={i} className={cn(card, "p-4 lg:p-5")}>
             <div className="flex items-start justify-between gap-2 mb-3">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{s.title}</p>
-              <div className={cn("flex h-7 w-7 shrink-0 items-center justify-center rounded-lg", s.iconBg)}>
+              <div className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-md", s.iconBg)}>
                 {s.icon}
               </div>
             </div>
