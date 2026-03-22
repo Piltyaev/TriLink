@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Activity, Calendar, BarChart3,
   Waves, Bike, PersonStanding, Zap, Map, ChevronDown,
-  TrendingUp, Shield, Star,
+  TrendingUp, Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -160,27 +160,6 @@ export default function LandingPage() {
             </Link>
           </motion.div>
 
-          {/* Social proof */}
-          <motion.div
-            className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-6"
-            variants={fadeUp} custom={4} initial="hidden" animate="show"
-          >
-            <div className="flex items-center gap-2 text-white/45 text-sm">
-              <div className="flex -space-x-2">
-                {["bg-swim/60","bg-bike/60","bg-run/60","bg-primary/60"].map((c,i) => (
-                  <div key={i} className={cn("h-7 w-7 rounded-full border-2 border-background/80 flex items-center justify-center", c)}>
-                    <span className="text-[9px] font-bold text-white">{["А","В","И","М"][i]}</span>
-                  </div>
-                ))}
-              </div>
-              <span>10,000+ атлетов уже тренируются</span>
-            </div>
-            <div className="hidden sm:block h-4 w-px bg-white/15" />
-            <div className="flex items-center gap-1 text-white/45 text-sm">
-              {[1,2,3,4,5].map(s => <Star key={s} className="h-3.5 w-3.5 fill-yellow-400/70 text-yellow-400/70" />)}
-              <span className="ml-1">4.9 рейтинг</span>
-            </div>
-          </motion.div>
         </div>
 
         {/* Scroll indicator */}
@@ -241,14 +220,6 @@ export default function LandingPage() {
                 <h3 className={cn("font-display text-2xl font-bold mb-1", d.color)}>{d.label}</h3>
                 <p className="text-sm text-muted-foreground mb-6">{d.sub}</p>
 
-                {/* Metric chips */}
-                <div className="flex flex-wrap gap-2">
-                  {d.metrics.map(m => (
-                    <span key={m} className={cn("text-xs px-2.5 py-1 rounded-full border font-medium", d.border, d.bg, d.color)}>
-                      {m}
-                    </span>
-                  ))}
-                </div>
               </motion.div>
             ))}
           </div>
@@ -371,15 +342,6 @@ export default function LandingPage() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
           >
-            {/* Trust chip */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 backdrop-blur-sm px-4 py-1.5 text-sm text-white/65">
-              <div className="flex -space-x-1.5">
-                {["bg-swim/70","bg-bike/70","bg-run/70"].map((c,i) => (
-                  <div key={i} className={cn("h-5 w-5 rounded-full border border-background/60", c)} />
-                ))}
-              </div>
-              10,000+ атлетов уже на борту
-            </div>
 
             <p className="text-xs font-bold text-primary uppercase tracking-[0.25em] mb-4">Присоединяйся</p>
             <h2 className="font-display text-5xl font-bold mb-5 lg:text-6xl leading-[1.1]">
@@ -395,7 +357,6 @@ export default function LandingPage() {
               </Button>
             </Link>
 
-            <p className="mt-4 text-xs text-white/30">Бесплатно · Без карты · Отмена в любой момент</p>
           </motion.div>
         </div>
 
