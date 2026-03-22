@@ -214,8 +214,7 @@ export default function LandingPage() {
                   <d.icon className={cn("h-7 w-7", d.color)} />
                 </div>
                 <h3 className={cn("font-display text-2xl font-bold mb-1", d.color)}>{d.label}</h3>
-                <p className="text-sm text-muted-foreground mb-4">{d.sub}</p>
-                <p className="text-sm text-white/60 leading-relaxed">{d.desc}</p>
+                <p className="text-sm text-muted-foreground">{d.sub}</p>
               </motion.div>
             ))}
           </div>
