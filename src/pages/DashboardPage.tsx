@@ -190,12 +190,10 @@ export default function DashboardPage() {
           { title: "Стрик", value: streak, sub: streak === 1 ? "день подряд" : streak < 5 ? "дня подряд" : "дней подряд", icon: <Flame className="h-4 w-4" />, iconBg: "bg-run/10 text-run" },
         ].map((s, i) => (
           <div key={i} className={cn(card, "p-4 lg:p-5")}>
-            <div className="flex items-start justify-between gap-2 mb-3">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{s.title}</p>
-              <div className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-md", s.iconBg)}>
-                {s.icon}
-              </div>
+            <div className={cn("flex h-6 w-6 items-center justify-center rounded-md mb-3", s.iconBg)}>
+              {s.icon}
             </div>
+            <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground mb-1">{s.title}</p>
             <p className="font-display text-2xl font-bold leading-none">{s.value}</p>
             <p className="text-[11px] text-muted-foreground mt-1.5">{s.sub}</p>
           </div>
