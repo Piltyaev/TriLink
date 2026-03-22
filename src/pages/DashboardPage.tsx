@@ -208,21 +208,7 @@ export default function DashboardPage() {
         style={{ boxShadow: `0 0 24px ${rank.glowColor}, 0 2px 8px hsl(0 0% 0% / 0.3)` }}
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
       >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-display text-base font-semibold">Ваш ранг</h3>
-          <div className="flex items-center gap-3">
-            {[
-              { label: 'Лучший стрик', value: bestDay, unit: 'дн.', color: 'text-primary' },
-              { label: 'Лучшая серия', value: bestWeek, unit: 'нед.', color: 'text-bike' },
-            ].map(s => (
-              <div key={s.label} className="text-center">
-                <span className={cn("font-display text-lg font-bold", s.color)}>{s.value}</span>
-                <span className="text-[10px] text-muted-foreground ml-1">{s.unit}</span>
-                <p className="text-[10px] text-muted-foreground/70">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <h3 className="font-display text-base font-semibold mb-4">Ваш ранг</h3>
 
         <div className="flex items-center gap-4 mb-4">
           <div
@@ -262,6 +248,30 @@ export default function DashboardPage() {
         ) : (
           <p className="text-sm text-amber-300 font-medium">Максимальный ранг достигнут 👑</p>
         )}
+      </motion.div>
+
+      {/* ── Streaks ─────────────────────────────────────── */}
+      <motion.div
+        className={cn(card, "p-5")}
+        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Flame className="h-4 w-4 text-run" />
+          <h3 className="font-display text-base font-semibold">Стрики</h3>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { label: 'Текущий', value: streak, unit: streak === 1 ? 'день' : streak < 5 ? 'дня' : 'дней', color: 'text-run' },
+            { label: 'Лучший дневной', value: bestDay, unit: 'дн.', color: 'text-primary' },
+            { label: 'Лучший недельный', value: bestWeek, unit: 'нед.', color: 'text-bike' },
+          ].map(s => (
+            <div key={s.label} className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-background/30 p-3 text-center">
+              <span className={cn("font-display text-2xl font-bold", s.color)}>{s.value}</span>
+              <span className="text-[10px] text-muted-foreground mt-0.5">{s.unit}</span>
+              <span className="text-[10px] text-muted-foreground/70 mt-0.5">{s.label}</span>
+            </div>
+          ))}
+        </div>
       </motion.div>
 
       {/* ── Heatmap ─────────────────────────────────────── */}
