@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Badge } from "@/lib/badges";
 import { cn } from "@/lib/utils";
+import { getIcon } from "@/lib/iconMap";
 
 interface Props {
   badge: Badge;
@@ -42,14 +43,14 @@ export function BadgeCelebration({ badge, onClose }: Props) {
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* Большой эмодзи достижения */}
+        {/* Иконка достижения */}
         <motion.div
-          className="relative text-[72px] mb-4 select-none leading-none"
+          className="relative mb-4 flex items-center justify-center"
           initial={{ scale: 0, rotate: -30 }}
           animate={{ scale: [0, 1.5, 1.1, 1], rotate: [-30, 15, -5, 0] }}
           transition={{ delay: 0.15, duration: 0.7, ease: 'easeOut' }}
         >
-          {badge.emoji}
+          {(() => { const Icon = getIcon(badge.icon); return <Icon className="h-16 w-16" />; })()}
         </motion.div>
 
         <motion.div

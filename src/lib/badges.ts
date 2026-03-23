@@ -3,7 +3,7 @@ import { toLocalISO } from "@/lib/utils";
 
 export interface Badge {
   id: string;
-  emoji: string;
+  icon: string;
   label: string;
   desc: string;
   color: string;
@@ -13,84 +13,84 @@ const ALL_BADGES: Badge[] = [
   // ── Позитивные ────────────────────────────────────────────────────────────
   {
     id: 'first_step',
-    emoji: '🏁',
+    icon: 'Flag',
     label: 'Кровавый старт',
     desc: 'Добавлена первая тренировка',
     color: 'bg-green-500/15 text-green-300 border-green-500/30',
   },
   {
     id: 'week_streak',
-    emoji: '🔥',
+    icon: 'Flame',
     label: 'Берсерк',
     desc: '7 дней подряд без пропусков',
     color: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
   },
   {
     id: 'two_week_streak',
-    emoji: '⚡',
+    icon: 'Zap',
     label: 'Нон-стоп',
     desc: '14 дней подряд без пропусков',
     color: 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30',
   },
   {
     id: 'triathlete',
-    emoji: '🎯',
+    icon: 'Target',
     label: 'Машина',
     desc: 'Плавание, вело и бег за одну неделю',
     color: 'bg-primary/15 text-primary border-primary/30',
   },
   {
     id: 'swimmer',
-    emoji: '🏊',
+    icon: 'Waves',
     label: 'Без тормозов',
     desc: '10 тренировок по плаванию',
     color: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
   },
   {
     id: 'cyclist',
-    emoji: '🚴',
+    icon: 'Bike',
     label: 'Одержимый',
     desc: '10 велотренировок',
     color: 'bg-green-500/15 text-green-300 border-green-500/30',
   },
   {
     id: 'runner',
-    emoji: '🏃',
+    icon: 'PersonStanding',
     label: 'Зверь',
     desc: '10 пробежек',
     color: 'bg-run/20 text-run-foreground border-run/30',
   },
   {
     id: 'hundred_km',
-    emoji: '💯',
+    icon: 'BadgeCheck',
     label: 'Сотка — не шутка',
     desc: '100 км суммарной дистанции',
     color: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
   },
   {
     id: 'marathon',
-    emoji: '🏔️',
+    icon: 'Mountain',
     label: 'Титан',
     desc: 'Пробежка на 42+ км',
     color: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
   },
   {
     id: 'iron_man',
-    emoji: '💪',
+    icon: 'Dumbbell',
     label: 'Безумец',
     desc: '30 тренировок в копилке',
     color: 'bg-slate-400/15 text-slate-300 border-slate-400/30',
   },
   {
     id: 'century_workouts',
-    emoji: '🌟',
+    icon: 'Star',
     label: 'Легенда',
     desc: '100 тренировок выполнено',
     color: 'bg-yellow-400/15 text-yellow-300 border-yellow-400/30',
   },
   {
     id: 'early_bird',
-    emoji: '🌅',
+    icon: 'Sun',
     label: 'Маньяк 5 утра',
     desc: 'Добавил 5+ тренировок подряд',
     color: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
@@ -98,35 +98,35 @@ const ALL_BADGES: Badge[] = [
   // ── Штрафные (за пропуски) ────────────────────────────────────────────────
   {
     id: 'missed_1',
-    emoji: '💩',
+    icon: 'ThumbsDown',
     label: 'Тряпка',
     desc: 'Пропустил 1 день',
     color: 'bg-red-500/10 text-red-400 border-red-500/25',
   },
   {
     id: 'missed_2',
-    emoji: '🛋️',
+    icon: 'MinusCircle',
     label: 'Диванный воин',
     desc: '2 дня подряд без тренировки',
     color: 'bg-red-500/10 text-red-400 border-red-500/25',
   },
   {
     id: 'missed_3',
-    emoji: '🪦',
+    icon: 'XCircle',
     label: 'R.I.P. Мотивация',
     desc: '3+ дня подряд без тренировки',
     color: 'bg-red-600/10 text-red-400 border-red-600/25',
   },
   {
     id: 'broken_10',
-    emoji: '🤡',
+    icon: 'AlertTriangle',
     label: 'Клоун',
     desc: 'Пропуск после серии 10+ дней',
     color: 'bg-red-600/10 text-red-400 border-red-600/25',
   },
   {
     id: 'long_reset',
-    emoji: '📉',
+    icon: 'TrendingDown',
     label: 'Слив',
     desc: 'Обнуление длинного стрика (5+ дней паузы)',
     color: 'bg-red-700/10 text-red-500 border-red-700/25',

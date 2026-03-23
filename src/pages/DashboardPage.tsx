@@ -7,7 +7,8 @@ import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import { type Workout, mapWorkout } from "@/data/mockData";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { Timer, MapPin, Zap, Plus, ArrowRight, Flame, Dumbbell } from "lucide-react";
+import { Timer, MapPin, Zap, Plus, ArrowRight, Flame, Dumbbell, Target } from "lucide-react";
+import { getIcon } from "@/lib/iconMap";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { motion } from "framer-motion";
 import { cn, formatDuration, toLocalISO, dateISO } from "@/lib/utils";
@@ -210,10 +211,10 @@ export default function DashboardPage() {
 
         <div className="flex items-center gap-4 mb-4">
           <div
-            className={cn("flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-3xl", rank.borderColor)}
+            className={cn("flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border", rank.borderColor)}
             style={{ boxShadow: `0 0 16px ${rank.glowColor}` }}
           >
-            {rank.emoji}
+            {(() => { const Icon = getIcon(rank.icon); return <Icon className="h-6 w-6" />; })()}
           </div>
           <div>
             <p className="font-display text-xl font-bold">{rank.label}</p>
@@ -221,7 +222,7 @@ export default function DashboardPage() {
           </div>
           {next && (
             <div className="ml-auto text-right hidden sm:block">
-              <p className="text-xs text-muted-foreground mb-0.5">До {next.emoji} {next.label}</p>
+              <p className="text-xs text-muted-foreground mb-0.5">До {next.label}</p>
               <p className="text-sm font-semibold">{(next.minMinutes - totalMins).toLocaleString()} мин</p>
             </div>
           )}
@@ -362,7 +363,7 @@ export default function DashboardPage() {
           </div>
           {badges.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 text-center gap-2">
-              <span className="text-4xl">🎯</span>
+              <Target className="h-8 w-8 text-muted-foreground/40" />
               <p className="text-sm text-muted-foreground">Тренируйтесь, чтобы открыть первые достижения!</p>
             </div>
           ) : (
@@ -374,7 +375,7 @@ export default function DashboardPage() {
                       "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold cursor-default transition-all hover:scale-105 hover:shadow-sm",
                       badge.color
                     )}>
-                      <span className="text-sm leading-none">{badge.emoji}</span>
+                      {(() => { const Icon = getIcon(badge.icon); return <Icon className="h-3.5 w-3.5" />; })()}
                       <span>{badge.label}</span>
                     </div>
                   </TooltipTrigger>

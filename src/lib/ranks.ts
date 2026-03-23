@@ -3,11 +3,11 @@ import type { Workout } from "@/data/mockData";
 export interface Rank {
   id: string;
   label: string;
-  emoji: string;
+  icon: string;
   minMinutes: number;
-  color: string;       // Tailwind bg+text classes
-  borderColor: string; // Tailwind border class
-  glowColor: string;   // inline style color for glow
+  color: string;
+  borderColor: string;
+  glowColor: string;
   nextLabel?: string;
 }
 
@@ -15,7 +15,7 @@ export const RANKS: Rank[] = [
   {
     id: 'rookie',
     label: 'Новичок',
-    emoji: '🥉',
+    icon: 'Shield',
     minMinutes: 0,
     color: 'bg-slate-500/20 text-slate-300',
     borderColor: 'border-slate-500/40',
@@ -25,7 +25,7 @@ export const RANKS: Rank[] = [
   {
     id: 'amateur',
     label: 'Любитель',
-    emoji: '🥈',
+    icon: 'Star',
     minMinutes: 300,
     color: 'bg-blue-500/20 text-blue-300',
     borderColor: 'border-blue-500/40',
@@ -35,7 +35,7 @@ export const RANKS: Rank[] = [
   {
     id: 'athlete',
     label: 'Атлет',
-    emoji: '🥇',
+    icon: 'Award',
     minMinutes: 1000,
     color: 'bg-yellow-500/20 text-yellow-300',
     borderColor: 'border-yellow-500/40',
@@ -45,7 +45,7 @@ export const RANKS: Rank[] = [
   {
     id: 'pro',
     label: 'Профи',
-    emoji: '💎',
+    icon: 'Gem',
     minMinutes: 3000,
     color: 'bg-cyan-500/20 text-cyan-300',
     borderColor: 'border-cyan-500/40',
@@ -55,7 +55,7 @@ export const RANKS: Rank[] = [
   {
     id: 'elite',
     label: 'Элита',
-    emoji: '🔥',
+    icon: 'Zap',
     minMinutes: 6000,
     color: 'bg-orange-500/20 text-orange-300',
     borderColor: 'border-orange-500/40',
@@ -65,7 +65,7 @@ export const RANKS: Rank[] = [
   {
     id: 'legend',
     label: 'Легенда',
-    emoji: '👑',
+    icon: 'Crown',
     minMinutes: 10000,
     color: 'bg-amber-400/20 text-amber-300',
     borderColor: 'border-amber-400/50',
