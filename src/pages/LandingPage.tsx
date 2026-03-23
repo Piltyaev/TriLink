@@ -18,9 +18,9 @@ const features = [
 ];
 
 const steps = [
-  { num: "01", title: "Создай аккаунт",      desc: "Регистрация за 30 секунд — никаких лишних полей",         color: "text-swim",  border: "border-swim/25",  colorVar: "--swim",  icon: Shield     },
-  { num: "02", title: "Подключи Strava",     desc: "Все прошлые и будущие тренировки появятся автоматически", color: "text-bike",  border: "border-bike/25",  colorVar: "--bike",  icon: Zap        },
-  { num: "03", title: "Анализируй прогресс", desc: "Смотри динамику, планируй пиковую форму к гонке",         color: "text-run",   border: "border-run/25",   colorVar: "--run",   icon: TrendingUp },
+  { num: "01", title: "Создай аккаунт",      desc: "Регистрация за 30 секунд — никаких лишних полей",         color: "text-swim",  border: "border-white/10",  colorVar: "--swim",  icon: Shield     },
+  { num: "02", title: "Подключи Strava",     desc: "Все прошлые и будущие тренировки появятся автоматически", color: "text-bike",  border: "border-white/10",  colorVar: "--bike",  icon: Zap        },
+  { num: "03", title: "Анализируй прогресс", desc: "Смотри динамику, планируй пиковую форму к гонке",         color: "text-run",   border: "border-white/10",  colorVar: "--run",   icon: TrendingUp },
 ];
 
 const disciplines = [
@@ -299,15 +299,12 @@ export default function LandingPage() {
           </div>
 
           <div className="relative grid gap-6 md:grid-cols-3">
-            {/* Connecting line */}
-            <div className="hidden md:block absolute top-12 left-[calc(33.33%+1.5rem)] right-[calc(33.33%+1.5rem)] h-px"
-              style={{ background: "linear-gradient(90deg, hsl(var(--swim)/0.5), hsl(var(--bike)/0.5), hsl(var(--run)/0.5))" }} />
 
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
                 className={cn("group relative rounded-2xl border p-8 transition-all duration-400 hover:-translate-y-2 cursor-default", s.border)}
-                style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.07) 0%, hsl(220 20% 11%/1) 60%)` }}
+                style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.04) 0%, hsl(220 20% 11%/1) 55%)` }}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.13, duration: 0.55 }}
@@ -316,11 +313,11 @@ export default function LandingPage() {
               >
                 {/* Top glow line */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] rounded-t-2xl"
-                  style={{ background: `linear-gradient(90deg, transparent, hsl(${s.colorVar}/0.35), transparent)` }} />
+                  style={{ background: `linear-gradient(90deg, transparent, hsl(${s.colorVar}/0.15), transparent)` }} />
 
                 {/* Large number — half inside, half outside right edge */}
                 <span className="absolute bottom-2 right-0 text-[5.5rem] font-black leading-none select-none pointer-events-none tabular-nums translate-x-[38%]"
-                  style={{ color: `hsl(${s.colorVar}/0.12)` }}>{s.num}</span>
+                  style={{ color: `hsl(${s.colorVar}/0.07)` }}>{s.num}</span>
 
                 <h3 className="font-display font-bold text-lg mb-2 text-white/85 mt-2">{s.title}</h3>
                 <p className="text-sm text-white/40 leading-relaxed">{s.desc}</p>
