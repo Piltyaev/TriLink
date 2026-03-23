@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -42,6 +42,19 @@ export default function LandingPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lazy-load CTA video only when section enters viewport
+  const ctaRef = useRef<HTMLElement>(null);
+  const [ctaSrc, setCtaSrc] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setCtaSrc("/bg11.mp4"); obs.disconnect(); }
+    }, { rootMargin: "200px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
@@ -74,7 +87,7 @@ export default function LandingPage() {
       {/* ── Hero ───────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 pt-20 pb-24 text-center overflow-hidden">
         {/* Video */}
-        <video className="absolute inset-0 h-full w-full object-cover object-center z-0" src="/bg10.mp4" autoPlay muted loop playsInline />
+        <video className="absolute inset-0 h-full w-full object-cover object-center z-0" src="/bg10.mp4" autoPlay muted loop playsInline preload="metadata" poster="/bg1.jpg" />
 
         {/* Multi-layer overlay */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, hsl(220 18% 8%/0.65) 0%, hsl(220 18% 8%/0.45) 40%, hsl(220 18% 8%/0.75) 100%)" }} />
@@ -328,9 +341,9 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA + Footer ────────────────────────────────── */}
-      <section className="relative overflow-hidden px-6 pt-32 pb-8 text-center md:min-h-[680px] md:flex md:flex-col md:justify-between">
+      <section ref={ctaRef} className="relative overflow-hidden px-6 pt-32 pb-8 text-center md:min-h-[680px] md:flex md:flex-col md:justify-between">
         <video className="absolute inset-0 h-full w-full object-cover object-center z-0"
-          src="/bg11.mp4" autoPlay muted loop playsInline preload="none" />
+          src={ctaSrc} autoPlay muted loop playsInline />
 
         {/* Multi-layer CTA overlay */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, hsl(220 18% 8%/0.8) 0%, hsl(220 18% 8%/0.6) 40%, hsl(220 18% 8%/0.82) 100%)" }} />
