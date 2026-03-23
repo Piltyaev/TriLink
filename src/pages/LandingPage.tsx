@@ -64,7 +64,7 @@ export default function LandingPage() {
               </Button>
             </Link>
             <Link to="/auth/register">
-              <Button size="sm" className="gap-1.5 text-sm font-semibold bg-blue-700 hover:bg-blue-600 border-blue-600 shadow-[0_0_20px_rgba(30,58,138,0.5)] hover:shadow-[0_0_28px_rgba(30,58,138,0.7)] transition-all duration-300">
+              <Button size="sm" className="gap-1.5 text-sm font-semibold  shadow-[0_0_20px_rgba(30,58,138,0.5)] hover:shadow-[0_0_28px_rgba(30,58,138,0.7)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </Link>
@@ -96,7 +96,7 @@ export default function LandingPage() {
 
           {/* Badge */}
           <motion.div variants={fadeUp} initial="hidden" animate="show">
-            <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/70 bg-primary/25 backdrop-blur-md px-5 py-2 text-sm font-bold text-white">
+            <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/50 bg-transparent backdrop-blur-md px-5 py-2 text-sm font-bold text-white">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
@@ -133,7 +133,7 @@ export default function LandingPage() {
             variants={fadeUp} custom={3} initial="hidden" animate="show"
           >
             <Link to="/auth/register">
-              <Button size="lg" className="gap-2 px-9 h-12 text-base font-semibold bg-blue-700 hover:bg-blue-600 border-blue-600 shadow-[0_0_32px_rgba(30,58,138,0.6)] hover:shadow-[0_0_48px_rgba(30,58,138,0.8)] transition-all duration-300">
+              <Button size="lg" className="gap-2 px-9 h-12 text-base font-semibold  shadow-[0_0_32px_rgba(30,58,138,0.6)] hover:shadow-[0_0_48px_rgba(30,58,138,0.8)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
@@ -361,7 +361,7 @@ export default function LandingPage() {
             </p>
 
             <Link to="/auth/register">
-              <Button size="lg" className="gap-2 px-12 h-12 text-base font-semibold bg-blue-700 hover:bg-blue-600 border-blue-600 shadow-[0_0_40px_rgba(30,58,138,0.6)] hover:shadow-[0_0_56px_rgba(30,58,138,0.8)] transition-all duration-300">
+              <Button size="lg" className="gap-2 px-12 h-12 text-base font-semibold  shadow-[0_0_40px_rgba(30,58,138,0.6)] hover:shadow-[0_0_56px_rgba(30,58,138,0.8)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
