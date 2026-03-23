@@ -96,7 +96,7 @@ export default function LandingPage() {
 
           {/* Badge */}
           <motion.div variants={fadeUp} initial="hidden" animate="show">
-            <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/70 bg-primary/25 backdrop-blur-md px-5 py-2 text-sm font-bold text-white shadow-[0_0_32px_hsl(var(--primary)/0.5),inset_0_0_16px_hsl(var(--primary)/0.2)]">
+            <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/70 bg-primary/25 backdrop-blur-md px-5 py-2 text-sm font-bold text-white">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
