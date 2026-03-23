@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { type Workout, mapWorkout, sportLabels, sportEmoji, sportIconBg, sportColors, type SportType, SPORTS } from "@/data/mockData";
+import { type Workout, mapWorkout, sportLabels, sportIconBg, sportColors, type SportType, SPORTS } from "@/data/mockData";
+import { SportIcon } from "@/lib/iconMap";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -252,7 +253,7 @@ export default function PersonalRecordsPage() {
                 transition={{ delay: i * 0.05 }}
               >
                 <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-base", sportIconBg[r.sport])}>
-                  {sportEmoji[r.sport]}
+                  <SportIcon sport={r.sport} className="h-4 w-4" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-foreground truncate">{r.value}</p>
@@ -289,7 +290,7 @@ export default function PersonalRecordsPage() {
                 : "border-border text-muted-foreground hover:text-foreground"
             )}
           >
-            {sportEmoji[s]} {sportLabels[s]}
+            <SportIcon sport={s} className="h-3.5 w-3.5" /> {sportLabels[s]}
           </button>
         ))}
       </div>
@@ -330,7 +331,7 @@ export default function PersonalRecordsPage() {
             <div key={group.sport}>
               <div className="flex items-center gap-2.5 mb-3">
                 <div className={cn("flex h-8 w-8 items-center justify-center rounded-lg text-base", sportIconBg[group.sport])}>
-                  {sportEmoji[group.sport]}
+                  <SportIcon sport={group.sport} className="h-4 w-4" />
                 </div>
                 <h2 className="font-display text-sm font-semibold">{sportLabels[group.sport]}</h2>
                 <span className="text-xs text-muted-foreground">{group.items.length}</span>
@@ -347,7 +348,7 @@ export default function PersonalRecordsPage() {
                     transition={{ delay: i * 0.03 }}
                   >
                     <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg", sportIconBg[r.sport])}>
-                      {sportEmoji[r.sport]}
+                      <SportIcon sport={r.sport} className="h-4 w-4" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-sm truncate">{r.discipline}</p>
@@ -442,7 +443,7 @@ export default function PersonalRecordsPage() {
                             : "border-border hover:bg-accent"
                         )}
                       >
-                        <span className="text-xl leading-none">{sportEmoji[s]}</span>
+                        <SportIcon sport={s} className="h-4 w-4" />
                         <span className={cn("text-[10px] font-medium", form.sport === s ? "opacity-90" : "text-muted-foreground")}>
                           {sportLabels[s]}
                         </span>

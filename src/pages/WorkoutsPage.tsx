@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import {
-  type Workout, sportLabels, sportEmoji, sportColors, sportIconBg,
+  type Workout, sportLabels, sportColors, sportIconBg,
   type SportType, mapWorkout, SPORTS,
 } from "@/data/mockData";
 import { supabase } from "@/integrations/supabase/client";
+import { SportIcon } from "@/lib/iconMap";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -253,7 +254,7 @@ export default function WorkoutsPage() {
                   : "border-border text-muted-foreground hover:border-border/80 hover:text-foreground"
               )}
             >
-              {sportEmoji[s]} {sportLabels[s]}
+              <SportIcon sport={s} className="h-3.5 w-3.5" /> {sportLabels[s]}
             </button>
           ))}
         </div>
@@ -281,7 +282,7 @@ export default function WorkoutsPage() {
                     "flex h-8 w-8 items-center justify-center rounded-lg text-base",
                     sportIconBg[group.sport]
                   )}>
-                    {sportEmoji[group.sport]}
+                    <SportIcon sport={group.sport} className="h-4 w-4" />
                   </div>
                   <h2 className="font-display text-sm font-semibold text-foreground">
                     {sportLabels[group.sport]}
@@ -313,7 +314,7 @@ export default function WorkoutsPage() {
                           "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg",
                           sportIconBg[w.sport]
                         )}>
-                          {sportEmoji[w.sport]}
+                          <SportIcon sport={w.sport} className="h-4 w-4" />
                         </div>
 
                         {/* Title + meta */}
@@ -479,7 +480,7 @@ export default function WorkoutsPage() {
                             : "border-border hover:bg-accent hover:border-border/80"
                         )}
                       >
-                        <span className="text-xl leading-none">{sportEmoji[s]}</span>
+                        <SportIcon sport={s} className="h-4 w-4" />
                         <span className={cn(
                           "text-[10px] font-medium leading-tight",
                           form.sport === s ? "opacity-90" : "text-muted-foreground"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import {
-  sportColors, sportLabels, sportEmoji, sportIconBg, sportBorderLeft,
+  sportColors, sportLabels, sportIconBg, sportBorderLeft,
   type SportType, type CalendarEvent, mapCalendarEvent,
   type Workout, mapWorkout, SPORTS,
 } from "@/data/mockData";
@@ -19,6 +19,7 @@ import { cn, toLocalISO, formatDuration, dateISO } from "@/lib/utils";
 import { StatCard } from "@/components/StatCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { SportIcon } from "@/lib/iconMap";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -287,7 +288,7 @@ export default function CalendarPage() {
                 : "border-border text-muted-foreground hover:text-foreground hover:bg-accent"
             )}
           >
-            <span>{sportEmoji[s]}</span>
+            <SportIcon sport={s} className="h-3.5 w-3.5" />
             {sportLabels[s]}
           </button>
         ))}
@@ -409,7 +410,7 @@ export default function CalendarPage() {
                             onClick={e => { e.stopPropagation(); openEdit(ev); }}
                             title={ev.title}
                           >
-                            {sportEmoji[ev.sport]} {ev.title}
+                            <SportIcon sport={ev.sport} className="h-3 w-3 inline mr-1" /> {ev.title}
                           </div>
                         );
                       }
@@ -482,7 +483,7 @@ export default function CalendarPage() {
                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm",
                       sportIconBg[ev.sport]
                     )}>
-                      {sportEmoji[ev.sport]}
+                      <SportIcon sport={ev.sport} className="h-4 w-4" />
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium truncate">{ev.title}</p>
@@ -546,7 +547,7 @@ export default function CalendarPage() {
                     "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg",
                     sportIconBg[viewWorkout.sport]
                   )}>
-                    {sportEmoji[viewWorkout.sport]}
+                    <SportIcon sport={viewWorkout.sport} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-display text-base font-semibold truncate">{viewWorkout.title}</h3>
