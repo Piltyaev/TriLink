@@ -70,21 +70,23 @@ export function AppSidebar() {
         ))}
       </nav>
 
-      {/* Admin */}
-      <div className="border-t border-sidebar-border p-2">
-        <NavLink
-          to="/admin"
-          className={cn(
-            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
-            "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-            collapsed && "justify-center px-0"
-          )}
-          activeClassName="bg-sidebar-accent text-sidebar-accent-foreground"
-        >
-          <Shield className="h-[18px] w-[18px] shrink-0" />
-          {!collapsed && <span>Админ</span>}
-        </NavLink>
-      </div>
+      {/* Admin — only visible to bobpltm@gmail.com */}
+      {user?.email === 'bobpltm@gmail.com' && (
+        <div className="border-t border-sidebar-border p-2">
+          <NavLink
+            to="/admin"
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
+              "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+              collapsed && "justify-center px-0"
+            )}
+            activeClassName="bg-sidebar-accent text-sidebar-accent-foreground"
+          >
+            <Shield className="h-[18px] w-[18px] shrink-0" />
+            {!collapsed && <span>Админ</span>}
+          </NavLink>
+        </div>
+      )}
 
       {/* User + logout */}
       <div className="border-t border-sidebar-border p-2 space-y-0.5">
