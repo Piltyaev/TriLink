@@ -30,8 +30,8 @@ const disciplines = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] } }),
+  hidden: { opacity: 0, y: 16 },
+  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.3, delay: i * 0.07, ease: "easeOut" } }),
 };
 
 export default function LandingPage() {
@@ -165,15 +165,15 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <motion.p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-3"
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-40px" }}>
               Дисциплины
             </motion.p>
             <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
-              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }}>
               Три дисциплины — одна платформа
             </motion.h2>
             <motion.p className="mt-3 text-white/65 text-sm max-w-xl mx-auto"
-              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }}>
+              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true, margin: "-40px" }}>
               Глубокая аналитика по каждому виду спорта в триатлоне
             </motion.p>
           </div>
@@ -186,8 +186,8 @@ export default function LandingPage() {
                 style={{ background: `linear-gradient(145deg, hsl(${d.colorVar}/0.16) 0%, hsl(${d.colorVar}/0.05) 50%, hsl(220 18% 10%/1) 100%)` }}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.13, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.25, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-40px" }}
                 whileHover={{ boxShadow: `0 0 64px hsl(${d.colorVar}/0.3), 0 24px 48px hsl(0 0% 0%/0.4)` }}
               >
                 {/* Top glow line */}
@@ -229,11 +229,11 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <motion.p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-3"
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-40px" }}>
               Возможности
             </motion.p>
             <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
-              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }}>
               Всё что нужно триатлету
             </motion.h2>
           </div>
@@ -250,8 +250,8 @@ export default function LandingPage() {
                 }}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
-                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, duration: 0.25 }}
+                viewport={{ once: true, margin: "-40px" }}
                 whileHover={{
                   background: "hsl(220 20% 14%/0.85)",
                   borderColor: `hsl(${f.glowVar}/0.4)`,
@@ -290,11 +290,11 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <motion.p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-3"
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-40px" }}>
               Быстрый старт
             </motion.p>
             <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
-              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }}>
               Три шага до результата
             </motion.h2>
           </div>
@@ -308,8 +308,8 @@ export default function LandingPage() {
                 style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.04) 0%, hsl(220 20% 11%/1) 55%)` }}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.13, duration: 0.55 }}
-                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.25 }}
+                viewport={{ once: true, margin: "-40px" }}
                 whileHover={{ boxShadow: `0 0 40px hsl(${s.colorVar}/0.18), 0 20px 40px hsl(0 0% 0%/0.3)` }}
               >
                 {/* Top glow line */}
@@ -344,8 +344,8 @@ export default function LandingPage() {
             className="flex flex-col items-center"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-40px" }}
           >
             <p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">Присоединяйся</p>
 
