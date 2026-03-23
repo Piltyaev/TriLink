@@ -342,15 +342,17 @@ export default function LandingPage() {
 
       {/* ── CTA + Footer ────────────────────────────────── */}
       <section ref={ctaRef} className="relative overflow-hidden px-6 pt-32 pb-8 text-center md:min-h-[680px] md:flex md:flex-col md:justify-between">
-        <video className="absolute inset-0 h-full w-full object-cover object-center z-0"
+        {/* Static poster shown until video loads */}
+        <div className="absolute inset-0 z-0 bg-cover bg-center" style={{ backgroundImage: "url('/bg1.jpg')" }} />
+        <video className="absolute inset-0 h-full w-full object-cover object-center z-[1]"
           src={ctaSrc} autoPlay muted loop playsInline />
 
         {/* Multi-layer CTA overlay */}
-        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, hsl(220 18% 8%/0.8) 0%, hsl(220 18% 8%/0.6) 40%, hsl(220 18% 8%/0.82) 100%)" }} />
-        <div className="absolute inset-0 z-[1] pointer-events-none"
+        <div className="absolute inset-0 z-[2]" style={{ background: "linear-gradient(to bottom, hsl(220 18% 8%/0.8) 0%, hsl(220 18% 8%/0.6) 40%, hsl(220 18% 8%/0.82) 100%)" }} />
+        <div className="absolute inset-0 z-[2] pointer-events-none"
           style={{ background: "radial-gradient(ellipse 70% 55% at 50% 50%, hsl(var(--primary)/0.14) 0%, transparent 70%)" }} />
 
-        <div className="relative z-[2] mx-auto max-w-3xl flex-1 flex flex-col items-center justify-center py-10">
+        <div className="relative z-[3] mx-auto max-w-3xl flex-1 flex flex-col items-center justify-center py-10">
           <motion.div
             className="flex flex-col items-center"
             initial={{ opacity: 0, y: 32 }}
@@ -380,7 +382,7 @@ export default function LandingPage() {
         </div>
 
         {/* Footer */}
-        <div className="relative z-[2] mx-auto w-full max-w-6xl border-t border-white/8 pt-6 flex flex-col items-center justify-between gap-3 sm:flex-row">
+        <div className="relative z-[3] mx-auto w-full max-w-6xl border-t border-white/8 pt-6 flex flex-col items-center justify-between gap-3 sm:flex-row">
           <p className="text-xs text-white/25">© {new Date().getFullYear()} TriLink · Created by Piltyayev Vladimir</p>
           <div className="flex items-center gap-5 text-xs text-white/25">
             <Link to="/auth/login" className="hover:text-white/55 transition-colors duration-200">Войти</Link>
