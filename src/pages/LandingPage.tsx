@@ -107,7 +107,7 @@ export default function LandingPage() {
 
           {/* Headline */}
           <motion.h1
-            className="font-display text-5xl font-extrabold leading-[1.08] tracking-[-0.02em] lg:text-[5.5rem]"
+            className="font-display text-3xl font-extrabold leading-[1.1] tracking-[-0.02em] lg:text-5xl"
             variants={fadeUp} custom={1} initial="hidden" animate="show"
           >
             Тренируйся{" "}
@@ -121,7 +121,7 @@ export default function LandingPage() {
 
           {/* Subtitle */}
           <motion.p
-            className="mt-7 text-lg text-white/50 max-w-lg mx-auto leading-relaxed"
+            className="mt-5 text-sm text-white/50 max-w-lg mx-auto leading-relaxed"
             variants={fadeUp} custom={2} initial="hidden" animate="show"
           >
             Полная платформа для триатлетов — трекинг, аналитика и планирование в одном месте.
@@ -168,11 +168,11 @@ export default function LandingPage() {
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
               Дисциплины
             </motion.p>
-            <motion.h2 className="font-display text-4xl font-extrabold lg:text-5xl tracking-tight"
+            <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               Три дисциплины — одна платформа
             </motion.h2>
-            <motion.p className="mt-4 text-white/45 text-lg max-w-xl mx-auto"
+            <motion.p className="mt-3 text-white/45 text-sm max-w-xl mx-auto"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }}>
               Глубокая аналитика по каждому виду спорта в триатлоне
             </motion.p>
@@ -209,8 +209,8 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <h3 className={cn("font-display text-3xl font-extrabold mb-2 tracking-tight", d.color)}>{d.label}</h3>
-                  <p className="text-sm text-white/45 leading-relaxed">{d.sub}</p>
+                  <h3 className={cn("font-display text-xl font-extrabold mb-1 tracking-tight", d.color)}>{d.label}</h3>
+                  <p className="text-xs text-white/45 leading-relaxed">{d.sub}</p>
                 </div>
               </motion.div>
             ))}
@@ -232,7 +232,7 @@ export default function LandingPage() {
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
               Возможности
             </motion.p>
-            <motion.h2 className="font-display text-4xl font-extrabold lg:text-5xl tracking-tight"
+            <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               Всё что нужно триатлету
             </motion.h2>
@@ -272,8 +272,8 @@ export default function LandingPage() {
                   </div>
                   <span className="text-[11px] font-extrabold tabular-nums" style={{ color: `hsl(${f.glowVar}/0.25)` }}>{f.num}</span>
                 </div>
-                <h3 className="font-display text-base font-bold mb-2 text-white/90 group-hover:text-white transition-colors duration-300">{f.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed">{f.desc}</p>
+                <h3 className="font-display text-sm font-bold mb-1.5 text-white/90 group-hover:text-white transition-colors duration-300">{f.title}</h3>
+                <p className="text-xs text-white/45 leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -293,7 +293,7 @@ export default function LandingPage() {
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
               Быстрый старт
             </motion.p>
-            <motion.h2 className="font-display text-4xl font-extrabold lg:text-5xl tracking-tight"
+            <motion.h2 className="font-display text-2xl font-extrabold lg:text-3xl tracking-tight"
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               Три шага до результата
             </motion.h2>
@@ -322,8 +322,8 @@ export default function LandingPage() {
                   {s.num}
                 </div>
 
-                <h3 className="font-display font-bold text-lg mb-2 text-white/85">{s.title}</h3>
-                <p className="text-sm text-white/40 leading-relaxed">{s.desc}</p>
+                <h3 className="font-display font-bold text-sm mb-1.5 text-white/85">{s.title}</h3>
+                <p className="text-xs text-white/40 leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -349,14 +349,14 @@ export default function LandingPage() {
           >
             <p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-5">Присоединяйся</p>
 
-            <h2 className="font-display text-5xl font-extrabold mb-6 lg:text-[4.5rem] leading-[1.05] tracking-[-0.02em]">
+            <h2 className="font-display text-3xl font-extrabold mb-4 lg:text-4xl leading-[1.1] tracking-[-0.02em]">
               Готов к{" "}
               <span className="bg-gradient-to-r from-primary via-blue-300 to-swim bg-clip-text text-transparent">
                 старту?
               </span>
             </h2>
 
-            <p className="text-lg text-white/50 mb-10 max-w-lg mx-auto leading-relaxed">
+            <p className="text-sm text-white/50 mb-8 max-w-lg mx-auto leading-relaxed">
               Тысячи атлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
             </p>
 
