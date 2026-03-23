@@ -304,7 +304,7 @@ export default function LandingPage() {
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
-                className={cn("group relative rounded-2xl border p-5 md:p-8 transition-all duration-400 hover:-translate-y-2 cursor-default overflow-hidden", s.border)}
+                className={cn("group relative rounded-2xl border p-8 transition-all duration-400 hover:-translate-y-2 cursor-default", s.border)}
                 style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.04) 0%, hsl(220 20% 11%/1) 55%)` }}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -316,12 +316,14 @@ export default function LandingPage() {
                 <div className="absolute top-0 left-0 right-0 h-[1px] rounded-t-2xl"
                   style={{ background: `linear-gradient(90deg, transparent, hsl(${s.colorVar}/0.15), transparent)` }} />
 
-                {/* Large number — half inside, half outside right edge */}
-                <span className="absolute bottom-1 right-0 text-[3.5rem] md:text-[5.5rem] font-black leading-none select-none pointer-events-none tabular-nums translate-x-[35%]"
-                  style={{ color: `hsl(${s.colorVar}/0.07)` }}>{s.num}</span>
+                {/* Step number */}
+                <div className={cn("inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm font-bold mb-5", s.border, s.color)}
+                  style={{ background: `hsl(${s.colorVar}/0.1)` }}>
+                  {s.num}
+                </div>
 
-                <h3 className="font-display font-bold text-base md:text-lg mb-1.5 text-white/85 mt-1">{s.title}</h3>
-                <p className="text-xs md:text-sm text-white/40 leading-relaxed">{s.desc}</p>
+                <h3 className="font-display font-bold text-lg mb-2 text-white/85">{s.title}</h3>
+                <p className="text-sm text-white/40 leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
