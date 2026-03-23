@@ -115,13 +115,13 @@ export default function LandingPage() {
               умнее
             </span>
             ,<br className="hidden sm:block" />
-            <span className="text-white/45 font-semibold"> финишируй </span>
+            <span className="text-white/65 font-semibold"> финишируй </span>
             быстрее
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            className="mt-5 text-sm text-white/50 max-w-lg mx-auto leading-relaxed"
+            className="mt-5 text-sm text-white/65 max-w-lg mx-auto leading-relaxed"
             variants={fadeUp} custom={2} initial="hidden" animate="show"
           >
             Полная платформа для триатлетов — трекинг, аналитика и планирование в одном месте.
@@ -172,7 +172,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               Три дисциплины — одна платформа
             </motion.h2>
-            <motion.p className="mt-3 text-white/45 text-sm max-w-xl mx-auto"
+            <motion.p className="mt-3 text-white/65 text-sm max-w-xl mx-auto"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }}>
               Глубокая аналитика по каждому виду спорта в триатлоне
             </motion.p>
@@ -210,7 +210,7 @@ export default function LandingPage() {
                   </div>
 
                   <h3 className={cn("font-display text-xl font-extrabold mb-1 tracking-tight", d.color)}>{d.label}</h3>
-                  <p className="text-xs text-white/45 leading-relaxed">{d.sub}</p>
+                  <p className="text-xs text-white/65 leading-relaxed">{d.sub}</p>
                 </div>
               </motion.div>
             ))}
@@ -273,7 +273,7 @@ export default function LandingPage() {
                   <span className="text-[11px] font-extrabold tabular-nums" style={{ color: `hsl(${f.glowVar}/0.25)` }}>{f.num}</span>
                 </div>
                 <h3 className="font-display text-sm font-bold mb-1.5 text-white/90 group-hover:text-white transition-colors duration-300">{f.title}</h3>
-                <p className="text-xs text-white/45 leading-relaxed">{f.desc}</p>
+                <p className="text-xs text-white/65 leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -323,7 +323,7 @@ export default function LandingPage() {
                 </div>
 
                 <h3 className="font-display font-bold text-sm mb-1.5 text-white/85">{s.title}</h3>
-                <p className="text-xs text-white/40 leading-relaxed">{s.desc}</p>
+                <p className="text-xs text-white/60 leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -356,7 +356,7 @@ export default function LandingPage() {
               </span>
             </h2>
 
-            <p className="text-sm text-white/50 mb-8 max-w-lg mx-auto leading-relaxed">
+            <p className="text-sm text-white/65 mb-8 max-w-lg mx-auto leading-relaxed">
               Тысячи атлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
             </p>
 
