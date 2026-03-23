@@ -18,9 +18,9 @@ const features = [
 ];
 
 const steps = [
-  { num: "01", title: "Создай аккаунт",      desc: "Регистрация за 30 секунд — никаких лишних полей",         color: "text-swim",  border: "border-swim/40",  colorVar: "--swim",  icon: Shield     },
-  { num: "02", title: "Подключи Strava",     desc: "Все прошлые и будущие тренировки появятся автоматически", color: "text-bike",  border: "border-bike/40",  colorVar: "--bike",  icon: Zap        },
-  { num: "03", title: "Анализируй прогресс", desc: "Смотри динамику, планируй пиковую форму к гонке",         color: "text-run",   border: "border-run/40",   colorVar: "--run",   icon: TrendingUp },
+  { num: "01", title: "Создай аккаунт",      desc: "Регистрация за 30 секунд — никаких лишних полей",         color: "text-swim",  border: "border-swim/25",  colorVar: "--swim",  icon: Shield     },
+  { num: "02", title: "Подключи Strava",     desc: "Все прошлые и будущие тренировки появятся автоматически", color: "text-bike",  border: "border-bike/25",  colorVar: "--bike",  icon: Zap        },
+  { num: "03", title: "Анализируй прогресс", desc: "Смотри динамику, планируй пиковую форму к гонке",         color: "text-run",   border: "border-run/25",   colorVar: "--run",   icon: TrendingUp },
 ];
 
 const disciplines = [
@@ -306,30 +306,24 @@ export default function LandingPage() {
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
-                className={cn("group relative rounded-2xl border overflow-hidden p-8 transition-all duration-400 hover:-translate-y-2 cursor-default", s.border)}
-                style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.1) 0%, hsl(220 20% 11%/1) 60%)` }}
+                className={cn("group relative rounded-2xl border p-8 transition-all duration-400 hover:-translate-y-2 cursor-default", s.border)}
+                style={{ background: `linear-gradient(160deg, hsl(${s.colorVar}/0.07) 0%, hsl(220 20% 11%/1) 60%)` }}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.13, duration: 0.55 }}
                 viewport={{ once: true }}
-                whileHover={{ boxShadow: `0 0 48px hsl(${s.colorVar}/0.25), 0 20px 40px hsl(0 0% 0%/0.35)` }}
+                whileHover={{ boxShadow: `0 0 40px hsl(${s.colorVar}/0.18), 0 20px 40px hsl(0 0% 0%/0.3)` }}
               >
                 {/* Top glow line */}
-                <div className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{ background: `linear-gradient(90deg, transparent, hsl(${s.colorVar}/0.7), transparent)` }} />
+                <div className="absolute top-0 left-0 right-0 h-[1px] rounded-t-2xl"
+                  style={{ background: `linear-gradient(90deg, transparent, hsl(${s.colorVar}/0.35), transparent)` }} />
 
-                {/* Large background number */}
-                <span className="absolute -bottom-3 -right-1 text-[7rem] font-black leading-none select-none pointer-events-none tabular-nums"
-                  style={{ color: `hsl(${s.colorVar}/0.06)` }}>{s.num}</span>
+                {/* Large number — half inside, half outside right edge */}
+                <span className="absolute bottom-2 right-0 text-[5.5rem] font-black leading-none select-none pointer-events-none tabular-nums translate-x-[38%]"
+                  style={{ color: `hsl(${s.colorVar}/0.12)` }}>{s.num}</span>
 
-                {/* Step circle */}
-                <div className={cn("relative inline-flex h-12 w-12 items-center justify-center rounded-full border-2 text-base font-extrabold mb-6 z-[1]", s.border, s.color)}
-                  style={{ background: `hsl(${s.colorVar}/0.12)` }}>
-                  {s.num}
-                </div>
-
-                <h3 className="font-display font-bold text-lg mb-2 text-white/90">{s.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed">{s.desc}</p>
+                <h3 className="font-display font-bold text-lg mb-2 text-white/85 mt-2">{s.title}</h3>
+                <p className="text-sm text-white/40 leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
