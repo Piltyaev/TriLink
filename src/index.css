@@ -121,6 +121,11 @@
   }
 }
 
+/* Lucide icons — thinner stroke for a more premium look */
+svg.lucide {
+  stroke-width: 1.5px;
+}
+
 @layer base {
   * {
     @apply border-border;
