@@ -1,10 +1,10 @@
 import { useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, Dumbbell, BarChart3, Award, Settings } from "lucide-react";
+import { LayoutDashboard, Calendar, BarChart3, Award, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { title: "Главная",    url: "/dashboard", icon: LayoutDashboard },
-  { title: "Трен.",      url: "/workouts",  icon: Dumbbell },
+  { title: "Календарь",  url: "/calendar",  icon: Calendar },
   { title: "Аналитика",  url: "/analytics", icon: BarChart3 },
   { title: "Рекорды",    url: "/records",   icon: Award },
   { title: "Ещё",        url: "/settings",  icon: Settings },
