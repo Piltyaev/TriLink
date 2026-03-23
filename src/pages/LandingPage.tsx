@@ -75,7 +75,7 @@ export default function LandingPage() {
       {/* ── Hero ───────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 pt-20 pb-24 text-center overflow-hidden">
         {/* Video */}
-        <video className="absolute inset-0 h-full w-full object-cover object-center z-0" src="/bg10.mp4" autoPlay muted loop playsInline preload="metadata" poster="/bg1.jpg" />
+        <video className="absolute inset-0 h-full w-full object-cover object-center z-0" src="/bg10.mp4" autoPlay muted loop playsInline preload="metadata" />
 
         {/* Multi-layer overlay */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, hsl(220 18% 8%/0.65) 0%, hsl(220 18% 8%/0.45) 40%, hsl(220 18% 8%/0.75) 100%)" }} />
