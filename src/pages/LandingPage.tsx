@@ -64,7 +64,7 @@ export default function LandingPage() {
               </Button>
             </Link>
             <Link to="/auth/register">
-              <Button size="sm" className="gap-1.5 text-sm font-semibold shadow-[0_0_28px_hsl(var(--primary)/0.45)] hover:shadow-[0_0_40px_hsl(var(--primary)/0.65)] transition-all duration-300">
+              <Button size="sm" className="gap-1.5 text-sm font-semibold bg-blue-900 hover:bg-blue-800 border-blue-800 shadow-[0_0_20px_rgba(30,58,138,0.5)] hover:shadow-[0_0_28px_rgba(30,58,138,0.7)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </Link>
@@ -133,7 +133,7 @@ export default function LandingPage() {
             variants={fadeUp} custom={3} initial="hidden" animate="show"
           >
             <Link to="/auth/register">
-              <Button size="lg" className="gap-2 px-9 h-12 text-base font-semibold shadow-[0_0_48px_hsl(var(--primary)/0.5),0_0_96px_hsl(var(--primary)/0.2)] hover:shadow-[0_0_64px_hsl(var(--primary)/0.7),0_0_120px_hsl(var(--primary)/0.3)] transition-all duration-300">
+              <Button size="lg" className="gap-2 px-9 h-12 text-base font-semibold bg-blue-900 hover:bg-blue-800 border-blue-800 shadow-[0_0_32px_rgba(30,58,138,0.6)] hover:shadow-[0_0_48px_rgba(30,58,138,0.8)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
@@ -361,7 +361,7 @@ export default function LandingPage() {
             </p>
 
             <Link to="/auth/register">
-              <Button size="lg" className="gap-2 px-12 h-12 text-base font-semibold shadow-[0_0_56px_hsl(var(--primary)/0.55),0_0_120px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_72px_hsl(var(--primary)/0.75),0_0_160px_hsl(var(--primary)/0.35)] transition-all duration-300">
+              <Button size="lg" className="gap-2 px-12 h-12 text-base font-semibold bg-blue-900 hover:bg-blue-800 border-blue-800 shadow-[0_0_40px_rgba(30,58,138,0.6)] hover:shadow-[0_0_56px_rgba(30,58,138,0.8)] transition-all duration-300">
                 Зарегистрироваться <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
