@@ -41,6 +41,7 @@ export default function StravaCallbackPage() {
   const [imported, setImported] = useState(0);
 
   useEffect(() => {
+    let cancelled = false;
     if (authLoading) return;
 
     const code  = searchParams.get('code');
@@ -72,6 +73,8 @@ export default function StravaCallbackPage() {
           body: { code, userId: user.id },
         });
 
+        if (cancelled) return;
+
         // Extract real error from edge function response body
         if (fnError) {
           let realMessage = fnError.message;
@@ -80,22 +83,24 @@ export default function StravaCallbackPage() {
             const body = await (fnError as { context?: Response }).context?.json();
             if (body?.error) realMessage = body.error;
           } catch { /* ignore parse error */ }
-          if (realMessage === 'too_many_athletes') { setStatus('quota'); return; }
+          if (realMessage === 'too_many_athletes') { if (!cancelled) setStatus('quota'); return; }
           throw new Error(realMessage);
         }
         if (data?.error === 'too_many_athletes') {
-          setStatus('quota');
+          if (!cancelled) setStatus('quota');
           return;
         }
         if (data?.error) throw new Error(data.error);
 
         // Step 2 — initial sync immediately after connecting
-        setStatus('syncing');
+        if (!cancelled) setStatus('syncing');
 
         const { data: { session: syncSession } } = await supabase.auth.refreshSession();
         const { data: syncData, error: syncError } = await supabase.functions.invoke('strava-sync', {
           body: { userId: syncSession?.user.id ?? user.id },
         });
+
+        if (cancelled) return;
 
         const count = syncData?.imported ?? 0;
         setImported(count);
@@ -111,9 +116,10 @@ export default function StravaCallbackPage() {
           );
         }
 
-        setStatus('success');
-        setTimeout(() => navigate('/dashboard'), 2000);
+        if (!cancelled) setStatus('success');
+        setTimeout(() => { if (!cancelled) navigate('/dashboard'); }, 2000);
       } catch (err: unknown) {
+        if (cancelled) return;
         const message = err instanceof Error ? err.message : 'Неизвестная ошибка';
         setStatus('error');
         setErrorMsg(`Ошибка подключения Strava: ${message}`);
@@ -122,6 +128,7 @@ export default function StravaCallbackPage() {
     };
 
     connect();
+    return () => { cancelled = true; };
   }, [authLoading, user, searchParams, navigate]);
 
   const labels = STATUS_LABELS[status];

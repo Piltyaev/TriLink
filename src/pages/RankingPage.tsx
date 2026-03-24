@@ -40,22 +40,32 @@ export default function RankingPage() {
   const [category, setCategory] = useState<Category>('Все');
 
   useEffect(() => {
-    supabase
-      .from('profiles')
-      .select('id, full_name, email, age_category, workout_count')
-      .order('workout_count', { ascending: false })
-      .limit(100)
-      .then(({ data }) => {
-        setEntries((data || []).map(p => ({
-          id: p.id,
-          full_name: p.full_name,
-          email: p.email,
-          age_category: p.age_category,
-          workout_count: p.workout_count ?? 0,
-        })));
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    let cancelled = false;
+
+    const fetchData = async () => {
+      try {
+        const { data } = await supabase
+          .from('profiles')
+          .select('id, full_name, email, age_category, workout_count')
+          .order('workout_count', { ascending: false })
+          .limit(100);
+        if (!cancelled) {
+          setEntries((data || []).map(p => ({
+            id: p.id,
+            full_name: p.full_name,
+            email: p.email,
+            age_category: p.age_category,
+            workout_count: p.workout_count ?? 0,
+          })));
+          setLoading(false);
+        }
+      } catch {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => { cancelled = true; };
   }, []);
 
   const filtered = category === 'Все'

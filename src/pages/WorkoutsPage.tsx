@@ -70,7 +70,7 @@ export default function WorkoutsPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const load = () => {
+  const load = (signal?: { cancelled: boolean }) => {
     if (!user) return;
     supabase
       .from('workouts')
@@ -79,12 +79,17 @@ export default function WorkoutsPage() {
       .gte('date', dateISO(365))
       .order('date', { ascending: false })
       .then(({ data }) => {
+        if (signal?.cancelled) return;
         setWorkouts((data || []).map(r => mapWorkout(r as Record<string, unknown>)));
         setLoading(false);
       });
   };
 
-  useEffect(() => { load(); }, [user]);
+  useEffect(() => {
+    const signal = { cancelled: false };
+    load(signal);
+    return () => { signal.cancelled = true; };
+  }, [user]);
 
   const handleSave = async () => {
     if (!user) return;

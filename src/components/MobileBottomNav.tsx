@@ -1,13 +1,13 @@
 import { useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, Calendar, BarChart3, Award, Settings } from "lucide-react";
+import { LayoutDashboard, Calendar, BarChart3, Award, Dumbbell } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
-  { title: "Главная",    url: "/dashboard", icon: LayoutDashboard },
-  { title: "Календарь",  url: "/calendar",  icon: Calendar },
-  { title: "Аналитика",  url: "/analytics", icon: BarChart3 },
-  { title: "Рекорды",    url: "/records",   icon: Award },
-  { title: "Ещё",        url: "/settings",  icon: Settings },
+  { title: "Главная",     url: "/dashboard", icon: LayoutDashboard },
+  { title: "Календарь",   url: "/calendar",  icon: Calendar },
+  { title: "Аналитика",   url: "/analytics", icon: BarChart3 },
+  { title: "Рекорды",     url: "/records",   icon: Award },
+  { title: "Тренировки",  url: "/workouts",  icon: Dumbbell },
 ];
 
 export function MobileBottomNav() {

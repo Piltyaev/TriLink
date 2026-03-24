@@ -75,7 +75,7 @@ export default function PersonalRecordsPage() {
   const [formError, setFormError] = useState('');
   const [saving,    setSaving]    = useState(false);
 
-  const load = () => {
+  const load = (signal?: { cancelled: boolean }) => {
     if (!user) return;
     Promise.all([
       supabase
@@ -89,14 +89,19 @@ export default function PersonalRecordsPage() {
         .eq('user_id', user.id)
         .gte('date', dateISO(730)),
     ]).then(([recRes, woRes]) => {
+      if (signal?.cancelled) return;
       const r = recRes as { data: Record<string, unknown>[] | null };
       setRecords((r.data || []).map(mapRecord));
       setWorkouts(((woRes.data || []) as Record<string, unknown>[]).map(mapWorkout));
       setLoading(false);
-    }).catch(() => setLoading(false));
+    }).catch(() => { if (!signal?.cancelled) setLoading(false); });
   };
 
-  useEffect(() => { load(); }, [user]);
+  useEffect(() => {
+    const signal = { cancelled: false };
+    load(signal);
+    return () => { signal.cancelled = true; };
+  }, [user]);
 
   // ── Auto records from workouts ──────────────────────────────────────────────
 

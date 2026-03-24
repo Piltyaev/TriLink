@@ -87,19 +87,24 @@ export default function CalendarPage() {
   const [formError,  setFormError]  = useState('');
   const [saving,     setSaving]     = useState(false);
 
-  const loadData = () => {
+  const loadData = (signal?: { cancelled: boolean }) => {
     if (!user) return;
     Promise.all([
       supabase.from('calendar_events').select('*').eq('user_id', user.id).order('date', { ascending: true }),
       supabase.from('workouts').select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes').eq('user_id', user.id).gte('date', dateISO(365)).order('date', { ascending: true }),
     ]).then(([evRes, woRes]) => {
+      if (signal?.cancelled) return;
       setEvents((evRes.data || []).map(r => mapCalendarEvent(r as Record<string, unknown>)));
       setWorkouts((woRes.data || []).map(r => mapWorkout(r as Record<string, unknown>)));
       setLoading(false);
-    }).catch(() => setLoading(false));
+    }).catch(() => { if (!signal?.cancelled) setLoading(false); });
   };
 
-  useEffect(() => { loadData(); }, [user]);
+  useEffect(() => {
+    const signal = { cancelled: false };
+    loadData(signal);
+    return () => { signal.cancelled = true; };
+  }, [user]);
 
   // ── Derived data ────────────────────────────────────────────────────────────
 
