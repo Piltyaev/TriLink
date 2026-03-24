@@ -125,18 +125,28 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     if (!user) return;
-    supabase
-      .from('workouts')
-      .select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes')
-      .eq('user_id', user.id)
-      .gte('date', dateISO(42))
-      .order('date', { ascending: true })
-      .then(({ data }) => {
-        setWorkouts((data || []).map(r => mapWorkout(r as Record<string, unknown>)));
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+
+    const fetchData = async () => {
+      try {
+        const { data } = await supabase
+          .from('workouts')
+          .select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes')
+          .eq('user_id', user.id)
+          .gte('date', dateISO(365))
+          .order('date', { ascending: true });
+        if (!cancelled) {
+          setWorkouts((data || []).map(r => mapWorkout(r as Record<string, unknown>)));
+          setLoading(false);
+        }
+      } catch {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => { cancelled = true; };
   }, [user]);
 
   // ── Compute ───────────────────────────────────────────────────────────────

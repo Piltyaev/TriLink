@@ -95,7 +95,33 @@ export default function SettingsPage() {
   const [syncing, setSyncing] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
 
-  useEffect(() => { loadStravaStatus(); }, []);
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchStravaStatus = async () => {
+      if (!user) return;
+      try {
+        const { data } = await supabase
+          .from('strava_tokens')
+          .select('athlete_name, last_sync_at, activities_count')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (!cancelled && data) {
+          setStravaStatus({
+            connected: true,
+            athlete_name: data.athlete_name ?? undefined,
+            last_sync: data.last_sync_at
+              ? new Date(data.last_sync_at).toLocaleString('ru-RU')
+              : 'Никогда',
+            activities_count: data.activities_count || 0,
+          });
+        }
+      } catch { /* not connected */ }
+    };
+
+    fetchStravaStatus();
+    return () => { cancelled = true; };
+  }, []);
 
   const loadStravaStatus = async () => {
     if (!user) return;

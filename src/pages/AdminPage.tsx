@@ -42,15 +42,27 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     if (!user) return;
-    Promise.all([
-      supabase.from('profiles').select('*').order('created_at', { ascending: false }),
-      supabase.from('workouts').select('id', { count: 'exact', head: true }),
-    ]).then(([profilesRes, workoutsRes]) => {
-      setProfiles((profilesRes.data || []) as Profile[]);
-      setTotalWorkouts(workoutsRes.count || 0);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+
+    const fetchData = async () => {
+      try {
+        const [profilesRes, workoutsRes] = await Promise.all([
+          supabase.from('profiles').select('*').order('created_at', { ascending: false }),
+          supabase.from('workouts').select('id', { count: 'exact', head: true }),
+        ]);
+        if (!cancelled) {
+          setProfiles((profilesRes.data || []) as Profile[]);
+          setTotalWorkouts(workoutsRes.count || 0);
+          setLoading(false);
+        }
+      } catch {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => { cancelled = true; };
   }, [user]);
 
   const activeRecently = profiles.filter(p => {

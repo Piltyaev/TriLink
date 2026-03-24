@@ -79,26 +79,32 @@ export default function DashboardPage() {
   const dismissBadge = useCallback(() => setBadgeQueue(q => q.slice(1)), []);
 
   useEffect(() => {
+    let cancelled = false;
     if (!user) return;
     const since = dateISO(105);
-    supabase
-      .from('workouts').select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes').eq('user_id', user.id).gte('date', since).order('date', { ascending: false })
-      .then(({ data, error }) => {
-        setLoading(false);
-        if (error) return;
-        const rows = (data || []).map(r => mapWorkout(r as Record<string, unknown>));
-        setWorkouts(rows);
-        setStreak(calcStreak(rows));
-        const weeks: { week: string; swim: number; bike: number; run: number; strength: number }[] = [];
-        for (let i = 5; i >= 0; i--) weeks.push({ week: `Нед ${6 - i}`, swim: 0, bike: 0, run: 0, strength: 0 });
-        rows.forEach(w => {
-          const idx = Math.min(Math.floor((Date.now() - new Date(w.date).getTime()) / 86400000 / 7), 5);
-          const weekIdx = 5 - idx;
-          if (weekIdx >= 0 && (w.sport === 'swim' || w.sport === 'bike' || w.sport === 'run' || w.sport === 'strength'))
-            weeks[weekIdx][w.sport] += w.duration;
-        });
-        setWeeklyVolume(weeks);
+
+    const fetchData = async () => {
+      const { data, error } = await supabase
+        .from('workouts').select('id,title,sport,date,duration,source,distance,avg_hr,max_hr,avg_pace,calories,tss,rpe,notes').eq('user_id', user.id).gte('date', since).order('date', { ascending: false });
+      if (cancelled) return;
+      setLoading(false);
+      if (error) return;
+      const rows = (data || []).map(r => mapWorkout(r as Record<string, unknown>));
+      setWorkouts(rows);
+      setStreak(calcStreak(rows));
+      const weeks: { week: string; swim: number; bike: number; run: number; strength: number }[] = [];
+      for (let i = 5; i >= 0; i--) weeks.push({ week: `Нед ${6 - i}`, swim: 0, bike: 0, run: 0, strength: 0 });
+      rows.forEach(w => {
+        const idx = Math.min(Math.floor((Date.now() - new Date(w.date).getTime()) / 86400000 / 7), 5);
+        const weekIdx = 5 - idx;
+        if (weekIdx >= 0 && (w.sport === 'swim' || w.sport === 'bike' || w.sport === 'run' || w.sport === 'strength'))
+          weeks[weekIdx][w.sport] += w.duration;
       });
+      setWeeklyVolume(weeks);
+    };
+
+    fetchData();
+    return () => { cancelled = true; };
   }, [user]);
 
   useEffect(() => {
