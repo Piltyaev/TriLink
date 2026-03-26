@@ -45,7 +45,7 @@ export default function RegisterPage() {
       }
       return;
     }
-    toast.success('Аккаунт создан! Проверьте почту для подтверждения.');
+    toast.success('Регистрация прошла успешно! Войдите в свой аккаунт.');
     navigate('/auth/login');
   };
 
