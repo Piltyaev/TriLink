@@ -357,7 +357,7 @@ export default function LandingPage() {
             </h2>
 
             <p className="text-sm text-white/65 mb-8 max-w-lg mx-auto leading-relaxed">
-              Тысячи атлетов уже становятся легендами.<br className="hidden sm:block" />Начни прямо сейчас.
+              Атлеты, которые знают свои цифры, всегда на шаг впереди.
             </p>
 
             <Link to="/auth/register">
