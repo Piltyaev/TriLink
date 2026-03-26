@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Flame, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -9,33 +8,6 @@ interface Props {
   weeklyMinutes: number;
   weeklyGoal?: number;
 }
-
-const QUOTES = [
-  "Каждый километр — это выбор продолжать.",
-  "Сила рождается там, где заканчивается комфорт.",
-  "Твой лучший соперник — вчерашняя версия тебя.",
-  "Не останавливайся, когда устал. Останавливайся, когда закончил.",
-  "Тело достигает того, во что верит разум.",
-  "Боль временна. Гордость за финиш — навсегда.",
-  "Чемпионы тренируются, когда другие отдыхают.",
-  "Каждая тренировка — инвестиция в себя.",
-  "Ты уже опередил всех, кто остался дома.",
-  "Прогресс, а не совершенство.",
-  "Маленькие шаги каждый день — великие результаты.",
-  "Триатлон — это не вид спорта. Это образ жизни.",
-  "Дисциплина — это то, что остаётся, когда мотивация уходит.",
-  "Финишная черта — это только начало следующего вызова.",
-  "Каждый подъём заканчивается спуском. Просто крути педали.",
-  "Плавай, крути, беги — повторяй до победы.",
-  "Тяжело в тренировке — легко на гонке.",
-  "Разум сдаётся раньше тела. Не слушай его.",
-  "Гонка начинается там, где хочется остановиться.",
-  "Выносливость — это искусство терпеть чуть дольше остальных.",
-  "Плыви глубже, езди дальше, беги быстрее.",
-  "Лучший день для старта — сегодня.",
-  "Слабость — выбор. Сила — тоже выбор.",
-  "Сделай сегодня то, о чём завтра будешь гордиться.",
-];
 
 function pluralDays(n: number): string {
   const abs = Math.abs(n) % 100;
@@ -57,8 +29,6 @@ function getGreeting(): string {
 
 export function DashboardHeader({ userName, streak, weeklyMinutes, weeklyGoal = 300 }: Props) {
   const firstName = userName.split(' ')[0] || 'Атлет';
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const quote = useMemo(() => QUOTES[Math.floor(Math.random() * QUOTES.length)], []);
   const pct = Math.min(Math.round((weeklyMinutes / weeklyGoal) * 100), 100);
   const goalReached = pct >= 100;
 
@@ -80,11 +50,6 @@ export function DashboardHeader({ userName, streak, weeklyMinutes, weeklyGoal = 
           </span>
         )}
       </div>
-
-      {/* Quote */}
-      <p className="text-sm text-muted-foreground italic mb-4">
-        «{quote}»
-      </p>
 
       {/* Weekly goal progress */}
       <div className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-[0_1px_4px_hsl(0_0%_0%/0.35)]">
