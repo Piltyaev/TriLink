@@ -62,14 +62,6 @@ export const sportLabels: Record<SportType, string> = {
   rest: 'Отдых',
 };
 
-export const sportEmoji: Record<SportType, string> = {
-  swim: '🏊',
-  bike: '🚴',
-  run: '🏃',
-  strength: '💪',
-  rest: '😴',
-};
-
 export function mapWorkout(row: Record<string, unknown>): Workout {
   return {
     id:       row.id       as string,
