@@ -7,13 +7,13 @@
 @layer base {
   :root {
     /* ── Backgrounds ────────────────── */
-    --background:   220 18%  8%;   /* чуть светлее для меньшей нагрузки на глаза */
+    --background:   0 0%  0%;      /* чисто чёрный */
     --foreground:   214 30% 94%;   /* почти белый, максимальная читаемость */
 
-    --card:         220 20% 12%;   /* контраст с фоном виден чётко */
+    --card:         0 0%  6%;      /* карточки чуть над чёрным */
     --card-foreground: 214 30% 94%;
 
-    --popover:      220 22% 14%;
+    --popover:      0 0%  8%;
     --popover-foreground: 214 30% 94%;
 
     /* ── Accent ─────────────────────── */
@@ -21,13 +21,13 @@
     --primary-foreground: 0 0% 100%;
 
     /* ── Surfaces ───────────────────── */
-    --secondary:    220 20% 17%;
+    --secondary:    0 0% 10%;
     --secondary-foreground: 214 22% 80%;
 
-    --muted:        220 18% 15%;
+    --muted:        0 0%  9%;
     --muted-foreground: 214 18% 65%;   /* было 50% — поднял до 65% для читаемости */
 
-    --accent:       220 20% 19%;
+    --accent:       0 0% 12%;
     --accent-foreground: 214 30% 94%;
 
     /* ── States ─────────────────────── */
@@ -35,8 +35,8 @@
     --destructive-foreground: 0 0% 100%;
 
     /* ── Structure ──────────────────── */
-    --border:       220 22% 22%;   /* было 17% — границы теперь заметнее */
-    --input:        220 22% 15%;
+    --border:       0 0% 16%;      /* границы видны на чёрном */
+    --input:        0 0%  9%;
     --ring:         217 91% 62%;
     --radius:       0.875rem;
 
@@ -64,36 +64,36 @@
     --chart-5: 262 48% 60%;
 
     /* ── Sidebar ────────────────────── */
-    --sidebar-background:         220 24%  7%;
+    --sidebar-background:         0 0%  2%;
     --sidebar-foreground:         214 18% 68%;   /* было 56% — навигация стала читаемее */
     --sidebar-primary:            217 91% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent:             220 22% 14%;
+    --sidebar-accent:             0 0%  8%;
     --sidebar-accent-foreground:  214 30% 92%;
-    --sidebar-border:             220 22% 13%;
+    --sidebar-border:             0 0%  8%;
     --sidebar-ring:               217 91% 62%;
   }
 
   /* dark alias for Tailwind dark: utilities */
   .dark {
-    --background:   220 18%  8%;
+    --background:   0 0%  0%;
     --foreground:   214 30% 94%;
-    --card:         220 20% 12%;
+    --card:         0 0%  6%;
     --card-foreground: 214 30% 94%;
-    --popover:      220 22% 14%;
+    --popover:      0 0%  8%;
     --popover-foreground: 214 30% 94%;
     --primary:      217 91% 62%;
     --primary-foreground: 0 0% 100%;
-    --secondary:    220 20% 17%;
+    --secondary:    0 0% 10%;
     --secondary-foreground: 214 22% 80%;
-    --muted:        220 18% 15%;
+    --muted:        0 0%  9%;
     --muted-foreground: 214 18% 65%;
-    --accent:       220 20% 19%;
+    --accent:       0 0% 12%;
     --accent-foreground: 214 30% 94%;
     --destructive:  0 62% 52%;
     --destructive-foreground: 0 0% 100%;
-    --border:       220 22% 22%;
-    --input:        220 22% 15%;
+    --border:       0 0% 16%;
+    --input:        0 0%  9%;
     --ring:         217 91% 62%;
     --swim:         200 55% 38%;
     --swim-foreground: 200 70% 90%;
@@ -110,13 +110,13 @@
     --chart-3: 155 48% 48%;
     --chart-4:  32 65% 54%;
     --chart-5: 262 48% 60%;
-    --sidebar-background:         220 24%  7%;
+    --sidebar-background:         0 0%  2%;
     --sidebar-foreground:         214 18% 68%;
     --sidebar-primary:            217 91% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent:             220 22% 14%;
+    --sidebar-accent:             0 0%  8%;
     --sidebar-accent-foreground:  214 30% 92%;
-    --sidebar-border:             220 22% 13%;
+    --sidebar-border:             0 0%  8%;
     --sidebar-ring:               217 91% 62%;
   }
 }
