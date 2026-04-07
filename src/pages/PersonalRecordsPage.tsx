@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { cn, dateISO } from "@/lib/utils";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// типы
 
 interface PersonalRecord {
   id: string;
@@ -59,7 +59,7 @@ function parsePace(pace: string): number {
 
 const GROUP_ORDER: SportType[] = ['swim', 'bike', 'run', 'strength', 'rest'];
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// компонент
 
 export default function PersonalRecordsPage() {
   usePageTitle('Рекорды');
@@ -103,7 +103,7 @@ export default function PersonalRecordsPage() {
     return () => { signal.cancelled = true; };
   }, [user]);
 
-  // ── Auto records from workouts ──────────────────────────────────────────────
+  // рекорды из тренировок (автоматически)
 
   const autoRecords = useMemo(() => {
     if (workouts.length === 0) return [];
@@ -157,14 +157,14 @@ export default function PersonalRecordsPage() {
     return rows;
   }, [workouts]);
 
-  // ── Filtered + grouped ──────────────────────────────────────────────────────
+  // фильтрация и группировка
 
   const filtered = records.filter(r => filter === 'all' || r.sport === filter);
   const grouped = GROUP_ORDER
     .map(sport => ({ sport, items: filtered.filter(r => r.sport === sport) }))
     .filter(g => g.items.length > 0);
 
-  // ── CRUD ────────────────────────────────────────────────────────────────────
+  // операции с данными
 
   const closeModal = () => { setShowModal(false); setEditingId(null); setForm(emptyForm()); setFormError(''); };
   const openAdd    = () => { setEditingId(null); setForm(emptyForm()); setFormError(''); setShowModal(true); };
@@ -219,12 +219,12 @@ export default function PersonalRecordsPage() {
     setRecords(prev => prev.filter(r => r.id !== id));
   };
 
-  // ── Render ───────────────────────────────────────────────────────────────────
+  // рендер
 
   return (
     <div className="p-4 lg:p-8 space-y-6">
 
-      {/* Header */}
+      {/* шапка */}
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl font-bold flex items-center gap-2">
@@ -238,7 +238,7 @@ export default function PersonalRecordsPage() {
         </Button>
       </div>
 
-      {/* Auto records */}
+      {/* авто-рекорды из тренировок */}
       {!loading && autoRecords.length > 0 && (
         <motion.div
           className="rounded-xl border border-border bg-card p-5 shadow-[0_1px_4px_hsl(0_0%_0%/0.3)]"
@@ -271,7 +271,7 @@ export default function PersonalRecordsPage() {
         </motion.div>
       )}
 
-      {/* Filters */}
+      {/* фильтры */}
       <div className="flex flex-wrap gap-1.5">
         <button
           onClick={() => setFilter('all')}
@@ -300,7 +300,7 @@ export default function PersonalRecordsPage() {
         ))}
       </div>
 
-      {/* List */}
+      {/* список рекордов */}
       {loading ? (
         <div className="space-y-3">
           {[...Array(4)].map((_, i) => (
@@ -384,7 +384,7 @@ export default function PersonalRecordsPage() {
         </div>
       )}
 
-      {/* Modal */}
+      {/* модальное окно */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -402,7 +402,7 @@ export default function PersonalRecordsPage() {
               transition={{ type: 'spring', damping: 28, stiffness: 320 }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Modal header */}
+              {/* шапка */}
               <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-border/60">
                 <div className="flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -432,7 +432,7 @@ export default function PersonalRecordsPage() {
 
               <div className="p-6 space-y-5">
 
-                {/* Sport */}
+                {/* вид спорта */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Вид спорта</Label>
                   <div className="mt-2 grid grid-cols-5 gap-2">
@@ -457,7 +457,7 @@ export default function PersonalRecordsPage() {
                   </div>
                 </div>
 
-                {/* Discipline */}
+                {/* дисциплина */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Дисциплина</Label>
                   <Input
@@ -469,7 +469,7 @@ export default function PersonalRecordsPage() {
                   />
                 </div>
 
-                {/* Result + Date */}
+                {/* результат и дата */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Результат</Label>
@@ -491,7 +491,7 @@ export default function PersonalRecordsPage() {
                   </div>
                 </div>
 
-                {/* Notes */}
+                {/* заметки */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Заметки</Label>
                   <Input

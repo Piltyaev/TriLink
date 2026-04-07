@@ -34,20 +34,20 @@ function formatLabel(d: Date, minutes: number): string {
 }
 
 export function ActivityHeatmap({ workouts }: Props) {
-  // Aggregate duration per date
+  // суммируем длительность по датам
   const durationByDate = new Map<string, number>();
   workouts.forEach(w => {
     durationByDate.set(w.date, (durationByDate.get(w.date) ?? 0) + w.duration);
   });
 
-  // Find grid start: Monday of (today − 14 weeks)
+  // начало сетки — понедельник (сегодня − 14 недель)
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const dayOfWeek = (today.getDay() + 6) % 7; // 0=Mon … 6=Sun
   const gridStart = new Date(today);
   gridStart.setDate(today.getDate() - dayOfWeek - (WEEKS - 1) * 7);
 
-  // Build cells (column-major: week 0..14 × day 0..6 Mon→Sun)
+  // строим ячейки: неделя 0..14 × день 0..6 (пн→вс)
   type Cell = { iso: string; date: Date; tier: 0|1|2|3|4; minutes: number; isFuture: boolean };
   const grid: Cell[][] = [];
   const monthLabels: (string | null)[] = [];
@@ -62,7 +62,7 @@ export function ActivityHeatmap({ workouts }: Props) {
       const minutes = isFuture ? 0 : (durationByDate.get(iso) ?? 0);
       week.push({ iso, date, tier: getTier(minutes), minutes, isFuture });
     }
-    // Show month label when week starts a new month
+    // метка месяца — если неделя начинает новый месяц
     const firstDay = week[0].date;
     const prevWeekFirst = w > 0 ? grid[w - 1][0].date : null;
     const showMonth = !prevWeekFirst || firstDay.getMonth() !== prevWeekFirst.getMonth();

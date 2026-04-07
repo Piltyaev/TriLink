@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { cn, dateISO } from "@/lib/utils";
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// вспомогательное
 
 function formatMin(min: number) {
   const h = Math.floor(min / 60);
@@ -25,7 +25,7 @@ function formatMin(min: number) {
   return h > 0 ? `${h}ч${m > 0 ? ` ${m}м` : ''}` : `${m}м`;
 }
 
-// Shared tooltip style
+// стиль тултипа для всех графиков
 const tooltipStyle = {
   contentStyle: {
     background: 'hsl(var(--popover))',
@@ -46,7 +46,7 @@ const axisProps = {
   axisLine: false,
 };
 
-// ── Sub-components ────────────────────────────────────────────────────────────
+// подкомпоненты
 
 function BigStatCard({
   label, value, sub, icon, accent, delay = 0,
@@ -116,7 +116,7 @@ function ChartCard({
   );
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────────
+// основной компонент
 
 export default function AnalyticsPage() {
   usePageTitle('Аналитика');
@@ -149,9 +149,9 @@ export default function AnalyticsPage() {
     return () => { cancelled = true; };
   }, [user]);
 
-  // ── Compute ───────────────────────────────────────────────────────────────
+  // расчёты
 
-  // Weekly volume (last 6 weeks)
+  // объём по неделям (последние 6)
   const weeklyVolume: { week: string; swim: number; bike: number; run: number; total: number }[] = [];
   for (let i = 5; i >= 0; i--) {
     weeklyVolume.push({ week: `Н${6 - i}`, swim: 0, bike: 0, run: 0, total: 0 });
@@ -167,12 +167,12 @@ export default function AnalyticsPage() {
     }
   });
 
-  // Summary stats
+  // итоговые показатели
   const totalWorkouts  = workouts.length;
   const totalDuration  = workouts.reduce((s, w) => s + w.duration, 0);
   const avgDuration    = totalWorkouts > 0 ? Math.round(totalDuration / totalWorkouts) : 0;
   const totalDistance  = workouts.reduce((s, w) => s + (w.distance || 0), 0);
-  // Sport breakdown
+  // распределение по видам спорта
   const swimMin     = workouts.filter(w => w.sport === 'swim').reduce((s, w) => s + w.duration, 0);
   const bikeMin     = workouts.filter(w => w.sport === 'bike').reduce((s, w) => s + w.duration, 0);
   const runMin      = workouts.filter(w => w.sport === 'run').reduce((s, w) => s + w.duration, 0);
@@ -186,7 +186,7 @@ export default function AnalyticsPage() {
     { label: 'Сила',      min: strengthMin, pct: Math.round((strengthMin / sportTotal) * 100), color: 'bg-strength', icon: <Dumbbell        className="h-4 w-4" />, accent: 'text-strength' },
   ].filter(s => s.min > 0).sort((a, b) => b.min - a.min);
 
-  // Day of week distribution
+  // распределение по дням недели
   const DOW_LABELS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   const dowCounts = Array(7).fill(0);
   workouts.forEach(w => {
@@ -196,7 +196,7 @@ export default function AnalyticsPage() {
   });
   const dowData = DOW_LABELS.map((d, i) => ({ day: d, count: dowCounts[i] }));
 
-  // Active vs rest days (last 6 weeks = 42 days)
+  // активные дни vs отдых (42 дня = 6 недель)
   const activeDays = new Set(workouts.map(w => w.date)).size;
   const restDays   = Math.max(0, 42 - activeDays);
   const pieData = [
@@ -204,7 +204,7 @@ export default function AnalyticsPage() {
     { name: 'Отдых',    value: restDays,     color: 'hsl(var(--muted))' },
   ];
 
-  // Radar
+  // данные для радара
   const maxSport  = Math.max(swimMin, bikeMin, runMin, strengthMin, 1);
   const radarData = [
     { metric: 'Плавание',  value: Math.round((swimMin     / maxSport) * 100) },
@@ -215,7 +215,7 @@ export default function AnalyticsPage() {
     { metric: 'Объём',     value: Math.min(Math.round(totalDuration / 12), 100) },
   ];
 
-  // ── Loading skeleton ──────────────────────────────────────────────────────
+  // скелетон загрузки
 
   if (loading) {
     return (
@@ -239,7 +239,7 @@ export default function AnalyticsPage() {
     );
   }
 
-  // ── Empty state ───────────────────────────────────────────────────────────
+  // пустое состояние
 
   if (workouts.length === 0) {
     return (
@@ -265,12 +265,12 @@ export default function AnalyticsPage() {
     );
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  // рендер
 
   return (
     <div className="p-4 lg:p-8 space-y-6">
 
-      {/* ── Header ─────────────────────────────────────────── */}
+      {/* шапка */}
       <motion.div
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
@@ -280,7 +280,7 @@ export default function AnalyticsPage() {
         <p className="text-sm text-muted-foreground mt-0.5">Тренды и анализ формы за последние 6 недель</p>
       </motion.div>
 
-      {/* ── Stat cards ─────────────────────────────────────── */}
+      {/* карточки показателей */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
         <BigStatCard
           label="Тренировок"
@@ -306,7 +306,7 @@ export default function AnalyticsPage() {
         />
       </div>
 
-      {/* ── Sport breakdown ────────────────────────────────── */}
+      {/* разбивка по дисциплинам */}
       {sportBreakdown.length > 0 && (
         <ChartCard
           title="Распределение по дисциплинам"
@@ -346,10 +346,10 @@ export default function AnalyticsPage() {
         </ChartCard>
       )}
 
-      {/* ── Charts grid ────────────────────────────────────── */}
+      {/* сетка графиков */}
       <div className="grid gap-5 lg:grid-cols-2">
 
-        {/* Stacked bar — weekly volume */}
+        {/* стак-бар — объём по неделям */}
         <ChartCard
           title="Объём по неделям"
           subtitle="минут по дисциплинам"
@@ -373,7 +373,7 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Radar — athlete profile */}
+        {/* радар — профиль атлета */}
         <ChartCard
           title="Профиль атлета"
           subtitle="относительные показатели"
@@ -399,7 +399,7 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Day of week */}
+        {/* по дням недели */}
         <ChartCard
           title="Время тренировок"
           subtitle="распределение по дням недели"
@@ -416,7 +416,7 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Active vs rest pie */}
+        {/* активные дни / отдых */}
         <ChartCard
           title="Активность / Отдых"
           subtitle="дней за последние 6 недель"
@@ -458,7 +458,7 @@ export default function AnalyticsPage() {
           </div>
         </ChartCard>
 
-        {/* Line — weekly trend */}
+        {/* линейный — тренд нагрузки */}
         <ChartCard
           title="Тренд нагрузки"
           subtitle="суммарный объём в минутах по неделям"

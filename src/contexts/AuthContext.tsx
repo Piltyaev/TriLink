@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       options: { data: { full_name: name, age_category: ageCategory || null, weight: weight ? parseFloat(weight) : null } },
     });
 
-    // Create profile record for the new user
+    // создаём запись профиля для нового пользователя
     if (!error && data.user) {
       await supabase.from('profiles').upsert({
         id: data.user.id,

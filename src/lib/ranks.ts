@@ -95,7 +95,7 @@ export function getTotalMinutes(workouts: Workout[]): number {
   return workouts.reduce((s, w) => s + w.duration, 0);
 }
 
-/** Map workout_count (from profiles table) → rank for leaderboard */
+// workout_count из таблицы profiles → ранг в таблице лидеров
 export function getRankByCount(count: number): Rank {
   if (count >= 200) return RANKS[5];
   if (count >= 100) return RANKS[4];

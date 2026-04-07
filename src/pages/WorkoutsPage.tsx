@@ -19,7 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { cn, formatDuration, toLocalISO, dateISO } from "@/lib/utils";
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// вспомогательные функции
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('ru-RU', {
@@ -35,7 +35,7 @@ const sportAccent: Record<SportType, string> = {
   rest:     'border-l-rest     bg-rest/8',
 };
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// типы
 
 interface WorkoutForm {
   title: string;
@@ -55,7 +55,7 @@ const emptyForm = (): WorkoutForm => ({
   notes: '',
 });
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// компонент
 
 export default function WorkoutsPage() {
   usePageTitle('Тренировки');
@@ -149,7 +149,7 @@ export default function WorkoutsPage() {
     [workouts, filter, search]
   );
 
-  // Grouped by sport for "all" view (only sports that have at least 1 workout)
+  // группируем по виду спорта (только те, у которых есть тренировки)
   const GROUP_ORDER: SportType[] = ['swim', 'bike', 'run', 'strength', 'rest'];
   const grouped = useMemo(() => {
     if (filter !== 'all') return null;
@@ -161,7 +161,7 @@ export default function WorkoutsPage() {
       .filter(g => g.items.length > 0);
   }, [filtered, filter]);
 
-  // Summary stats
+  // итоговые показатели
   const totalDuration  = workouts.reduce((s, w) => s + w.duration, 0);
   const totalDistance  = workouts.reduce((s, w) => s + (w.distance || 0), 0);
 
@@ -178,7 +178,7 @@ export default function WorkoutsPage() {
   return (
     <div className="p-4 lg:p-8 space-y-6">
 
-      {/* ── Header ─────────────────────────────────────────── */}
+      {/* шапка */}
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl font-bold">Тренировки</h1>
@@ -189,7 +189,7 @@ export default function WorkoutsPage() {
         </Button>
       </div>
 
-      {/* ── Summary chips ───────────────────────────────────── */}
+      {/* чипы со статистикой */}
       {!loading && workouts.length > 0 && (
         <motion.div
           className="flex flex-wrap gap-2"
@@ -214,9 +214,9 @@ export default function WorkoutsPage() {
         </motion.div>
       )}
 
-      {/* ── Search & Filters ────────────────────────────────── */}
+      {/* поиск и фильтры */}
       <div className="space-y-3">
-        {/* Search */}
+        {/* поиск */}
         <div className="relative max-w-sm">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           <Input
@@ -235,7 +235,7 @@ export default function WorkoutsPage() {
           )}
         </div>
 
-        {/* Sport filter chips */}
+        {/* фильтр по виду спорта */}
         <div className="flex flex-wrap gap-1.5">
           <button
             onClick={() => setFilter('all')}
@@ -265,7 +265,7 @@ export default function WorkoutsPage() {
         </div>
       </div>
 
-      {/* ── List ────────────────────────────────────────────── */}
+      {/* список тренировок */}
       {loading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
@@ -280,7 +280,7 @@ export default function WorkoutsPage() {
         <div className="space-y-6">
           {(grouped ?? [{ sport: filter as SportType, items: filtered }]).map((group) => (
             <div key={group.sport}>
-              {/* Section header — only in grouped mode */}
+              {/* заголовок секции — только в режиме группировки */}
               {grouped && (
                 <div className="flex items-center gap-2.5 mb-3">
                   <div className={cn(
@@ -314,7 +314,7 @@ export default function WorkoutsPage() {
                         "transition-all duration-150 hover:-translate-y-px",
                         sportAccent[w.sport]
                       )}>
-                        {/* Sport icon */}
+                        {/* иконка */}
                         <div className={cn(
                           "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg",
                           sportIconBg[w.sport]
@@ -322,7 +322,7 @@ export default function WorkoutsPage() {
                           <SportIcon sport={w.sport} className="h-4 w-4" />
                         </div>
 
-                        {/* Title + meta */}
+                        {/* название и мета */}
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-sm truncate">{w.title}</p>
                           <div className="flex items-center gap-2 mt-0.5 flex-wrap">
@@ -339,7 +339,7 @@ export default function WorkoutsPage() {
                           </div>
                         </div>
 
-                        {/* Metrics */}
+                        {/* показатели */}
                         <div className="hidden sm:flex items-center gap-3 text-xs text-muted-foreground shrink-0">
                           <span className="flex items-center gap-1 font-medium text-foreground">
                             <Timer className="h-3.5 w-3.5 text-muted-foreground" />
@@ -353,7 +353,7 @@ export default function WorkoutsPage() {
                           )}
                         </div>
 
-                        {/* Actions */}
+                        {/* кнопки */}
                         <div className="flex items-center gap-1 shrink-0">
                           <button
                             onClick={e => openEdit(w, e)}
@@ -380,7 +380,7 @@ export default function WorkoutsPage() {
           ))}
         </div>
       ) : (
-        /* ── Empty state ── */
+        /* пусто */
         <motion.div
           className="flex flex-col items-center justify-center py-24 text-center"
           initial={{ opacity: 0, y: 10 }}
@@ -405,7 +405,7 @@ export default function WorkoutsPage() {
         </motion.div>
       )}
 
-      {/* ── Modal ───────────────────────────────────────────── */}
+      {/* модальное окно */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -423,7 +423,7 @@ export default function WorkoutsPage() {
               transition={{ type: 'spring', damping: 28, stiffness: 320 }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Modal header */}
+              {/* шапка модального окна */}
               <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-border/60">
                 <div className="flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -453,7 +453,7 @@ export default function WorkoutsPage() {
               </div>
 
               <div className="p-6 space-y-5">
-                {/* Title */}
+                {/* название */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     Название
@@ -467,7 +467,7 @@ export default function WorkoutsPage() {
                   />
                 </div>
 
-                {/* Sport selector */}
+                {/* вид спорта */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     Вид спорта
@@ -497,7 +497,7 @@ export default function WorkoutsPage() {
                   </div>
                 </div>
 
-                {/* Date + Duration */}
+                {/* дата и длительность */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
@@ -524,7 +524,7 @@ export default function WorkoutsPage() {
                   </div>
                 </div>
 
-                {/* Distance */}
+                {/* дистанция */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     Дистанция, км
@@ -540,7 +540,7 @@ export default function WorkoutsPage() {
                   />
                 </div>
 
-                {/* Notes */}
+                {/* заметки */}
                 <div>
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     Заметки
@@ -557,7 +557,7 @@ export default function WorkoutsPage() {
                   <p className="text-sm text-destructive">{formError}</p>
                 )}
 
-                {/* Actions */}
+                {/* кнопки сохранения */}
                 <div className="flex gap-3 pt-1">
                   <Button variant="outline" className="flex-1" onClick={closeModal}>
                     Отмена

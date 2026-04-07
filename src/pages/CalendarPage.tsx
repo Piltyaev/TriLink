@@ -21,13 +21,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { SportIcon } from "@/lib/iconMap";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// типы
 
 type CalendarItem =
   | { kind: 'event';   event:   CalendarEvent }
   | { kind: 'workout'; workout: Workout };
 
-// ── Constants ─────────────────────────────────────────────────────────────────
+// константы
 
 const DAYS   = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const MONTHS = [
@@ -42,7 +42,7 @@ const sportIcons: Record<SportType, React.ReactNode> = {
   rest:     <BedDouble className="h-5 w-5" />,
 };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// вспомогательные функции
 
 function getDaysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate();
@@ -53,7 +53,7 @@ function getFirstDayOfMonth(year: number, month: number) {
   return day === 0 ? 6 : day - 1; // Mon=0 … Sun=6
 }
 
-// ── Form ──────────────────────────────────────────────────────────────────────
+// форма
 
 interface WorkoutForm {
   title:    string;
@@ -67,7 +67,7 @@ const emptyForm = (date = ''): WorkoutForm => ({
   title: '', sport: 'run', date, duration: '60', notes: '',
 });
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+// страница
 
 export default function CalendarPage() {
   usePageTitle('Календарь');
@@ -106,7 +106,7 @@ export default function CalendarPage() {
     return () => { signal.cancelled = true; };
   }, [user]);
 
-  // ── Derived data ────────────────────────────────────────────────────────────
+  // вычисляемые данные
 
   const allItems: CalendarItem[] = [
     ...events.map(e  => ({ kind: 'event'   as const, event:   e })),
@@ -136,7 +136,7 @@ export default function CalendarPage() {
     .slice(0, 6);
 
 
-  // ── Navigation ──────────────────────────────────────────────────────────────
+  // навигация по месяцам
 
   const prev = () => {
     if (month === 0) { setMonth(11); setYear(y => y - 1); } else setMonth(m => m - 1);
@@ -146,7 +146,7 @@ export default function CalendarPage() {
   };
   const goToday = () => { setYear(now.getFullYear()); setMonth(now.getMonth()); };
 
-  // ── Modal helpers ───────────────────────────────────────────────────────────
+  // работа с модальными окнами
 
   const openAdd = (day?: number) => {
     const date = day
@@ -243,12 +243,12 @@ export default function CalendarPage() {
     }
   };
 
-  // ── Render ──────────────────────────────────────────────────────────────────
+  // рендер
 
   return (
     <div className="p-4 lg:p-8 space-y-6">
 
-      {/* ── Header ─────────────────────────────────────────── */}
+      {/* шапка */}
       <motion.div
         className="flex items-start justify-between gap-4"
         initial={{ opacity: 0, y: -6 }}
@@ -264,7 +264,7 @@ export default function CalendarPage() {
         </Button>
       </motion.div>
 
-      {/* ── Sport filter pills ──────────────────────────────── */}
+      {/* фильтр по виду спорта */}
       <motion.div
         className="flex flex-wrap gap-2"
         initial={{ opacity: 0, y: 6 }}
@@ -299,7 +299,7 @@ export default function CalendarPage() {
         ))}
       </motion.div>
 
-      {/* ── Month navigation ────────────────────────────────── */}
+      {/* навигация по месяцу */}
       <motion.div
         className="flex items-center justify-between gap-3"
         initial={{ opacity: 0 }}
@@ -325,7 +325,7 @@ export default function CalendarPage() {
         </Button>
       </motion.div>
 
-      {/* ── Calendar grid ───────────────────────────────────── */}
+      {/* сетка календаря */}
       <motion.div
         className="rounded-2xl border border-border bg-card overflow-hidden shadow-[0_2px_8px_hsl(0_0%_0%/0.3)]"
         initial={{ opacity: 0, y: 10 }}
@@ -348,7 +348,7 @@ export default function CalendarPage() {
         ) : (
           <div className="grid grid-cols-7">
 
-            {/* ── Day-of-week header ────────────────────────── */}
+            {/* заголовок дней недели */}
             {DAYS.map((d, i) => (
               <div
                 key={d}
@@ -361,7 +361,7 @@ export default function CalendarPage() {
               </div>
             ))}
 
-            {/* ── Empty leading cells ───────────────────────── */}
+            {/* пустые ячейки в начале */}
             {Array.from({ length: firstDay }, (_, i) => (
               <div
                 key={`empty-${i}`}
@@ -372,7 +372,7 @@ export default function CalendarPage() {
               />
             ))}
 
-            {/* ── Day cells ─────────────────────────────────── */}
+            {/* ячейки дней */}
             {Array.from({ length: daysInMonth }, (_, i) => {
               const day     = i + 1;
               const col     = (firstDay + i) % 7;
@@ -448,7 +448,7 @@ export default function CalendarPage() {
         )}
       </motion.div>
 
-      {/* ── Empty state hint ───────────────────────────────── */}
+      {/* подсказка при пустом состоянии */}
       {!loading && events.length === 0 && workouts.length === 0 && (
         <motion.div
           className="flex flex-col items-center justify-center py-10 text-center rounded-2xl border border-dashed border-border/60 bg-card/40"
@@ -461,7 +461,7 @@ export default function CalendarPage() {
         </motion.div>
       )}
 
-      {/* ── Upcoming planned workouts ───────────────────────── */}
+      {/* предстоящие тренировки */}
       <AnimatePresence>
         {upcoming.length > 0 && (
           <motion.div
@@ -527,7 +527,7 @@ export default function CalendarPage() {
       </AnimatePresence>
 
 
-      {/* ── Workout detail modal ────────────────────────────── */}
+      {/* модальное окно деталей тренировки */}
       <AnimatePresence>
         {viewWorkout && (
           <motion.div
@@ -545,7 +545,7 @@ export default function CalendarPage() {
               transition={{ type: 'spring', damping: 22, stiffness: 300 }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Header */}
+              {/* шапка */}
               <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-border/50">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className={cn(
@@ -567,7 +567,7 @@ export default function CalendarPage() {
                 </Button>
               </div>
 
-              {/* Stats */}
+              {/* показатели */}
               <div className="px-6 py-5 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <StatCard title="Время" value={formatDuration(viewWorkout.duration)} icon={<Timer className="h-5 w-5" />} />
@@ -593,7 +593,7 @@ export default function CalendarPage() {
                 )}
               </div>
 
-              {/* Footer */}
+              {/* низ */}
               <div className="px-6 pb-5">
                 <Button className="w-full" variant="outline" onClick={() => setViewWorkout(null)}>
                   Закрыть
@@ -604,7 +604,7 @@ export default function CalendarPage() {
         )}
       </AnimatePresence>
 
-      {/* ── Modal ───────────────────────────────────────────── */}
+      {/* модальное окно */}
       <AnimatePresence>
         {modal && (
           <motion.div
@@ -622,7 +622,7 @@ export default function CalendarPage() {
               transition={{ type: 'spring', damping: 22, stiffness: 300 }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Modal header */}
+              {/* заголовок */}
               <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-border/50">
                 <h3 className="font-display text-base font-semibold">
                   {modal === 'add' ? 'Новая тренировка' : 'Редактировать'}
@@ -643,10 +643,10 @@ export default function CalendarPage() {
                 </div>
               </div>
 
-              {/* Modal body */}
+              {/* тело модального окна */}
               <div className="px-6 py-5 space-y-5">
 
-                {/* Title */}
+                {/* название */}
                 <div>
                   <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Название
@@ -659,7 +659,7 @@ export default function CalendarPage() {
                   />
                 </div>
 
-                {/* Sport icon grid */}
+                {/* выбор вида спорта */}
                 <div>
                   <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Тип тренировки
@@ -684,7 +684,7 @@ export default function CalendarPage() {
                   </div>
                 </div>
 
-                {/* Date + Duration */}
+                {/* дата и длительность */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -711,7 +711,7 @@ export default function CalendarPage() {
                   </div>
                 </div>
 
-                {/* Notes */}
+                {/* заметки */}
                 <div>
                   <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Заметки (необязательно)
@@ -724,13 +724,13 @@ export default function CalendarPage() {
                   />
                 </div>
 
-                {/* Validation error */}
+                {/* ошибка валидации */}
                 {formError && (
                   <p className="text-sm text-destructive">{formError}</p>
                 )}
               </div>
 
-              {/* Modal footer */}
+              {/* кнопки */}
               <div className="flex gap-3 px-6 pb-6">
                 <Button variant="outline" className="flex-1" onClick={() => setModal(null)}>
                   Отмена

@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 
-// Re-sync at most once per hour per session
+// не чаще раза в час за сессию
 const SYNC_INTERVAL_MS = 60 * 60 * 1000;
 
 export function useStravaAutoSync() {
@@ -45,7 +45,7 @@ export function useStravaAutoSync() {
           );
         }
       } catch {
-        // background sync — don't bother the user on failure
+        // фоновая синхронизация — ошибку не показываем
       }
     };
 

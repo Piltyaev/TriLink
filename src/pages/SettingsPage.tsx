@@ -33,7 +33,7 @@ interface StravaStatus {
   activities_count?: number;
 }
 
-// ── Section header ──────────────────────────────────────────────────────────
+// заголовок секции
 function SectionHeader({
   icon,
   title,
@@ -53,7 +53,7 @@ function SectionHeader({
   );
 }
 
-// ── Row for sync stats ───────────────────────────────────────────────────────
+// строка статистики синхронизации
 function StatRow({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
@@ -65,23 +65,23 @@ function StatRow({ label, value, accent }: { label: string; value: string; accen
   );
 }
 
-// ── Main component ───────────────────────────────────────────────────────────
+// основной компонент
 export default function SettingsPage() {
   usePageTitle('Настройки');
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
-  // Profile
+  // профиль
   const [name,        setName]        = useState('');
   const [ageCategory, setAgeCategory] = useState('');
   const [weight,      setWeight]      = useState('');
   const [savingProfile, setSavingProfile] = useState(false);
 
-  // Goal
+  // цель
   const [weeklyGoal, setWeeklyGoal] = useState('300');
   const [savingGoals, setSavingGoals] = useState(false);
 
-  // Sync form fields when user metadata becomes available
+  // синхронизируем поля при загрузке метаданных пользователя
   useEffect(() => {
     if (!user) return;
     setName(user.user_metadata?.full_name || '');
@@ -90,7 +90,7 @@ export default function SettingsPage() {
     setWeeklyGoal(String(user.user_metadata?.weekly_goal || 300));
   }, [user]);
 
-  // Strava
+  // strava
   const [stravaStatus, setStravaStatus] = useState<StravaStatus>({ connected: false });
   const [syncing, setSyncing] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
@@ -242,7 +242,7 @@ export default function SettingsPage() {
 
   const handleLogout = async () => { await signOut(); navigate('/'); };
 
-  // Derived
+  // вычисляемые значения
   const initials = getInitials(user?.user_metadata?.full_name, user?.email);
   const displayName = name || user?.email?.split('@')[0] || 'Атлет';
   const goalNum = parseInt(weeklyGoal) || 300;
@@ -265,25 +265,25 @@ export default function SettingsPage() {
       <div className="fixed inset-0 bg-background/80 z-[1] pointer-events-none" />
     <div className="relative z-[2] p-4 lg:p-8 max-w-2xl space-y-5">
 
-      {/* ── Page title ──────────────────────────────────────── */}
+      {/* заголовок страницы */}
       <motion.div {...fadeUp(0)}>
         <h1 className="font-display text-2xl font-bold">Настройки</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Профиль, цели и подключения</p>
       </motion.div>
 
-      {/* ── Profile banner card ─────────────────────────────── */}
+      {/* баннер профиля */}
       <motion.div className={cn(card, "overflow-hidden")} {...fadeUp(0.05)}>
-        {/* Gradient banner */}
+        {/* градиентный баннер */}
         <div className="relative h-24 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/15 to-swim/20" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_20%_50%,hsl(var(--primary)/0.25),transparent)]" />
           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card/80 to-transparent" />
         </div>
 
-        {/* Avatar + info */}
+        {/* аватар и имя */}
         <div className="px-6 pb-6">
           <div className="flex items-end justify-between -mt-10 mb-4">
-            {/* Avatar */}
+            {/* аватар */}
             <div className="relative">
               <div className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl border-4 border-card bg-gradient-to-br from-primary/25 to-primary/10 text-primary text-xl font-bold shadow-[0_0_0_2px_hsl(var(--primary)/0.25)]">
                 {initials}
@@ -292,7 +292,7 @@ export default function SettingsPage() {
                 <Activity className="h-2.5 w-2.5 text-bike-foreground" />
               </div>
             </div>
-            {/* Logout */}
+            {/* выход */}
             <Button
               variant="outline"
               size="sm"
@@ -309,7 +309,7 @@ export default function SettingsPage() {
         </div>
       </motion.div>
 
-      {/* ── Profile fields ──────────────────────────────────── */}
+      {/* поля профиля */}
       <motion.div className={cn(card, "p-6 space-y-5")} {...fadeUp(0.1)}>
         <SectionHeader
           icon={<User className="h-4 w-4" />}
@@ -343,7 +343,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Age category + Weight */}
+        {/* возрастная категория и вес */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
@@ -395,7 +395,7 @@ export default function SettingsPage() {
         </div>
       </motion.div>
 
-      {/* ── Weekly goal ─────────────────────────────────────── */}
+      {/* цель недели */}
       <motion.div className={cn(card, "p-6 space-y-5")} {...fadeUp(0.15)}>
         <SectionHeader
           icon={<Target className="h-4 w-4" />}
@@ -403,7 +403,7 @@ export default function SettingsPage() {
           iconClass="bg-run/10 text-run"
         />
 
-        {/* Big number display */}
+        {/* большое число */}
         <div className="flex items-end gap-4">
           <div className="flex-1">
             <div className="flex items-baseline gap-2 mb-1">
@@ -429,7 +429,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Preset chips */}
+        {/* быстрый выбор */}
         <div className="space-y-2">
           <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Быстрый выбор</p>
           <div className="flex flex-wrap gap-2">
@@ -459,7 +459,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Preview bar */}
+        {/* предпросмотр прогресс-бара */}
         <div className="rounded-xl border border-border/50 bg-background/40 p-4 space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground flex items-center gap-1.5">
@@ -492,7 +492,7 @@ export default function SettingsPage() {
         </div>
       </motion.div>
 
-      {/* ── Strava + Sync ───────────────────────────────────── */}
+      {/* strava и синхронизация */}
       <motion.div className={cn(card, "p-6 space-y-5")} {...fadeUp(0.2)}>
         <SectionHeader
           icon={<Zap className="h-4 w-4" />}
@@ -500,7 +500,7 @@ export default function SettingsPage() {
           iconClass="bg-[#FC4C02]/10 text-[#FC4C02]"
         />
 
-        {/* Connection status */}
+        {/* статус подключения */}
         <div className={cn(
           "flex items-center justify-between rounded-xl border p-4 transition-colors",
           stravaStatus.connected
@@ -539,7 +539,7 @@ export default function SettingsPage() {
           )}
         </div>
 
-        {/* Sync stats */}
+        {/* статистика синхронизации */}
         <div className="rounded-xl border border-border/50 bg-background/30 px-4 py-1 divide-y divide-border/30">
           <StatRow
             label="Последняя синхронизация"
@@ -556,7 +556,7 @@ export default function SettingsPage() {
           />
         </div>
 
-        {/* Sync button */}
+        {/* кнопка синхронизации */}
         <Button
           variant="outline"
           size="sm"

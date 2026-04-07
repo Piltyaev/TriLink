@@ -68,18 +68,18 @@ export default function StravaCallbackPage() {
 
     const connect = async () => {
       try {
-        // Step 1 — exchange OAuth code for tokens
+        // шаг 1 — обмениваем код на токены
         const { data, error: fnError } = await supabase.functions.invoke('strava-oauth', {
           body: { code, userId: user.id },
         });
 
         if (cancelled) return;
 
-        // Extract real error from edge function response body
+        // извлекаем реальную ошибку из тела ответа edge function
         if (fnError) {
           let realMessage = fnError.message;
           try {
-            // FunctionsHttpError has a context property (the Response object)
+            // у FunctionsHttpError есть context (объект Response)
             const body = await (fnError as { context?: Response }).context?.json();
             if (body?.error) realMessage = body.error;
           } catch { /* ignore parse error */ }
@@ -92,7 +92,7 @@ export default function StravaCallbackPage() {
         }
         if (data?.error) throw new Error(data.error);
 
-        // Step 2 — initial sync immediately after connecting
+        // шаг 2 — первая синхронизация сразу после подключения
         if (!cancelled) setStatus('syncing');
 
         const { data: { session: syncSession } } = await supabase.auth.refreshSession();
@@ -141,7 +141,7 @@ export default function StravaCallbackPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        {/* Icon */}
+        {/* иконка статуса */}
         <AnimatePresence mode="wait">
           {(status === 'loading' || status === 'syncing') && (
             <motion.div
@@ -197,7 +197,7 @@ export default function StravaCallbackPage() {
           )}
         </AnimatePresence>
 
-        {/* Title + subtitle */}
+        {/* заголовок и подпись */}
         <div>
           <h2 className="font-display text-xl font-bold text-foreground">
             {labels.title}
@@ -207,7 +207,7 @@ export default function StravaCallbackPage() {
           </p>
         </div>
 
-        {/* Progress dots while loading/syncing */}
+        {/* анимированные точки */}
         {(status === 'loading' || status === 'syncing') && (
           <div className="flex justify-center gap-1.5">
             {[0, 1, 2].map(i => (
@@ -221,7 +221,7 @@ export default function StravaCallbackPage() {
           </div>
         )}
 
-        {/* Success: show import count */}
+        {/* количество импортированных активностей */}
         {status === 'success' && imported > 0 && (
           <motion.div
             className="inline-flex items-center gap-2 rounded-full border border-bike/30 bg-bike/10 px-4 py-2 text-sm font-medium text-bike"
@@ -234,7 +234,7 @@ export default function StravaCallbackPage() {
           </motion.div>
         )}
 
-        {/* Quota: two actions */}
+        {/* лимит превышен — два действия */}
         {status === 'quota' && (
           <div className="flex flex-col gap-2">
             <Button onClick={() => navigate('/workouts')} className="w-full">
@@ -246,7 +246,7 @@ export default function StravaCallbackPage() {
           </div>
         )}
 
-        {/* Error: back button */}
+        {/* ошибка — кнопка назад */}
         {status === 'error' && (
           <Button onClick={() => navigate('/settings')} className="mt-2">
             Вернуться в настройки
